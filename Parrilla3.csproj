@@ -1,0 +1,602 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="15.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.2.0.1\build\net46\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.props" Condition="Exists('packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.2.0.1\build\net46\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.props')" />
+  <Import Project="packages\NUnit.3.10.1\build\NUnit.props" Condition="Exists('packages\NUnit.3.10.1\build\NUnit.props')" />
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>
+    </ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{E0DD8D61-077D-4284-AB20-8358A2885AA9}</ProjectGuid>
+    <ProjectTypeGuids>{349c5851-65df-11da-9384-00065b846f21};{fae04ec0-301f-11d3-bf4b-00c04f79efbc}</ProjectTypeGuids>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Parrilla3</RootNamespace>
+    <AssemblyName>Parrilla3</AssemblyName>
+    <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
+    <MvcBuildViews>false</MvcBuildViews>
+    <UseIISExpress>true</UseIISExpress>
+    <Use64BitIISExpress />
+    <IISExpressSSLPort>44355</IISExpressSSLPort>
+    <IISExpressAnonymousAuthentication />
+    <IISExpressWindowsAuthentication />
+    <IISExpressUseClassicPipelineMode />
+    <UseGlobalApplicationHostFile />
+    <NuGetPackageImportStamp>
+    </NuGetPackageImportStamp>
+    <TargetFrameworkProfile />
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="MercadoPago, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>packages\mercadopago-sdk.1.0.57\lib\net35\MercadoPago.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.CodeDom.Providers.DotNetCompilerPlatform, Version=2.0.1.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.2.0.1\lib\net45\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="nunit.framework, Version=3.10.1.0, Culture=neutral, PublicKeyToken=2638cd05610744eb, processorArchitecture=MSIL">
+      <HintPath>packages\NUnit.3.10.1\lib\net45\nunit.framework.dll</HintPath>
+    </Reference>
+    <Reference Include="ObjectDumper, Version=1.0.0.12, Culture=neutral, PublicKeyToken=9e2fabf3af85dba9, processorArchitecture=MSIL">
+      <HintPath>packages\ObjectDumper.1.0.0.12\lib\net35-Client\ObjectDumper.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Net" />
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.Security" />
+    <Reference Include="System.Web.DynamicData" />
+    <Reference Include="System.Web.Entity" />
+    <Reference Include="System.Web.ApplicationServices" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.Web.Extensions" />
+    <Reference Include="System.Web" />
+    <Reference Include="System.Web.Abstractions" />
+    <Reference Include="System.Web.Routing" />
+    <Reference Include="System.Xml" />
+    <Reference Include="System.Configuration" />
+    <Reference Include="System.Web.Services" />
+    <Reference Include="System.EnterpriseServices" />
+    <Reference Include="Microsoft.Web.Infrastructure, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>packages\Microsoft.Web.Infrastructure.1.0.0.0\lib\net40\Microsoft.Web.Infrastructure.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Net.Http">
+    </Reference>
+    <Reference Include="System.Net.Http.WebRequest">
+    </Reference>
+    <Reference Include="System.Web.Helpers, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>packages\Microsoft.AspNet.WebPages.3.2.7\lib\net45\System.Web.Helpers.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Mvc, Version=5.2.7.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>packages\Microsoft.AspNet.Mvc.5.2.7\lib\net45\System.Web.Mvc.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Optimization">
+      <HintPath>packages\Microsoft.AspNet.Web.Optimization.1.1.3\lib\net40\System.Web.Optimization.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Razor, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>packages\Microsoft.AspNet.Razor.3.2.7\lib\net45\System.Web.Razor.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.WebPages, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>packages\Microsoft.AspNet.WebPages.3.2.7\lib\net45\System.Web.WebPages.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.WebPages.Deployment, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>packages\Microsoft.AspNet.WebPages.3.2.7\lib\net45\System.Web.WebPages.Deployment.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.WebPages.Razor, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>packages\Microsoft.AspNet.WebPages.3.2.7\lib\net45\System.Web.WebPages.Razor.dll</HintPath>
+    </Reference>
+    <Reference Include="Newtonsoft.Json">
+      <HintPath>packages\Newtonsoft.Json.12.0.2\lib\net45\Newtonsoft.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="WebGrease">
+      <Private>True</Private>
+      <HintPath>packages\WebGrease.1.6.0\lib\WebGrease.dll</HintPath>
+    </Reference>
+    <Reference Include="Antlr3.Runtime">
+      <Private>True</Private>
+      <HintPath>packages\Antlr.3.5.0.2\lib\Antlr3.Runtime.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Reference Include="EntityFramework">
+      <HintPath>packages\EntityFramework.6.2.0\lib\net45\EntityFramework.dll</HintPath>
+    </Reference>
+    <Reference Include="EntityFramework.SqlServer">
+      <HintPath>packages\EntityFramework.6.2.0\lib\net45\EntityFramework.SqlServer.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.AspNet.Identity.Core">
+      <HintPath>packages\Microsoft.AspNet.Identity.Core.2.2.3\lib\net45\Microsoft.AspNet.Identity.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.AspNet.Identity.Owin">
+      <HintPath>packages\Microsoft.AspNet.Identity.Owin.2.2.3\lib\net45\Microsoft.AspNet.Identity.Owin.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.AspNet.Identity.EntityFramework">
+      <HintPath>packages\Microsoft.AspNet.Identity.EntityFramework.2.2.3\lib\net45\Microsoft.AspNet.Identity.EntityFramework.dll</HintPath>
+    </Reference>
+    <Reference Include="Owin">
+      <HintPath>packages\Owin.1.0\lib\net40\Owin.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Owin">
+      <HintPath>packages\Microsoft.Owin.4.0.1\lib\net45\Microsoft.Owin.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Owin.Host.SystemWeb">
+      <HintPath>packages\Microsoft.Owin.Host.SystemWeb.4.0.1\lib\net45\Microsoft.Owin.Host.SystemWeb.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Owin.Security">
+      <HintPath>packages\Microsoft.Owin.Security.4.0.1\lib\net45\Microsoft.Owin.Security.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Owin.Security.Cookies">
+      <HintPath>packages\Microsoft.Owin.Security.Facebook.4.0.1\lib\net45\Microsoft.Owin.Security.Facebook.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Owin.Security.Cookies">
+      <HintPath>packages\Microsoft.Owin.Security.Cookies.4.0.1\lib\net45\Microsoft.Owin.Security.Cookies.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Owin.Security.Google">
+      <HintPath>packages\Microsoft.Owin.Security.Google.4.0.1\lib\net45\Microsoft.Owin.Security.Google.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Owin.Security.Twitter">
+      <HintPath>packages\Microsoft.Owin.Security.Twitter.4.0.1\lib\net45\Microsoft.Owin.Security.Twitter.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Owin.Security.MicrosoftAccount">
+      <HintPath>packages\Microsoft.Owin.Security.MicrosoftAccount.4.0.1\lib\net45\Microsoft.Owin.Security.MicrosoftAccount.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Owin.Security.OAuth">
+      <HintPath>packages\Microsoft.Owin.Security.OAuth.4.0.1\lib\net45\Microsoft.Owin.Security.OAuth.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="App_Start\BundleConfig.cs" />
+    <Compile Include="App_Start\FilterConfig.cs" />
+    <Compile Include="App_Start\IdentityConfig.cs" />
+    <Compile Include="App_Start\RouteConfig.cs" />
+    <Compile Include="App_Start\Startup.Auth.cs" />
+    <Compile Include="Controllers\AccountController.cs" />
+    <Compile Include="Controllers\ComidaController.cs" />
+    <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\ManageController.cs" />
+    <Compile Include="Global.asax.cs">
+      <DependentUpon>Global.asax</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202008021628489_InitialCreate.cs" />
+    <Compile Include="Migrations\202008021628489_InitialCreate.Designer.cs">
+      <DependentUpon>202008021628489_InitialCreate.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202008030416414_Agrego_Columna.cs" />
+    <Compile Include="Migrations\202008030416414_Agrego_Columna.Designer.cs">
+      <DependentUpon>202008030416414_Agrego_Columna.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202008142336246_AgregoNYA.cs" />
+    <Compile Include="Migrations\202008142336246_AgregoNYA.Designer.cs">
+      <DependentUpon>202008142336246_AgregoNYA.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\Configuration.cs" />
+    <Compile Include="Models\AccountViewModels.cs" />
+    <Compile Include="Models\Adicionales.cs">
+      <DependentUpon>CarritoBD.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\CarritoBD.Context.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>CarritoBD.Context.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\CarritoBD.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>CarritoBD.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\CarritoBD.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>CarritoBD.edmx</DependentUpon>
+    </Compile>
+    <Compile Include="Models\CarritoItem.cs" />
+    <Compile Include="Models\Categorias.cs">
+      <DependentUpon>CarritoBD.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Comidas.cs">
+      <DependentUpon>CarritoBD.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Email.cs" />
+    <Compile Include="Models\Guarniciones.cs">
+      <DependentUpon>CarritoBD.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\IdentityModels.cs" />
+    <Compile Include="Models\Ingredientes.cs">
+      <DependentUpon>CarritoBD.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\ListaVenta.cs">
+      <DependentUpon>CarritoBD.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\ManageViewModels.cs" />
+    <Compile Include="Models\Salsas.cs">
+      <DependentUpon>CarritoBD.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Usuario.cs" />
+    <Compile Include="Models\Ventas.cs">
+      <DependentUpon>CarritoBD.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Startup.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Content\bootstrap-theme.css" />
+    <Content Include="Content\bootstrap-theme.min.css" />
+    <Content Include="Content\bootstrap.css" />
+    <Content Include="Content\bootstrap.min.css" />
+    <Content Include="Content\jquery-ui.css" />
+    <Content Include="Content\main.css" />
+    <Content Include="Content\normalize.css" />
+    <Content Include="Content\picto-foundry-food.css" />
+    <Content Include="Content\star-rating.css" />
+    <Content Include="Content\star-rating.min.css" />
+    <Content Include="Content\style-portfolio.css" />
+    <Content Include="favicon.ico" />
+    <Content Include="fonts\fontawesome-webfont.svg" />
+    <Content Include="fonts\glyphicons-halflings-regular.svg" />
+    <Content Include="Global.asax" />
+    <Content Include="Content\Site.css" />
+    <Content Include="images\13238999_278296722509243_3323743460678766675_n.jpg" />
+    <Content Include="images\arroz.jpg" />
+    <Content Include="images\bagel.jpg" />
+    <Content Include="images\bebidas.jpg" />
+    <Content Include="images\beer.jpg" />
+    <Content Include="images\beer_spec.jpg" />
+    <Content Include="images\bifechorizo.jpg" />
+    <Content Include="images\Bondiola.jpg" />
+    <Content Include="images\bread.jpg" />
+    <Content Include="images\bread1.jpg" />
+    <Content Include="images\bread2.jpg" />
+    <Content Include="images\breakfast.jpg" />
+    <Content Include="images\Canelones.jpg" />
+    <Content Include="images\caprese.jpeg" />
+    <Content Include="images\Capresse.jpg" />
+    <Content Include="images\casuela.jpg" />
+    <Content Include="images\cerveza.jpg" />
+    <Content Include="images\Champignones.jpg" />
+    <Content Include="images\Chinchulines.jpg" />
+    <Content Include="images\choripan.jpg" />
+    <Content Include="images\Choripan2.jpg" />
+    <Content Include="images\comidas\asado.jpg" />
+    <Content Include="images\comidas\blanco.jpg" />
+    <Content Include="images\comidas\bondiolaBraseadaCiruela.jpg" />
+    <Content Include="images\comidas\bondiolaCerdo.jpg" />
+    <Content Include="images\comidas\budinDePan.jpg" />
+    <Content Include="images\comidas\cervezaSalta.jpg" />
+    <Content Include="images\comidas\chinchulines.jpg" />
+    <Content Include="images\comidas\choripan.jpg" />
+    <Content Include="images\comidas\chorizo.jpg" />
+    <Content Include="images\comidas\costillitaCerdoRiojana.jpg" />
+    <Content Include="images\comidas\empanadaJQ.jpg" />
+    <Content Include="images\comidas\empanadaLosSaltenos.jpg" />
+    <Content Include="images\comidas\empanadaPollo.jpg" />
+    <Content Include="images\comidas\ensalada.jpg" />
+    <Content Include="images\comidas\ensaladaCapresse.jpg" />
+    <Content Include="images\comidas\ensaladaFrutas.jpg" />
+    <Content Include="images\comidas\faina.jpg" />
+    <Content Include="images\comidas\fideosNoquisSpagheti.jpg" />
+    <Content Include="images\comidas\fileteMerluzaRomana.jpg" />
+    <Content Include="images\comidas\flanCasero.jpg" />
+    <Content Include="images\comidas\hamburguesaBienPolenta.jpg" />
+    <Content Include="images\comidas\hamburguesaClasica.jpg" />
+    <Content Include="images\comidas\hamburguesaElManioso.jpg" />
+    <Content Include="images\comidas\hamburguesaLaLinda.jpg" />
+    <Content Include="images\comidas\lechonParrilla.jpg" />
+    <Content Include="images\comidas\matambritoCerdoPizza.jpg" />
+    <Content Include="images\comidas\milanesaPollo.jpg" />
+    <Content Include="images\comidas\milanesaPolloGauchoRejillas.jpg" />
+    <Content Include="images\comidas\milanesaTernera.jpg" />
+    <Content Include="images\comidas\milanesaTerneraFritas.jpg" />
+    <Content Include="images\comidas\milanesaTerneraNapolitanaFritas.jpg" />
+    <Content Include="images\comidas\mollejas.jpg" />
+    <Content Include="images\comidas\morcilla.jpg" />
+    <Content Include="images\comidas\morcipan.jpg" />
+    <Content Include="images\comidas\omeletteMixto.jpg" />
+    <Content Include="images\comidas\pamplonaCerdo.jpg" />
+    <Content Include="images\comidas\panquequeDulceLeche.jpg" />
+    <Content Include="images\comidas\papasFritas.jpg" />
+    <Content Include="images\comidas\papasFritasProvenzal.jpg" />
+    <Content Include="images\comidas\parrillaP2.jpg" />
+    <Content Include="images\comidas\pizzaJamonMorron.jpg" />
+    <Content Include="images\comidas\pizzaNapolitana.jpg" />
+    <Content Include="images\comidas\pollo12.jpg" />
+    <Content Include="images\comidas\pollo14.jpg" />
+    <Content Include="images\comidas\polloAjillo.jpg" />
+    <Content Include="images\comidas\polloChampignon.jpg" />
+    <Content Include="images\comidas\polloSpiedoFritaEnsalada.jpg" />
+    <Content Include="images\comidas\polloVerdeo.jpg" />
+    <Content Include="images\comidas\promo2.jpg" />
+    <Content Include="images\comidas\promo4.jpg" />
+    <Content Include="images\comidas\provoletaOregano.jpg" />
+    <Content Include="images\comidas\salmonRosadpRoquefortParisienne.jpg" />
+    <Content Include="images\comidas\sandwichBondiola.jpg" />
+    <Content Include="images\comidas\sandwichMilanesa.jpg" />
+    <Content Include="images\comidas\sandwichVacio.jpg" />
+    <Content Include="images\comidas\sorrentinoLasagnaCanelones.jpg" />
+    <Content Include="images\comidas\supremaPolloFritas.jpg" />
+    <Content Include="images\comidas\supremaPolloMariland.jpg" />
+    <Content Include="images\comidas\tortillaEspaniola.jpg" />
+    <Content Include="images\comidas\tortillaPapas.jpg" />
+    <Content Include="images\comidas\vacio.jpg" />
+    <Content Include="images\comidas\vinoCafayate.jpg" />
+    <Content Include="images\comidas\vinoCafayateTardia.jpg" />
+    <Content Include="images\comidas\vinoCallia.jpg" />
+    <Content Include="images\comidas\vinoDonValentin.jpg" />
+    <Content Include="images\copa.jpg" />
+    <Content Include="images\corn.jpg" />
+    <Content Include="images\Costillas.jpg" />
+    <Content Include="images\desayuno.jpg" />
+    <Content Include="images\empanadas.jpg" />
+    <Content Include="images\EmpJYQ.jpg" />
+    <Content Include="images\EmpPollo.jpg" />
+    <Content Include="images\ensalada1.jpg" />
+    <Content Include="images\EnsTomZana.jpg" />
+    <Content Include="images\entrada.jpg" />
+    <Content Include="images\featured.jpg" />
+    <Content Include="images\fideos.jpg" />
+    <Content Include="images\Flan.jpg" />
+    <Content Include="images\food_icon01.jpg" />
+    <Content Include="images\food_icon02.jpg" />
+    <Content Include="images\food_icon03.jpg" />
+    <Content Include="images\food_icon04.jpg" />
+    <Content Include="images\food_icon05.jpg" />
+    <Content Include="images\food_icon06.jpg" />
+    <Content Include="images\food_icon07.jpg" />
+    <Content Include="images\food_icon08.jpg" />
+    <Content Include="images\frente.jpg" />
+    <Content Include="images\frente2.jpg" />
+    <Content Include="images\frente3.jpg" />
+    <Content Include="images\FrenteNuevo.jpg" />
+    <Content Include="images\FrenteNuevo2.jpg" />
+    <Content Include="images\frentep.jpg" />
+    <Content Include="images\Fritas.jpg" />
+    <Content Include="images\FritasProv.jpg" />
+    <Content Include="images\hamburguesa.jpg" />
+    <Content Include="images\humita.jpg" />
+    <Content Include="images\kabob.jpg" />
+    <Content Include="images\LaNaturista.jpg" />
+    <Content Include="images\limes.jpg" />
+    <Content Include="images\locro.jpg" />
+    <Content Include="images\lomochamp.jpg" />
+    <Content Include="images\LomoMostaza.jpg" />
+    <Content Include="images\matambre.jpg" />
+    <Content Include="images\Matambre2.jpg" />
+    <Content Include="images\Merced.jpg" />
+    <Content Include="images\Mila.jpg" />
+    <Content Include="images\MilaCaballo.jpg" />
+    <Content Include="images\milaconfritas.jpg" />
+    <Content Include="images\milanapolitana.jpg" />
+    <Content Include="images\milasuiza.jpg" />
+    <Content Include="images\Mixto.jpg" />
+    <Content Include="images\Morcipan.jpg" />
+    <Content Include="images\napoconfritas.jpg" />
+    <Content Include="images\Napolitana.jpg" />
+    <Content Include="images\NapoRejilla.jpg" />
+    <Content Include="images\Omelete.jpg" />
+    <Content Include="images\pamplona.jpg" />
+    <Content Include="images\Pamplona2.jpg" />
+    <Content Include="images\panqueque.jpg" />
+    <Content Include="images\Panqueques.jpg" />
+    <Content Include="images\papasfritas.jpg" />
+    <Content Include="images\parrilla.jpg" />
+    <Content Include="images\parrillada.jpg" />
+    <Content Include="images\Parrillada2.jpg" />
+    <Content Include="images\pizzaemp.jpg" />
+    <Content Include="images\pizzamuzza.jpg" />
+    <Content Include="images\pollo.jpg" />
+    <Content Include="images\polloalaparrilla.jpg" />
+    <Content Include="images\PolloParrilla.jpg" />
+    <Content Include="images\pollospiedo.jpg" />
+    <Content Include="images\postres.jpg" />
+    <Content Include="images\pricing.jpg" />
+    <Content Include="images\promo.jpg" />
+    <Content Include="images\provoleta.jpg" />
+    <Content Include="images\Provoleta2.jpg" />
+    <Content Include="images\rabas.jpg" />
+    <Content Include="images\radish.jpg" />
+    <Content Include="images\ravioles.jpg" />
+    <Content Include="images\reservation-seat.jpg" />
+    <Content Include="images\Rusa.jpg" />
+    <Content Include="images\RusaProvo.jpg" />
+    <Content Include="images\Salmon.jpg" />
+    <Content Include="images\salmonrosado.jpg" />
+    <Content Include="images\salsas.jpg" />
+    <Content Include="images\Salta.jpg" />
+    <Content Include="images\sandbondiola.jpg" />
+    <Content Include="images\SandMila.jpg" />
+    <Content Include="images\seeds.jpg" />
+    <Content Include="images\slider1.jpg" />
+    <Content Include="images\slider2.jpg" />
+    <Content Include="images\slider3.JPG" />
+    <Content Include="images\Sorrentinos.jpg" />
+    <Content Include="images\Sorrentinos2.jpg" />
+    <Content Include="images\star-empty.svg" />
+    <Content Include="images\star-filled.svg" />
+    <Content Include="images\star-half.svg" />
+    <Content Include="images\steak.jpg" />
+    <Content Include="images\tamales.jpg" />
+    <Content Include="images\torta1.jpg" />
+    <Content Include="images\torta2.jpg" />
+    <Content Include="images\tortas.jpg" />
+    <Content Include="images\Vacio.jpg" />
+    <Content Include="images\vinos.jpg" />
+    <Content Include="images\vinos2.jpg" />
+    <Content Include="images\Ñoquis.jpg" />
+    <Content Include="Models\CarritoBD.Context.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>CarritoBD.edmx</DependentUpon>
+      <LastGenOutput>CarritoBD.Context.cs</LastGenOutput>
+    </Content>
+    <Content Include="Models\CarritoBD.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>CarritoBD.edmx</DependentUpon>
+      <LastGenOutput>CarritoBD.cs</LastGenOutput>
+    </Content>
+    <Content Include="Scripts\bootstrap.js" />
+    <Content Include="Scripts\bootstrap.min.js" />
+    <EntityDeploy Include="Models\CarritoBD.edmx">
+      <Generator>EntityModelCodeGenerator</Generator>
+      <LastGenOutput>CarritoBD.Designer.cs</LastGenOutput>
+    </EntityDeploy>
+    <Content Include="Models\CarritoBD.edmx.diagram">
+      <DependentUpon>CarritoBD.edmx</DependentUpon>
+    </Content>
+    <Content Include="fonts\fontawesome-webfont.eot" />
+    <Content Include="fonts\fontawesome-webfont.ttf" />
+    <Content Include="fonts\fontawesome-webfont.woff" />
+    <Content Include="fonts\fontawesome-webfont.woff2" />
+    <Content Include="fonts\FontAwesome.otf" />
+    <None Include="Scripts\jquery-3.4.1.intellisense.js" />
+    <Content Include="Scripts\Comida\Comida.js" />
+    <Content Include="Scripts\jquery-3.4.1.js" />
+    <Content Include="Scripts\jquery-3.4.1.min.js" />
+    <Content Include="Scripts\jquery-3.4.1.slim.js" />
+    <Content Include="Scripts\jquery-3.4.1.slim.min.js" />
+    <None Include="Scripts\jquery.validate-vsdoc.js" />
+    <Content Include="Scripts\jquery.validate.js" />
+    <Content Include="Scripts\jquery.validate.min.js" />
+    <Content Include="Scripts\jquery.validate.unobtrusive.js" />
+    <Content Include="Scripts\jquery.validate.unobtrusive.min.js" />
+    <Content Include="Scripts\jquerysession.js" />
+    <Content Include="Scripts\modernizr-2.8.3.js" />
+    <Content Include="Web.config" />
+    <Content Include="Web.Debug.config">
+      <DependentUpon>Web.config</DependentUpon>
+    </Content>
+    <Content Include="Web.Release.config">
+      <DependentUpon>Web.config</DependentUpon>
+    </Content>
+    <Content Include="Views\Web.config" />
+    <Content Include="Views\_ViewStart.cshtml" />
+    <Content Include="Views\Shared\Error.cshtml" />
+    <Content Include="Views\Shared\_Layout.cshtml" />
+    <Content Include="Views\Home\Index.cshtml" />
+    <Content Include="Views\Account\_ExternalLoginsListPartial.cshtml" />
+    <Content Include="Views\Account\ConfirmEmail.cshtml" />
+    <Content Include="Views\Account\ExternalLoginConfirmation.cshtml" />
+    <Content Include="Views\Account\ExternalLoginFailure.cshtml" />
+    <Content Include="Views\Account\ForgotPassword.cshtml" />
+    <Content Include="Views\Account\ForgotPasswordConfirmation.cshtml" />
+    <Content Include="Views\Account\Login.cshtml" />
+    <Content Include="Views\Account\Register.cshtml" />
+    <Content Include="Views\Account\ResetPassword.cshtml" />
+    <Content Include="Views\Account\ResetPasswordConfirmation.cshtml" />
+    <Content Include="Views\Account\SendCode.cshtml" />
+    <Content Include="Views\Account\VerifyCode.cshtml" />
+    <Content Include="Views\Manage\AddPhoneNumber.cshtml" />
+    <Content Include="Views\Manage\ChangePassword.cshtml" />
+    <Content Include="Views\Manage\Index.cshtml" />
+    <Content Include="Views\Manage\ManageLogins.cshtml" />
+    <Content Include="Views\Manage\SetPassword.cshtml" />
+    <Content Include="Views\Manage\VerifyPhoneNumber.cshtml" />
+    <Content Include="Views\Shared\Lockout.cshtml" />
+    <Content Include="Views\Shared\_LoginPartial.cshtml" />
+    <Content Include="Views\Comida\Index.cshtml" />
+    <Content Include="Views\Comida\VerComida.cshtml" />
+    <Content Include="Views\Comida\CargaCarrito.cshtml" />
+    <Content Include="Views\Comida\FinalizarCompra.cshtml" />
+    <Content Include="Views\Comida\Pagar.cshtml" />
+    <Content Include="Views\Comida\ABM.cshtml" />
+    <Content Include="Views\Comida\VerEdit.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="App_Data\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="fonts\glyphicons-halflings-regular.woff2" />
+    <Content Include="fonts\glyphicons-halflings-regular.woff" />
+    <Content Include="fonts\glyphicons-halflings-regular.ttf" />
+    <Content Include="fonts\glyphicons-halflings-regular.eot" />
+    <Content Include="Content\bootstrap.min.css.map" />
+    <Content Include="Content\bootstrap.css.map" />
+    <Content Include="Content\bootstrap-theme.min.css.map" />
+    <Content Include="Content\bootstrap-theme.css.map" />
+    <None Include="packages.config" />
+    <Content Include="Scripts\jquery-3.4.1.slim.min.map" />
+    <Content Include="Scripts\jquery-3.4.1.min.map" />
+  </ItemGroup>
+  <ItemGroup>
+    <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Migrations\202008021628489_InitialCreate.resx">
+      <DependentUpon>202008021628489_InitialCreate.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202008030416414_Agrego_Columna.resx">
+      <DependentUpon>202008030416414_Agrego_Columna.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202008142336246_AgregoNYA.resx">
+      <DependentUpon>202008142336246_AgregoNYA.cs</DependentUpon>
+    </EmbeddedResource>
+  </ItemGroup>
+  <PropertyGroup>
+    <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
+    <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
+  </PropertyGroup>
+  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+  <Import Project="$(VSToolsPath)\WebApplications\Microsoft.WebApplication.targets" Condition="'$(VSToolsPath)' != ''" />
+  <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v10.0\WebApplications\Microsoft.WebApplication.targets" Condition="false" />
+  <Target Name="MvcBuildViews" AfterTargets="AfterBuild" Condition="'$(MvcBuildViews)'=='true'">
+    <AspNetCompiler VirtualPath="temp" PhysicalPath="$(WebProjectOutputDir)" />
+  </Target>
+  <ProjectExtensions>
+    <VisualStudio>
+      <FlavorProperties GUID="{349c5851-65df-11da-9384-00065b846f21}">
+        <WebProjectProperties>
+          <UseIIS>True</UseIIS>
+          <AutoAssignPort>True</AutoAssignPort>
+          <DevelopmentServerPort>51065</DevelopmentServerPort>
+          <DevelopmentServerVPath>/</DevelopmentServerVPath>
+          <IISUrl>https://localhost:44355/</IISUrl>
+          <NTLMAuthentication>False</NTLMAuthentication>
+          <UseCustomServer>False</UseCustomServer>
+          <CustomServerUrl>
+          </CustomServerUrl>
+          <SaveServerSettingsInUserFile>False</SaveServerSettingsInUserFile>
+        </WebProjectProperties>
+      </FlavorProperties>
+    </VisualStudio>
+  </ProjectExtensions>
+  <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
+    <PropertyGroup>
+      <ErrorText>Este proyecto hace referencia a los paquetes NuGet que faltan en este equipo. Use la restauración de paquetes NuGet para descargarlos. Para obtener más información, consulte http://go.microsoft.com/fwlink/?LinkID=322105. El archivo que falta es {0}.</ErrorText>
+    </PropertyGroup>
+    <Error Condition="!Exists('packages\NUnit.3.10.1\build\NUnit.props')" Text="$([System.String]::Format('$(ErrorText)', 'packages\NUnit.3.10.1\build\NUnit.props'))" />
+    <Error Condition="!Exists('packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.2.0.1\build\net46\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.props')" Text="$([System.String]::Format('$(ErrorText)', 'packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.2.0.1\build\net46\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.props'))" />
+  </Target>
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it.
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target> -->
+</Project>

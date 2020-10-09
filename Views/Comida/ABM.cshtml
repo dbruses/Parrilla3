@@ -1,0 +1,187 @@
+﻿
+@{
+    ViewBag.Title = "ABM";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@model IEnumerable<Parrilla3.Models.Comidas>
+<h2>ABM</h2>
+@if (Model != null)
+{
+    List<Parrilla3.Models.Comidas> comidas = Model.OrderBy(order => order.categoria).ThenBy(order => order.nombre).ToList();
+    <div class="container">
+        <div class="col-xs-12 col-md-12 col-lg-12">
+            <div>
+                <h3 class="section-name ">
+                    <span itemprop="servesCuisine">Comidas</span>
+                </h3>
+            </div>
+            <div class="col-xs-12 col-md-12 col-lg-12">
+                <div>
+                    <label>Porcentaje Aumento: </label>
+                    <input type="text" id="porcentaje" class="form-control" value="0,00" min="0" max="100" onblur="verificaNro('porcentaje');" />
+                    <button id="btnPorcentaje" type="button" class="btn btn-primary" onclick="aumento();">Aplicar</button>
+                </div>
+                <br />
+            </div>
+            <div class="col-xs-12 col-md-12 col-lg-12">
+                <table class="table table-bordered">
+                    <thead>
+                        <tr>
+                            <th>
+                                Acción
+                            </th>
+                            <th>
+                                Comida
+                            </th>
+                            <th>
+                                Precio
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (Parrilla3.Models.Comidas com in comidas)
+                        {
+                            <tr>
+                                <td>
+                                    <a href="#editModal" class="btnEdit btn-link btn-info" data-toggle="modal" data-id="@com.idComida"><i class="fas fa-edit color_add" title="Editar"></i></a>
+                                </td>
+                                <td>
+                                    @com.nombre
+                                </td>
+                                <td align="right">
+                                    @String.Format("{0:C}", com.precio)
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <div id="editModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true" data-keyboard="false" data-backdrop="static">
+        <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">×</button>
+                </div>
+                <div class="modal-body">
+                    <div id="modal-content">
+                        Cargando ...
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+}
+
+@section Scripts {
+    <script type="text/javascript">
+        $(".btnEdit").click(function (eve) {
+            //alert("btnComida");
+            $("#modal-content").load("/Comida/VerEdit/" + $(this).data("id"));
+        });
+
+        function aumento() {
+            let num = document.getElementById("porcentaje").value;
+            if ((num >= 0) && (num <= 100)) {
+                $.ajax({
+                    type: "POST",
+                    url: '@Url.Action("Aumento","Comida")',
+                    contentType: "application/json; charset=utf-8",
+                    dataType: "json",
+                    data: JSON.stringify({
+                        porcentaje: document.getElementById("porcentaje").value
+                    }),
+                    success: function (result) {
+                        alert(result);
+                        location.href = '@Url.Action("Index", "Comida")';
+                    },
+                    async: true,
+                    error: function (xhr, status, p3, p4) {
+                        alert("Error");
+                    }
+                });
+            }
+            else {
+                alert("Debe ingresar un valor entre 0 y 100");
+                document.getElementById("porcentaje").value = 0;
+            }
+        }
+
+        function cancelaGraba() {
+            $.ajax({
+                type: "POST",
+                url: '@Url.Action("CancelaGraba", "Comida")',
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                data: JSON.stringify({
+                }),
+                success: function (result) {
+                    alert(result);
+                    location.href = '@Url.Action("ABM", "Comida")';
+                },
+                async: true,
+                error: function (xhr, status, p3, p4) {
+                    alert("Error");
+                }
+            });
+        }
+
+        function guardar() {
+            let activo = $("#activo").prop("checked");
+            let salsa = $("#salsa").prop("checked");
+            let aderezo = $("#aderezo").prop("checked");
+            let guarnicion = $("#guarnicion").prop("checked");
+
+            $.ajax({
+                type: "POST",
+                url: '@Url.Action("GrabaProd", "Comida")',
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                data: JSON.stringify({
+                    id: document.getElementById("idComida").value,
+                    nombre: document.getElementById("nombre").value,
+                    descripcion: document.getElementById("descripcion").value,
+                    categoria: document.getElementById("categoria").value,
+                    precio: document.getElementById("precio").value,
+                    activo: activo,
+                    llevaSalsa: salsa,
+                    llevaAderezo: aderezo,
+                    llevaGuarnicion: guarnicion,
+                    cantIngredientes: document.getElementById("cantIngredientes").value
+                }),
+                success: function (result) {
+                    alert(result);
+                    location.href = '@Url.Action("ABM", "Comida")';
+                },
+                async: true,
+                error: function (xhr, status, p3, p4) {
+                    alert("Error");
+                }
+            });
+        }
+
+        function verificaNro(input) {
+            let num = document.getElementById(input).value;
+            let regex;
+            if (input != 'cantIngredientes') {
+                regex = new RegExp('^-?[0-9][0-9,\.]+$');
+            }
+            else {
+                regex = new RegExp('^[0-9]+$');
+                if ((num.indexOf(".") != -1) || (num.indexOf(",") != -1)) {
+                    alert("Solo debe ingresar números enteros.");
+                    document.getElementById(input).value = 0;
+                    return;
+                }
+            }
+            let ok = regex.exec(num);
+
+            if (ok == null) {
+                document.getElementById(input).value = 0;
+                alert("Por favor ingrese un número válido.");
+            }
+        }
+    </script>
+}

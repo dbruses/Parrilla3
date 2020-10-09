@@ -1,0 +1,417 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="ParrillaModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Adicionales">
+          <Key>
+            <PropertyRef Name="idAdicional" />
+          </Key>
+          <Property Name="idAdicional" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="nombre" Type="varchar" MaxLength="200" Nullable="false" />
+          <Property Name="precio" Type="decimal" Precision="16" Scale="2" Nullable="false" />
+          <Property Name="descripcion" Type="varchar" MaxLength="200" />
+          <Property Name="activo" Type="bit" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Categorias">
+          <Key>
+            <PropertyRef Name="idCategoria" />
+          </Key>
+          <Property Name="idCategoria" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="nombreCategoria" Type="varchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Comidas">
+          <Key>
+            <PropertyRef Name="idComida" />
+          </Key>
+          <Property Name="idComida" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="nombre" Type="varchar" MaxLength="200" Nullable="false" />
+          <Property Name="precio" Type="decimal" Precision="16" Scale="2" />
+          <Property Name="descripcion" Type="varchar" MaxLength="200" />
+          <Property Name="categoria" Type="int" Nullable="false" />
+          <Property Name="activo" Type="bit" />
+          <Property Name="foto" Type="varchar" MaxLength="150" />
+          <Property Name="llevaSalsa" Type="bit" />
+          <Property Name="llevaAderezo" Type="bit" />
+          <Property Name="llevaGuarnicion" Type="bit" />
+          <Property Name="cantIngredientes" Type="int" />
+        </EntityType>
+        <EntityType Name="Guarniciones">
+          <Key>
+            <PropertyRef Name="idGuarnicion" />
+          </Key>
+          <Property Name="idGuarnicion" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="nombre" Type="varchar" MaxLength="200" Nullable="false" />
+          <Property Name="precio" Type="decimal" Precision="16" Scale="2" Nullable="false" />
+          <Property Name="descripcion" Type="varchar" MaxLength="200" />
+          <Property Name="activo" Type="bit" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Ingredientes">
+          <Key>
+            <PropertyRef Name="idIngrediente" />
+          </Key>
+          <Property Name="idIngrediente" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="nombre" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="precio" Type="decimal" Precision="16" Scale="2" Nullable="false" />
+          <Property Name="descripcion" Type="varchar" MaxLength="200" />
+          <Property Name="activo" Type="bit" Nullable="false" />
+        </EntityType>
+        <EntityType Name="ListaVenta">
+          <Key>
+            <PropertyRef Name="idListaVenta" />
+          </Key>
+          <Property Name="idListaVenta" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ventaId" Type="int" Nullable="false" />
+          <Property Name="comidaId" Type="int" Nullable="false" />
+          <Property Name="cantidad" Type="int" Nullable="false" />
+          <Property Name="total" Type="float" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Salsas">
+          <Key>
+            <PropertyRef Name="idSalsa" />
+          </Key>
+          <Property Name="idSalsa" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="nombre" Type="varchar" MaxLength="200" Nullable="false" />
+          <Property Name="precio" Type="decimal" Precision="16" Scale="2" Nullable="false" />
+          <Property Name="descripcion" Type="varchar" MaxLength="200" />
+          <Property Name="activo" Type="bit" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Ventas">
+          <Key>
+            <PropertyRef Name="idVenta" />
+          </Key>
+          <Property Name="idVenta" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="fechaVenta" Type="datetime" Nullable="false" />
+          <Property Name="total" Type="float" Nullable="false" />
+          <Property Name="idUsuario" Type="nvarchar" MaxLength="128" Nullable="false" />
+        </EntityType>
+        <Association Name="FK_Comidas_Categorias">
+          <End Role="Categorias" Type="Self.Categorias" Multiplicity="1" />
+          <End Role="Comidas" Type="Self.Comidas" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Categorias">
+              <PropertyRef Name="idCategoria" />
+            </Principal>
+            <Dependent Role="Comidas">
+              <PropertyRef Name="categoria" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ListaVenta_Comidas">
+          <End Role="Comidas" Type="Self.Comidas" Multiplicity="1" />
+          <End Role="ListaVenta" Type="Self.ListaVenta" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Comidas">
+              <PropertyRef Name="idComida" />
+            </Principal>
+            <Dependent Role="ListaVenta">
+              <PropertyRef Name="comidaId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ListaVenta_Ventas">
+          <End Role="Ventas" Type="Self.Ventas" Multiplicity="1" />
+          <End Role="ListaVenta" Type="Self.ListaVenta" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Ventas">
+              <PropertyRef Name="idVenta" />
+            </Principal>
+            <Dependent Role="ListaVenta">
+              <PropertyRef Name="ventaId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="ParrillaModelStoreContainer">
+          <EntitySet Name="Adicionales" EntityType="Self.Adicionales" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Categorias" EntityType="Self.Categorias" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Comidas" EntityType="Self.Comidas" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Guarniciones" EntityType="Self.Guarniciones" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Ingredientes" EntityType="Self.Ingredientes" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ListaVenta" EntityType="Self.ListaVenta" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Salsas" EntityType="Self.Salsas" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Ventas" EntityType="Self.Ventas" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_Comidas_Categorias" Association="Self.FK_Comidas_Categorias">
+            <End Role="Categorias" EntitySet="Categorias" />
+            <End Role="Comidas" EntitySet="Comidas" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ListaVenta_Comidas" Association="Self.FK_ListaVenta_Comidas">
+            <End Role="Comidas" EntitySet="Comidas" />
+            <End Role="ListaVenta" EntitySet="ListaVenta" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ListaVenta_Ventas" Association="Self.FK_ListaVenta_Ventas">
+            <End Role="Ventas" EntitySet="Ventas" />
+            <End Role="ListaVenta" EntitySet="ListaVenta" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="ParrillaModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="Adicionales">
+          <Key>
+            <PropertyRef Name="idAdicional" />
+          </Key>
+          <Property Name="idAdicional" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="nombre" Type="String" MaxLength="200" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="precio" Type="Decimal" Precision="16" Scale="2" Nullable="false" />
+          <Property Name="descripcion" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="activo" Type="Boolean" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Categorias">
+          <Key>
+            <PropertyRef Name="idCategoria" />
+          </Key>
+          <Property Name="idCategoria" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="nombreCategoria" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="Comidas" Relationship="Self.FK_Comidas_Categorias" FromRole="Categorias" ToRole="Comidas" />
+        </EntityType>
+        <EntityType Name="Comidas">
+          <Key>
+            <PropertyRef Name="idComida" />
+          </Key>
+          <Property Name="idComida" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="nombre" Type="String" MaxLength="200" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="precio" Type="Decimal" Precision="16" Scale="2" />
+          <Property Name="descripcion" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="categoria" Type="Int32" Nullable="false" />
+          <Property Name="activo" Type="Boolean" />
+          <Property Name="foto" Type="String" MaxLength="150" FixedLength="false" Unicode="false" />
+          <Property Name="llevaSalsa" Type="Boolean" />
+          <Property Name="llevaAderezo" Type="Boolean" />
+          <Property Name="llevaGuarnicion" Type="Boolean" />
+          <Property Name="cantIngredientes" Type="Int32" />
+          <NavigationProperty Name="Categorias" Relationship="Self.FK_Comidas_Categorias" FromRole="Comidas" ToRole="Categorias" />
+          <NavigationProperty Name="ListaVenta" Relationship="Self.FK_ListaVenta_Comidas" FromRole="Comidas" ToRole="ListaVenta" />
+        </EntityType>
+        <EntityType Name="Guarniciones">
+          <Key>
+            <PropertyRef Name="idGuarnicion" />
+          </Key>
+          <Property Name="idGuarnicion" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="nombre" Type="String" MaxLength="200" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="precio" Type="Decimal" Precision="16" Scale="2" Nullable="false" />
+          <Property Name="descripcion" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="activo" Type="Boolean" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Ingredientes">
+          <Key>
+            <PropertyRef Name="idIngrediente" />
+          </Key>
+          <Property Name="idIngrediente" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="nombre" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="precio" Type="Decimal" Precision="16" Scale="2" Nullable="false" />
+          <Property Name="descripcion" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="activo" Type="Boolean" Nullable="false" />
+        </EntityType>
+        <EntityType Name="ListaVenta">
+          <Key>
+            <PropertyRef Name="idListaVenta" />
+          </Key>
+          <Property Name="idListaVenta" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ventaId" Type="Int32" Nullable="false" />
+          <Property Name="comidaId" Type="Int32" Nullable="false" />
+          <Property Name="cantidad" Type="Int32" Nullable="false" />
+          <Property Name="total" Type="Double" Nullable="false" />
+          <NavigationProperty Name="Comidas" Relationship="Self.FK_ListaVenta_Comidas" FromRole="ListaVenta" ToRole="Comidas" />
+          <NavigationProperty Name="Ventas" Relationship="Self.FK_ListaVenta_Ventas" FromRole="ListaVenta" ToRole="Ventas" />
+        </EntityType>
+        <EntityType Name="Salsas">
+          <Key>
+            <PropertyRef Name="idSalsa" />
+          </Key>
+          <Property Name="idSalsa" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="nombre" Type="String" MaxLength="200" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="precio" Type="Decimal" Precision="16" Scale="2" Nullable="false" />
+          <Property Name="descripcion" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="activo" Type="Boolean" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Ventas">
+          <Key>
+            <PropertyRef Name="idVenta" />
+          </Key>
+          <Property Name="idVenta" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="total" Type="Double" Nullable="false" />
+          <NavigationProperty Name="ListaVenta" Relationship="Self.FK_ListaVenta_Ventas" FromRole="Ventas" ToRole="ListaVenta" />
+          <Property Name="idUsuario" Type="String" Nullable="false" />
+          <Property Name="fechaVenta" Type="DateTime" Nullable="false" Precision="3" />
+        </EntityType>
+        <Association Name="FK_Comidas_Categorias">
+          <End Role="Categorias" Type="Self.Categorias" Multiplicity="1" />
+          <End Role="Comidas" Type="Self.Comidas" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Categorias">
+              <PropertyRef Name="idCategoria" />
+            </Principal>
+            <Dependent Role="Comidas">
+              <PropertyRef Name="categoria" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ListaVenta_Comidas">
+          <End Role="Comidas" Type="Self.Comidas" Multiplicity="1" />
+          <End Role="ListaVenta" Type="Self.ListaVenta" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Comidas">
+              <PropertyRef Name="idComida" />
+            </Principal>
+            <Dependent Role="ListaVenta">
+              <PropertyRef Name="comidaId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ListaVenta_Ventas">
+          <End Role="Ventas" Type="Self.Ventas" Multiplicity="1" />
+          <End Role="ListaVenta" Type="Self.ListaVenta" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Ventas">
+              <PropertyRef Name="idVenta" />
+            </Principal>
+            <Dependent Role="ListaVenta">
+              <PropertyRef Name="ventaId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="ParrillaEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Adicionales" EntityType="Self.Adicionales" />
+          <EntitySet Name="Categorias" EntityType="Self.Categorias" />
+          <EntitySet Name="Comidas" EntityType="Self.Comidas" />
+          <EntitySet Name="Guarniciones" EntityType="Self.Guarniciones" />
+          <EntitySet Name="Ingredientes" EntityType="Self.Ingredientes" />
+          <EntitySet Name="ListaVenta" EntityType="Self.ListaVenta" />
+          <EntitySet Name="Salsas" EntityType="Self.Salsas" />
+          <EntitySet Name="Ventas" EntityType="Self.Ventas" />
+          <AssociationSet Name="FK_Comidas_Categorias" Association="Self.FK_Comidas_Categorias">
+            <End Role="Categorias" EntitySet="Categorias" />
+            <End Role="Comidas" EntitySet="Comidas" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ListaVenta_Comidas" Association="Self.FK_ListaVenta_Comidas">
+            <End Role="Comidas" EntitySet="Comidas" />
+            <End Role="ListaVenta" EntitySet="ListaVenta" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ListaVenta_Ventas" Association="Self.FK_ListaVenta_Ventas">
+            <End Role="Ventas" EntitySet="Ventas" />
+            <End Role="ListaVenta" EntitySet="ListaVenta" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="ParrillaModelStoreContainer" CdmEntityContainer="ParrillaEntities">
+          <EntitySetMapping Name="Adicionales">
+            <EntityTypeMapping TypeName="ParrillaModel.Adicionales">
+              <MappingFragment StoreEntitySet="Adicionales">
+                <ScalarProperty Name="idAdicional" ColumnName="idAdicional" />
+                <ScalarProperty Name="nombre" ColumnName="nombre" />
+                <ScalarProperty Name="precio" ColumnName="precio" />
+                <ScalarProperty Name="descripcion" ColumnName="descripcion" />
+                <ScalarProperty Name="activo" ColumnName="activo" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Categorias">
+            <EntityTypeMapping TypeName="ParrillaModel.Categorias">
+              <MappingFragment StoreEntitySet="Categorias">
+                <ScalarProperty Name="idCategoria" ColumnName="idCategoria" />
+                <ScalarProperty Name="nombreCategoria" ColumnName="nombreCategoria" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Comidas">
+            <EntityTypeMapping TypeName="ParrillaModel.Comidas">
+              <MappingFragment StoreEntitySet="Comidas">
+                <ScalarProperty Name="idComida" ColumnName="idComida" />
+                <ScalarProperty Name="nombre" ColumnName="nombre" />
+                <ScalarProperty Name="precio" ColumnName="precio" />
+                <ScalarProperty Name="descripcion" ColumnName="descripcion" />
+                <ScalarProperty Name="categoria" ColumnName="categoria" />
+                <ScalarProperty Name="activo" ColumnName="activo" />
+                <ScalarProperty Name="foto" ColumnName="foto" />
+                <ScalarProperty Name="llevaSalsa" ColumnName="llevaSalsa" />
+                <ScalarProperty Name="llevaAderezo" ColumnName="llevaAderezo" />
+                <ScalarProperty Name="llevaGuarnicion" ColumnName="llevaGuarnicion" />
+                <ScalarProperty Name="cantIngredientes" ColumnName="cantIngredientes" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Guarniciones">
+            <EntityTypeMapping TypeName="ParrillaModel.Guarniciones">
+              <MappingFragment StoreEntitySet="Guarniciones">
+                <ScalarProperty Name="idGuarnicion" ColumnName="idGuarnicion" />
+                <ScalarProperty Name="nombre" ColumnName="nombre" />
+                <ScalarProperty Name="precio" ColumnName="precio" />
+                <ScalarProperty Name="descripcion" ColumnName="descripcion" />
+                <ScalarProperty Name="activo" ColumnName="activo" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Ingredientes">
+            <EntityTypeMapping TypeName="ParrillaModel.Ingredientes">
+              <MappingFragment StoreEntitySet="Ingredientes">
+                <ScalarProperty Name="idIngrediente" ColumnName="idIngrediente" />
+                <ScalarProperty Name="nombre" ColumnName="nombre" />
+                <ScalarProperty Name="precio" ColumnName="precio" />
+                <ScalarProperty Name="descripcion" ColumnName="descripcion" />
+                <ScalarProperty Name="activo" ColumnName="activo" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ListaVenta">
+            <EntityTypeMapping TypeName="ParrillaModel.ListaVenta">
+              <MappingFragment StoreEntitySet="ListaVenta">
+                <ScalarProperty Name="idListaVenta" ColumnName="idListaVenta" />
+                <ScalarProperty Name="ventaId" ColumnName="ventaId" />
+                <ScalarProperty Name="comidaId" ColumnName="comidaId" />
+                <ScalarProperty Name="cantidad" ColumnName="cantidad" />
+                <ScalarProperty Name="total" ColumnName="total" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Salsas">
+            <EntityTypeMapping TypeName="ParrillaModel.Salsas">
+              <MappingFragment StoreEntitySet="Salsas">
+                <ScalarProperty Name="idSalsa" ColumnName="idSalsa" />
+                <ScalarProperty Name="nombre" ColumnName="nombre" />
+                <ScalarProperty Name="precio" ColumnName="precio" />
+                <ScalarProperty Name="descripcion" ColumnName="descripcion" />
+                <ScalarProperty Name="activo" ColumnName="activo" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Ventas">
+            <EntityTypeMapping TypeName="ParrillaModel.Ventas">
+              <MappingFragment StoreEntitySet="Ventas">
+                <ScalarProperty Name="idUsuario" ColumnName="idUsuario" />
+                <ScalarProperty Name="fechaVenta" ColumnName="fechaVenta" />
+                <ScalarProperty Name="idVenta" ColumnName="idVenta" />
+                <ScalarProperty Name="total" ColumnName="total" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="Ninguno" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

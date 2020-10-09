@@ -1,0 +1,267 @@
+﻿
+@{
+    Layout = null;
+}
+@model IEnumerable<Parrilla3.Models.Comidas>
+@if (Model != null)
+{
+    <div>
+        <div class="row">
+            @foreach (var item in Model)
+            {
+                @*<div class="col-xs-12 col-sm-6 col-md-4 col-lg-4">*@
+                <div class="col-xs-12 col-md-12 col-lg-12">
+                    <div style="text-align:center;">
+                        @if (item.foto != null)
+                        {
+                            <img src="~/@item.foto" height="300" width="500" />
+                        }
+                        else
+                        {
+                            <img src="~/images/comidas/blanco.jpg" height="300" width="500" />
+                        }
+                    </div>
+                    <div>
+                        <table style="width: 100%">
+                            <tr>
+                                <td style="width: 75%">
+                                    <h4>@item.nombre</h4>
+                                </td>
+                                <td style="width: 25%; text-align:right">
+                                    <h4>@String.Format("{0:C}", item.precio)</h4>
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+                    <div class="col-xs-12 col-md-12 col-lg-12">
+                        <p>@item.descripcion</p>
+                    </div>
+                    <br />
+                    <div>
+                        <label>Cantidad: </label>
+                        <input type="number" id="cantidad" class="numbers" value="1" min="1" max="20" />
+                        &nbsp;&nbsp;
+                        <a href="#" onclick="AgregaCarrito();" class="btncargaCarrito btn-link btn-info"><i class="fas fa-plus-circle color_add" title="Agregar al pedido." style="cursor: pointer;"></i></a>
+                    </div>
+                    <!-- ENSALADAS -->
+                    <div>
+                        @if ((item.cantIngredientes != null) && (item.cantIngredientes > 0))
+                        {
+                            int i = 0;
+                            List<Parrilla3.Models.Ingredientes> ingredientes = (List<Parrilla3.Models.Ingredientes>)Session["ingredientes"];
+                            foreach (var ing in ingredientes)
+                            {
+                                if (ing.activo)
+                                {
+                                    <div class="col-xs-3 col-md-3 col-lg-3">
+                                        <input type="checkbox" id="@ing.idIngrediente" value="@ing.nombre" onclick="cuentaIngredientes(@item.cantIngredientes,@ing.idIngrediente);" />
+                                        <label for="@ing.idIngrediente">@ing.nombre</label>
+                                    </div>
+                                }
+                            }
+                        }
+                        @if (item.nombre == "Fideos - Spaghettis - Ñoquis")
+                        {
+                            <div class="col-xs-3 col-md-3 col-lg-3">
+                                <input type="radio" id="@item.idComida" name="Fideos" value="Fideos" />
+                                <label for="@item.idComida">Fideos</label>
+                            </div>
+                            <div class="col-xs-3 col-md-3 col-lg-3">
+                                <input type="radio" id="@item.idComida" name="Fideos" value="Spaghettis" />
+                                <label for="@item.idComida">Spaghettis</label>
+                            </div>
+                            <div class="col-xs-3 col-md-3 col-lg-3">
+                                <input type="radio" id="@item.idComida" name="Fideos" value="Ñoquis" />
+                                <label for="@item.idComida">Ñoquis</label>
+                            </div>
+                            <div class="col-xs-3 col-md-3 col-lg-3">
+                                &nbsp;&nbsp;
+                            </div>
+                            <div class="col-xs-12 col-md-12 col-lg-12">
+                                <label>Salsas</label>
+                            </div>
+                        }
+                        @if ((item.llevaSalsa != null) && ((bool)item.llevaSalsa))
+                        {
+                            int i = 0;
+                            List<Parrilla3.Models.Salsas> salsas = (List<Parrilla3.Models.Salsas>)Session["salsas"];
+                            foreach (var salsa in salsas)
+                            {
+                                if (salsa.activo)
+                                {
+                                    <div class="col-xs-3 col-md-3 col-lg-3">
+                                        <input type="checkbox" id="@salsa.idSalsa" value="@salsa.nombre" onclick="cuentaIngredientes(1,@salsa.idSalsa);" />
+                                        <label for="@salsa.idSalsa">@salsa.nombre</label>
+                                    </div>
+                                }
+                            }
+                        }
+                        @if ((item.nombre == "Cerveza Quilmes - Brahama porrón 500 ml") || (item.nombre == "Cerveza Quilmes - Brahama 1 L"))
+                        {
+                            <div class="col-xs-3 col-md-3 col-lg-3">
+                                <input type="radio" id="@item.idComida" name="Quilmes" value="Quilmes" />
+                                <label for="@item.idComida">Quilmes</label>
+                            </div>
+                            <div class="col-xs-3 col-md-3 col-lg-3">
+                                <input type="radio" id="@item.idComida" name="Quilmes" value="Brahama" />
+                                <label for="@item.idComida">Brahama</label>
+                            </div>
+                            <br />
+                        }
+                        @if (item.nombre == "Milanesa de ternera o pollo")
+                        {
+                            <div class="col-xs-3 col-md-3 col-lg-3">
+                                <input type="radio" id="@item.idComida" name="Milanesa" value="Ternera" />
+                                <label for="@item.idComida">Ternera</label>
+                            </div>
+                            <div class="col-xs-3 col-md-3 col-lg-3">
+                                <input type="radio" id="@item.idComida" name="Milanesa" value="Pollo" />
+                                <label for="@item.idComida">Pollo</label>
+                            </div>
+                            <br />
+                        }
+                        @if ((item.nombre == "Gaseosa línea Coca Cola 2.25 L") || (item.nombre == "Gaseosa línea Coca Cola 600 ml"))
+                        {
+                            <div class="col-xs-3 col-md-3 col-lg-3">
+                                <input type="radio" id="@item.idComida" name="Coca" value="Coca" />
+                                <label for="@item.idComida">Coca</label>
+                            </div>
+                            <div class="col-xs-3 col-md-3 col-lg-3">
+                                <input type="radio" id="@item.idComida" name="Coca" value="Fanta" />
+                                <label for="@item.idComida">Fanta</label>
+                            </div>
+                            <div class="col-xs-3 col-md-3 col-lg-3">
+                                <input type="radio" id="@item.idComida" name="Coca" value="Sprite" />
+                                <label for="@item.idComida">Sprite</label>
+                            </div>
+                            <div class="col-xs-3 col-md-3 col-lg-3">
+                                <input type="radio" id="@item.idComida" name="Coca" value="Coca Light" />
+                                <label for="@item.idComida">Coca Light</label>
+                            </div>
+                            <div class="col-xs-3 col-md-3 col-lg-3">
+                                <input type="radio" id="@item.idComida" name="Coca" value="Coca Zero" />
+                                <label for="@item.idComida">Coca Zero</label>
+                            </div>
+                            <div class="col-xs-3 col-md-3 col-lg-3">
+                                &nbsp;&nbsp;
+                            </div>
+                            <br />
+                        }
+                        @if ((item.nombre == "Agua saborizada 1.5 L") || (item.nombre == "Agua saborizda 500 ml"))
+                        {
+                            <div class="col-xs-3 col-md-3 col-lg-3">
+                                <input type="radio" id="@item.idComida" name="Saborizada" value="Naranja" />
+                                <label for="@item.idComida">Naranja</label>
+                            </div>
+                            <div class="col-xs-3 col-md-3 col-lg-3">
+                                <input type="radio" id="@item.idComida" name="Saborizada" value="Pomelo" />
+                                <label for="@item.idComida">Pomelo</label>
+                            </div>
+                            <div class="col-xs-3 col-md-3 col-lg-3">
+                                <input type="radio" id="@item.idComida" name="Saborizada" value="Manzana" />
+                                <label for="@item.idComida">Manzana</label>
+                            </div>
+                            <div class="col-xs-3 col-md-3 col-lg-3">
+                                &nbsp;&nbsp;
+                            </div>
+                            <br />
+                        }
+                        @if (item.nombre == "Agua mineral 500 ml")
+                        {
+                            <div class="col-xs-3 col-md-3 col-lg-3">
+                                <input type="radio" id="@item.idComida" name="Agua" value="Con Gas" />
+                                <label for="@item.idComida">Con Gas</label>
+                            </div>
+                            <div class="col-xs-3 col-md-3 col-lg-3">
+                                <input type="radio" id="@item.idComida" name="Agua" value="Sin Gas" />
+                                <label for="@item.idComida">Sin Gas</label>
+                            </div>
+                            <br />
+                        }
+                        @if (item.nombre == "Cerveza 1 L Salta - Heineken - Stella")
+                        {
+                            <div class="col-xs-3 col-md-3 col-lg-3">
+                                <input type="radio" id="@item.idComida" name="Cerveza" value="Salta Rubia" />
+                                <label for="@item.idComida">Salta Rubia</label>
+                            </div>
+                            <div class="col-xs-3 col-md-3 col-lg-3">
+                                <input type="radio" id="@item.idComida" name="Cerveza" value="Salta Negra" />
+                                <label for="@item.idComida">Salta Negra</label>
+                            </div>
+                            <div class="col-xs-3 col-md-3 col-lg-3">
+                                <input type="radio" id="@item.idComida" name="Cerveza" value="Heineken" />
+                                <label for="@item.idComida">Heineken</label>
+                            </div>
+                            <div class="col-xs-3 col-md-3 col-lg-3">
+                                <input type="radio" id="@item.idComida" name="Cerveza" value="Stella Artois" />
+                                <label for="@item.idComida">Stella Artois</label>
+                            </div>
+                            <br />
+                        }
+                        @if ((item.nombre == "Vino Callia 750 ml") || (item.nombre == "Vino Alaris 750 ml") || (item.nombre == "Vino Cafayate 750 ml") || (item.nombre == "Vino Don Valentin 750 ml") || (item.nombre == "Vino Alaris 3/8 90 ml"))
+                        {
+                            <div class="col-xs-3 col-md-3 col-lg-3">
+                                <input type="radio" id="@item.idComida" name="Vino" value="Tinto" />
+                                <label for="@item.idComida">Tinto</label>
+                            </div>
+                            <div class="col-xs-3 col-md-3 col-lg-3">
+                                <input type="radio" id="@item.idComida" name="Vino" value="Blanco" />
+                                <label for="@item.idComida">Blanco</label>
+                            </div>
+                            <br />
+                        }
+                    </div>
+                    <input type="hidden" id="idComida" value="@item.idComida" />
+                </div>
+            }
+        </div>
+    </div>
+}
+
+@section Scripts {
+    <script src="~/Scripts/Comida/Comida.js"></script>
+    <script>
+        //$(function () {
+        //    $("#send").click(function () {
+        //        alert("ENTROOOOOOOOOOOOOOOOOO");
+        //        var id = $("#idComida").val();
+        //        var cantidad = $("#cantidad").val();
+        //        updateResult(id, cantidad);
+        //        return false;
+        //    });
+        //});
+
+        //$(".numbers").keydown(function (e) {
+        //    alert("ENTROOOOOOOOOOOOOOOOOO");
+        //});
+
+        @*function envia() {
+                    alert("ENTROOOOOOOOOOOOOOOOOO");
+                    var id = $("#idComida").val();
+                    var cantidad = $("#cantidad").val();
+                    updateResult(id, cantidad);
+                    return false;
+        }
+
+        function updateResult(id, cantidad) {
+            var url = "@Url.Action("CargaCarrito", "Comida", new { id="param-id", cantidad = "param-cantidad" })";
+            alert(url);
+            url = url.replace("param-id", id)
+                     .replace("param-cantidad", cantidad);
+            $("#result").load(url);
+        }*@
+
+        $(".btncargaCarrito").click(function (eve) {
+            alert("btncargaCarrito1");
+            $("#modalCarrito-content").load("/Comida/MostrarCarrito/");
+        });
+
+        $('#press').click(function () {
+           var url = '@Url.Action("Index", "Home")';
+            var cantValue = $('#cantidad').val();
+            alert(cantValue);
+           window.location.href = url + '?id=' + textValue;
+        });
+
+    </script>
+}

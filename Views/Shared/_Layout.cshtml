@@ -1,0 +1,84 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Parrilla Los Salteños</title>
+    @Styles.Render("~/Content/css")
+    @Scripts.Render("~/bundles/modernizr")
+
+    <link rel="stylesheet" href="~/Content/normalize.css" />
+    <link rel="stylesheet" href="~/Content/main.css" media="screen" type="text/css" />
+    <link href='https://fonts.googleapis.com/css?family=Pacifico' rel='stylesheet' type='text/css' />
+    <link href='https://fonts.googleapis.com/css?family=Playball' rel='stylesheet' type='text/css' />
+    <link rel="stylesheet" href="~/Content/bootstrap.css" />
+    <link rel="stylesheet" href="~/Content/style-portfolio.css" />
+    <link rel="stylesheet" href="~/Content/picto-foundry-food.css" />
+    <link rel="stylesheet" href="~/Content/jquery-ui.css" />
+    <link href="~/Content/font-awesome.min.css" rel="stylesheet" />
+    <link href="~/Content/star-rating.css" rel="stylesheet" />
+    <script src="https://kit.fontawesome.com/62a0a05291.js" crossorigin="anonymous"></script>
+    @*<script src="~/Scripts/jquerysession.js"></script>*@
+    <style type="text/css">
+        .position-fixed {
+            width: 252px;
+            min-height: 120px;
+            text-align: center;
+            background-color: aquamarine;
+        }
+        .my-fixed-item {
+            position: fixed;
+            min-height: 120px;
+            text-align: center;
+            word-wrap: break-word;
+            width: 25%;
+            /*background-color: aquamarine;*/
+        }
+    </style>
+</head>
+<body>
+    <div class="navbar navbar-inverse navbar-fixed-top">
+        <div class="container">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                @Html.ActionLink("Parrilla Los Salteños", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
+            </div>
+            <div class="navbar-collapse collapse">
+                <ul class="nav navbar-nav">
+                    <li>@Html.ActionLink("Inicio", "Index", "Home")</li>
+                    <li>@Html.ActionLink("Pedido", "Index", "Comida")</li>
+
+                    @if (User.IsInRole("Administrador"))
+                    {
+                        @*<li>@Html.ActionLink("Administrar", "Index", "Home")</li>*@
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Administrar</a>
+                            <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                                <li>@Html.ActionLink("Comidas", "ABM", "Comida")</li>
+                            </ul>
+                        </li>
+                    }
+
+                </ul>
+                @Html.Partial("_LoginPartial")
+            </div>
+        </div>
+    </div>
+    <div class="container body-content">
+        @RenderBody()
+        <hr />
+        <footer>
+            <p>&copy; @DateTime.Now.Year - Parrilla Los Salteños</p>
+        </footer>
+    </div>
+
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/bootstrap")
+    @RenderSection("Scripts", required: false)
+</body>
+</html>

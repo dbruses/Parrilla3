@@ -1,0 +1,441 @@
+﻿@{
+    ViewBag.Title = "Home Page";
+}
+@Session["carrito"] = null;
+<div id="top" class="inicio background_content">
+    <div class="follow_container">
+        <div class="col-md-6 col-md-offset-3">
+            <h2 class="top-title">Los Salteños </h2>
+            <h2 class="white second-title">" Parrilla - Restó "</h2>
+            <hr />
+        </div>
+    </div>
+</div>
+@*============ About Us =============*@
+
+<section id="story" class="description_content">
+    <div class="text-content container">
+        <div class="col-md-6">
+            <h1>Acerca De</h1>
+            <div class="fa fa-cutlery fa-2x"></div>
+            <p class="desc-text">Hace años que nos encontramos en el barrio de Boedo, ofreciendo la mejor calidad en Parrilla, Platos Regionales Salteños, y muchos otros platos más. Y para compartir estos momentos contamos con cerveza SALTA (Negra y Rubia). Los ESPERAMOS.</p>
+        </div>
+        <div class="col-md-6">
+            <div class="img-section">
+                <img src="~/images/arroz.jpg" width="250" height="220" />
+                <img src="~/images/bifechorizo.jpg" width="250" height="220" />
+                <div class="img-section-space"></div>
+                <img src="~/images/casuela.jpg" width="250" height="220" />
+                <img src="~/images/parrilla.jpg" width="250" height="220" />
+            </div>
+        </div>
+    </div>
+</section>
+
+@*============ Promociones  =============*@
+<section id="promociones" class="description_content">
+    <div class="promo background_content">
+        <h1>Nuestras<span>Promociones</span></h1>
+    </div>
+    <div class="text-content container">
+        <div class="col-md-12">
+            <div class="img-section">
+                <img src="~/images/pollospiedo.jpg" width="310" height="220" />
+                <img src="~/images/Ñoquis.jpg" width="310" height="220" />
+                <img src="~/images/NapoRejilla.jpg" width="310" height="220" />
+            </div>
+        </div>
+    </div>
+</section>
+<br />
+
+@*============ Platos Especiales  =============*@
+<section id="platos" class="description_content">
+    <div class="platosespeciales background_content">
+        <h1>Nuestros Platos <span>Especiales</span></h1>
+    </div>
+    <div class="text-content container">
+        <div class="col-md-6">
+            <h1>Mire nuestros platos!</h1>
+            <div class="icon-chef-hat fa-2x"></div>
+            <p class="desc-text">Especialidad en carnes, pescados, mariscos, pastas caseras, minutas y pastelería de elaboración propia.</p>
+        </div>
+        <div class="col-md-6">
+            <ul class="image_box_story2">
+                <div id="carousel-example-generic" class="carousel slide" data-ride="carousel">
+                    <ol class="carousel-indicators">
+                        <li data-target="#carousel-example-generic" data-slide-to="0" class="active"></li>
+                        <li data-target="#carousel-example-generic" data-slide-to="1"></li>
+                        <li data-target="#carousel-example-generic" data-slide-to="2"></li>
+                        <li data-target="#carousel-example-generic" data-slide-to="3"></li>
+                        <li data-target="#carousel-example-generic" data-slide-to="4"></li>
+                        <li data-target="#carousel-example-generic" data-slide-to="5"></li>
+                        <li data-target="#carousel-example-generic" data-slide-to="6"></li>
+                        <li data-target="#carousel-example-generic" data-slide-to="7"></li>
+                        <li data-target="#carousel-example-generic" data-slide-to="8"></li>
+                        <li data-target="#carousel-example-generic" data-slide-to="9"></li>
+                    </ol>
+
+                    <div class="carousel-inner">
+                        <div class="item active">
+                            <img src="~/images/parrilla.jpg" alt="..." width="350" />
+                            <div class="carousel-caption">
+                            </div>
+                        </div>
+                        <div class="item">
+                            <img src="~/images/locro.jpg" alt="..." width="350" />
+                            <div class="carousel-caption">
+                            </div>
+                        </div>
+                        <div class="item">
+                            <img src="~/images/bifechorizo.jpg" alt="..." width="350" />
+                            <div class="carousel-caption">
+                            </div>
+                        </div>
+                        <div class="item">
+                            <img src="~/images/Napolitana.jpg" alt="..." width="350" />
+                            <div class="carousel-caption">
+                            </div>
+                        </div>
+                        <div class="item">
+                            <img src="~/images/Vacio.jpg" alt="..." width="350" />
+                            <div class="carousel-caption">
+                            </div>
+                        </div>
+                        <div class="item">
+                            <img src="~/images/Choripan2.jpg" alt="..." width="350" />
+                            <div class="carousel-caption">
+                            </div>
+                        </div>
+                        <div class="item">
+                            <img src="~/images/LomoMostaza.jpg" alt="..." width="350" />
+                            <div class="carousel-caption">
+                            </div>
+                        </div>
+                        <div class="item">
+                            <img src="~/images/EmpJYQ.jpg" alt="..." width="350" />
+                            <div class="carousel-caption">
+                            </div>
+                        </div>
+                        <div class="item">
+                            <img src="~/images/Merced.jpg" alt="..." width="350" />
+                            <div class="carousel-caption">
+                            </div>
+                        </div>
+                        <div class="item">
+                            <img src="~/images/PolloParrilla.jpg" alt="..." width="350" />
+                            <div class="carousel-caption">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </ul>
+        </div>
+    </div>
+</section>
+<br />
+
+@*============ Minutas  =============*@
+<section id="minutas" class="description_content">
+    <div class="minutas background_content">
+        <h1><span>Minutas</span></h1>
+    </div>
+    <div class="text-content container">
+        <div class="col-md-12">
+            <div class="img-section">
+                <img src="~/images/milaconfritas.jpg" width="250" height="220" />
+                <img src="~/images/napoconfritas.jpg" width="250" height="220" />
+                <img src="~/images/milasuiza.jpg" width="250" height="220" />
+                <img src="~/images/Omelete.jpg" width="250" height="220" />
+                <img src="~/images/Salmon.jpg" width="250" height="220" />
+                <img src="~/images/MilaCaballo.jpg" width="250" height="220" />
+                <img src="~/images/NapoRejilla.jpg" width="250" height="220" />
+                <img src="~/images/Napolitana.jpg" width="250" height="220" />
+            </div>
+        </div>
+    </div>
+</section>
+<br />
+
+@*============ Sandwiches Calientes  =============*@
+<section id="sanwiches" class="description_content">
+    <div class="sandwich background_content">
+        <h1><span>Sandwiches</span> Calientes</h1>
+    </div>
+    <div class="text-content container">
+        <div class="col-md-12">
+            <div class="img-section">
+                <img src="~/images/Choripan2.jpg" width="250" height="220" />
+                <img src="~/images/Morcipan.jpg" width="250" height="220" />
+                <img src="~/images/SandMila.jpg" width="250" height="220" />
+                <img src="~/images/Bondiola.jpg" width="250" height="220" />
+            </div>
+        </div>
+    </div>
+</section>
+<br />
+
+@*============ Pizzas y Empanadas  =============*@
+<section id="pizzas" class="description_content">
+    <div class="pizza background_content">
+        <h1>Pizzas y <span>Empanadas</span></h1>
+    </div>
+    <div class="text-content container">
+        <div class="col-md-6">
+            <h1>Sabrosas Pizzas y Empanadas</h1>
+            <div class="icon-pizza fa-2x"></div>
+        </div>
+        <div class="col-md-6">
+            <div class="img-section">
+                <img src="~/images/pizzaemp.jpg" width="250" height="220" />
+                <img src="~/images/empanadas.jpg" width="250" height="220" />
+                <img src="~/images/EmpJYQ.jpg" width="250" height="220" />
+                <img src="~/images/EmpPollo.jpg" width="250" height="220" />
+            </div>
+        </div>
+    </div>
+</section>
+<br />
+
+@*============ Entradas  =============*@
+<section id="entradas" class="description_content">
+    <div class="entrada background_content">
+        <h1><span>Entradas</span></h1>
+    </div>
+    <div class="text-content container">
+        <div class="col-md-6">
+            <h1>Para Tentarse</h1>
+        </div>
+        <div class="col-md-6">
+            <div class="img-section">
+                <img src="~/images/rabas.jpg" width="250" height="220" />
+                <img src="~/images/matambre.jpg" width="250" height="220" />
+                <img src="~/images/Matambre2.jpg" width="250" height="220" />
+                <img src="~/images/Provoleta2.jpg" width="250" height="220" />
+            </div>
+        </div>
+    </div>
+</section>
+<br />
+
+@*============ Ensaladas  =============*@
+<section id="ensaladas" class="description_content">
+    <div class="pricing background_content">
+        <h1><span>Ensaladas</span></h1>
+    </div>
+    <div class="text-content container">
+        <div class="col-md-6">
+            <h1>Muy Frescas</h1>
+            <div class="icon-tomato fa-2x"></div>
+        </div>
+        <div class="col-md-6">
+            <div class="img-section">
+                <img src="~/images/ensalada1.jpg" width="250" height="220" />
+                <img src="~/images/caprese.jpeg" width="250" height="220" />
+                <img src="~/images/Capresse.jpg" width="250" height="220" />
+                <img src="~/images/EnsTomZana.jpg" width="250" height="220" />
+            </div>
+        </div>
+    </div>
+</section>
+<br />
+
+@*============ Hamburguesas  =============*@
+<section id="hamburguesas" class="description_content">
+    <div class="featured background_content">
+        <h1><span>Hamburguesas</span></h1>
+    </div>
+    <div class="text-content container">
+        <div class="col-md-6">
+            <h1>Mmmmm...</h1>
+            <div class="icon-hamburger fa-2x"></div>
+        </div>
+        <div class="col-md-6">
+            <div class="img-section">
+                <img src="~/images/food_icon05.jpg" width="250" height="220" />
+                <img src="~/images/hamburguesa.jpg" width="250" height="220" />
+                <img src="~/images/LaNaturista.jpg" width="250" height="220" />
+                <img src="~/images/Merced.jpg" width="250" height="220" />
+            </div>
+        </div>
+    </div>
+</section>
+<br />
+
+@*============ Parrilla  =============*@
+<section id="parrilla" class="description_content">
+    <div class="parrilla background_content">
+        <h1><span>Parrilla</span></h1>
+    </div>
+    <div class="text-content container">
+        <div class="col-md-12">
+            <h1>Con La Mejor Carne</h1>
+            <div class="icon-steak fa-2x"></div>
+        </div>
+        <div class="col-md-12">
+            <div class="img-section">
+                <img src="~/images/Pamplona2.jpg" width="250" height="220" />
+                <img src="~/images/PolloParrilla.jpg" width="250" height="220" />
+                <img src="~/images/parrillada.jpg" width="250" height="220" />
+                <img src="~/images/provoleta.jpg" width="250" height="220" />
+                <img src="~/images/Costillas.jpg" width="250" height="220" />
+                <img src="~/images/Parrillada2.jpg" width="250" height="220" />
+                <img src="~/images/Vacio.jpg" width="250" height="220" />
+                <img src="~/images/Chinchulines.jpg" width="250" height="220" />
+            </div>
+        </div>
+    </div>
+</section>
+<br />
+
+@*============ Guarniciones  =============*@
+<section id="guarniciones" class="description_content">
+    <div class="guarnicion background_content">
+        <h1><span>Guarniciones</span></h1>
+    </div>
+    <div class="text-content container">
+        <div class="col-md-12">
+            <div class="img-section">
+                <img src="~/images/Mixto.jpg" width="250" height="220" />
+                <img src="~/images/Rusa.jpg" width="250" height="220" />
+                <img src="~/images/Omelete.jpg" width="250" height="220" />
+                <img src="~/images/FritasProv.jpg" width="250" height="220" />
+            </div>
+        </div>
+    </div>
+</section>
+<br />
+
+@*============ Pastas  =============*@
+<section id="pastas" class="description_content">
+    <div class="pastas background_content">
+        <h1><span>Pastas</span></h1>
+    </div>
+    <div class="text-content container">
+        <div class="col-md-12">
+            <h1>Deliciosas</h1>
+        </div>
+    </div>
+    <div class="text-content container">
+        <div class="col-md-12">
+            <div class="img-section">
+                <img src="~/images/fideos.jpg" width="250" height="220" />
+                <img src="~/images/ravioles.jpg" width="250" height="220" />
+                <img src="~/images/Sorrentinos2.jpg" width="250" height="220" />
+                <img src="~/images/Ñoquis.jpg" width="250" height="220" />
+            </div>
+        </div>
+    </div>
+</section>
+<br />
+
+@*============ Postres  =============*@
+<section id="postres" class="description_content">
+    <div class="postres background_content">
+        <h1><span>Postres</span></h1>
+    </div>
+    <div class="text-content container">
+        <div class="col-md-12">
+            <h1>Imposible No Probarlos ...</h1>
+            <div class="icon-pie fa-2x"></div>
+        </div>
+    </div>
+    <div class="text-content container">
+        <div class="col-md-12">
+            <div class="img-section">
+                <img src="~/images/tortas.jpg" width="250" height="220" />
+                <img src="~/images/torta1.jpg" width="250" height="220" />
+                <img src="~/images/torta2.jpg" width="250" height="220" />
+                <div class="img-section-space"></div>
+                <img src="~/images/copa.jpg" width="250" height="220" />
+                <img src="~/images/Flan.jpg" width="250" height="220" />
+                <img src="~/images/Panqueques.jpg" width="250" height="220" />
+            </div>
+        </div>
+    </div>
+</section>
+<br />
+
+@*============ Bebidas  =============*@
+<section id="bebidas" class="description_content">
+    <div class="bebidas background_content">
+        <h1><span>Bebidas</span></h1>
+    </div>
+    <div class="text-content container">
+        <div class="col-md-6">
+            <h1>Para compartir los mejores momentos</h1>
+            <div class="icon-beer fa-2x"></div>
+        </div>
+        <div class="col-md-6">
+            <div class="img-section">
+                <img src="~/images/bebidas.jpg" width="250" height="220" />
+                <img src="~/images/Salta.jpg" width="250" height="220" />
+            </div>
+        </div>
+    </div>
+</section>
+<br />
+
+@*============ Bebidas  =============*@
+<section id="vinos" class="description_content">
+    <div class="vinos background_content">
+        <h1><span>Vinos</span></h1>
+    </div>
+    <div class="text-content container">
+        <div class="col-md-6">
+            <h1>Para compartir los mejores momentos</h1>
+            <div class="icon-wine-bottle fa-2x"></div>
+        </div>
+        <div class="col-md-6">
+            <div class="img-section">
+                <img src="~/images/vinos2.jpg" width="250" height="220" />
+            </div>
+        </div>
+    </div>
+</section>
+<br />
+
+@*============ Social Section  =============*@
+
+<section class="social_connect" id="social">
+    <div class="text-content container">
+        <div class="col-md-6">
+            <span class="social_heading">SIGANOS</span>
+            <ul class="social_icons">
+                <li>
+                    <abbr title="Parrilla Resto Los Salteños"><a href="https://www.facebook.com/resto.lossaltenos?fref=ts" target="_blank"><i class="fa fa-facebook-square color_animation"></i></a></abbr>
+                </li>
+                <li>
+                    <abbr title="+ 54 11 5853 0973"><a href="https://wa.me/541158530973" target="_blank"><i class="fa fa-whatsapp color_animation"></i></a></abbr>
+                </li>
+                <li>
+                    <abbr title="pedidos@parrillalossalteños.com"><a href="mailto:pedidos@parrillalossalteños.com"><i class="fa fa-envelope-o color_animation"></i></a></abbr>
+                </li>
+                <li>
+                    <abbr title="resto.parrilla.los.saltenos"><a href="https://www.instagram.com/resto.parrilla.los.saltenos/" target="_blank"><i class="fa fa-instagram color_animation"></i></a></abbr>
+                </li>
+            </ul>
+        </div>
+        <div class="col-md-4">
+            <span class="social_heading">O LLAME</span>
+            <span class="social_info"><a class="color_animation" href="tel:011 4957-0049">011 4957-0049</a></span>
+        </div>
+        <div class="col-md-10">
+            <span class="social_heading">DELIVERY SIN CARGO</span>
+        </div>
+    </div>
+</section>
+
+<section id="contact">
+    <div class="map">
+        @*<iframe src="https://www.google.com/maps/d/embed?mid=1HQZytmSTWLaZX3rq1_vcYmJbdq4" width="100%" height="450" frameborder="0" style="border: 0" allowfullscreen="true"></iframe>*@
+        <iframe src="https://www.google.com/maps/d/embed?mid=1HQZytmSTWLaZX3rq1_vcYmJbdq4" width="100%" height="450" frameborder="0" style="border: 0" allowfullscreen="true"></iframe>
+    </div>
+</section>
+
+<!-- Footer -->
+<div>
+    <hr />
+    <footer>
+    </footer>
+</div>

@@ -1,0 +1,52 @@
+﻿
+@{
+    //ViewBag.Title = "CargaCarrito";
+    Layout = null;
+}
+@{
+    double total = 0;
+}
+<h2 style="text-align:center">Mi Pedido</h2>
+<table>
+    <thead>
+        <tr>
+            <th width="5%"></th>
+            <th width="10%"></th>
+            <th width="55%"></th>
+            <th width="20%"></th>
+            <th width="5%"></th>
+            <th width="5%"></th>
+        </tr>
+    </thead>
+    <tbody>
+        @if (Session["carrito"] != null)
+        {
+            foreach (var item in Session["carrito"] as List<Parrilla3.Models.CarritoItem>)
+            {
+                total += (double)(item.Cantidad * item.Comidas.precio);
+                <tr>
+                    <td width="5%"></td>
+                    <td width="10%" style="text-align:left">@item.Cantidad</td>
+                    <td width="55%" style="text-align:left">@item.Comidas.nombre</td>
+                    <td width="20%" style="text-align:right">@String.Format("{0:C}", (item.Cantidad * item.Comidas.precio))</td>
+                    <td width="5%" style="text-align:right"><a href="@Url.Action("EliminaCarrito","Comida")/@item.Comidas.idComida" class="btncargaCarrito btn-link btn-info"><i class="far fa-trash-alt color_add" title="Eliminar del pedido."></i></a></td>
+                    <td width="5%"></td>
+                </tr>
+            }
+        }
+    </tbody>
+    <tfoot>
+        <tr>
+            <th colspan="6"></th>
+            @*<th></th>*@
+        </tr>
+    </tfoot>
+</table>
+<br /><br />
+<p style="text-align:center">Total <b>@String.Format("{0:c}", total)</b></p>
+<br />
+@Html.ActionLink("Seguir comprando", "Index", "Comida", null, null) | @Html.ActionLink("Finalizar Compa", "FinalizarCompra", "Comida", null, null)
+<hr />
+<footer>
+    <p>&copy; @DateTime.Now.Year - Parrilla Los Salteños</p>
+</footer>

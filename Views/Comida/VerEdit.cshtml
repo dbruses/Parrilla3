@@ -1,0 +1,84 @@
+﻿
+@{
+    Layout = null;
+}
+@model IEnumerable<Parrilla3.Models.Comidas>
+
+@if (Model != null)
+{
+    <div>
+        <div class="form-group row">
+            @foreach (var item in Model)
+            {
+                <div class="col-lg-12">
+                    <label for="nombre">Nombre</label>
+                    <input type="text" id="nombre" class="form-control" value="@item.nombre" style="max-width: 95%" />
+                </div>
+                <div class="col-lg-12">
+                    <label for="descripcion">Descripción</label>
+                    <textarea class="form-control" rows="3" id="descripcion" value="@item.descripcion" style="max-width: 95%">@item.descripcion</textarea>
+                </div>
+                <div class="col-lg-12">
+                    <div class="col-lg-3">
+                        <label for="categoria">Categoría</label>
+                        <select class="form-control" id="categoria">
+                            @if (Session["categorias"] != null)
+                            {
+                                List<Parrilla3.Models.Categorias> categorias = (List<Parrilla3.Models.Categorias>)Session["categorias"];
+                                foreach (var cat in categorias)
+                                {
+                                    if (item.categoria == cat.idCategoria)
+                                    {
+                                        <option value="@cat.idCategoria" selected="selected">@cat.nombreCategoria</option>
+                                    }
+                                    else
+                                    {
+                                        <option value="@cat.idCategoria">@cat.nombreCategoria</option>
+                                    }
+                                }
+                            }
+                        </select>
+                    </div>
+                    <div class="col-lg-2">
+                        <label for="precio">Precio</label>
+                        <input type="text" id="precio" class="form-control" value="@item.precio" onblur="verificaNro('precio');" />
+                    </div>
+                    <div class="col-lg-1">
+                        <label for="activo">
+                            Activo
+                            <input type="checkbox" id="activo" checked="@item.activo" value="@item.activo">
+                        </label>
+                    </div>
+                    <div class="col-lg-1">
+                        <label for="salsa">
+                            Salsa
+                            <input type="checkbox" id="salsa" checked="@item.llevaSalsa">
+                        </label>
+                    </div>
+                    <div class="col-lg-1">
+                        <label for="aderezo">
+                            Aderezo
+                            <input type="checkbox" id="aderezo" checked="@item.llevaAderezo">
+                        </label>
+                    </div>
+                    <div class="col-lg-1">
+                        <label for="guarnicion">
+                            Guarnición
+                            <input type="checkbox" id="guarnicion" checked="@item.llevaGuarnicion">
+                        </label>
+                    </div>
+                    <div class="col-lg-2" style="text-align:right">
+                        <label for="ingredientes">Cant. Ingred.</label>
+                        <input type="number" id="cantIngredientes" class="form-control" value="@item.cantIngredientes" onblur="verificaNro('cantIngredientes');"/>
+                    </div>
+                </div>
+                <br />
+                <div class="col-xs-12 col-md-12 col-lg-12" style="text-align:center">
+                    <button id="btnCancelar" type="button" class="btn btn-danger" onclick="cancelaGraba();">Cancelar</button>
+                    <button id="btnGuardar" type="button" class="btn btn-primary" onclick="guardar();">Guardar</button>
+                </div><br />
+                <input type="hidden" id="idComida" value="@item.idComida" />
+            }
+        </div>
+    </div>
+}
