@@ -57,6 +57,7 @@ namespace Parrilla3.Controllers
         [AllowAnonymous]
         public ActionResult Login(string returnUrl)
         {
+            Session["esPedido"] = 0;
             ViewBag.ReturnUrl = returnUrl;
             return View();
         }
@@ -96,6 +97,7 @@ namespace Parrilla3.Controllers
         [AllowAnonymous]
         public async Task<ActionResult> VerifyCode(string provider, string returnUrl, bool rememberMe)
         {
+            Session["esPedido"] = 0;
             // Requerir que el usuario haya iniciado sesión con nombre de usuario y contraseña o inicio de sesión externo
             if (!await SignInManager.HasBeenVerifiedAsync())
             {
@@ -139,6 +141,7 @@ namespace Parrilla3.Controllers
         [AllowAnonymous]
         public ActionResult Register()
         {
+            Session["esPedido"] = 0;
             return View();
         }
 
@@ -194,6 +197,7 @@ namespace Parrilla3.Controllers
         [AllowAnonymous]
         public ActionResult ForgotPassword()
         {
+            Session["esPedido"] = 0;
             return View();
         }
 
@@ -230,6 +234,7 @@ namespace Parrilla3.Controllers
         [AllowAnonymous]
         public ActionResult ForgotPasswordConfirmation()
         {
+            Session["esPedido"] = 0;
             return View();
         }
 
@@ -248,6 +253,7 @@ namespace Parrilla3.Controllers
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> ResetPassword(ResetPasswordViewModel model)
         {
+            Session["esPedido"] = 0;
             if (!ModelState.IsValid)
             {
                 return View(model);
@@ -272,6 +278,7 @@ namespace Parrilla3.Controllers
         [AllowAnonymous]
         public ActionResult ResetPasswordConfirmation()
         {
+            Session["esPedido"] = 0;
             return View();
         }
 
@@ -308,6 +315,7 @@ namespace Parrilla3.Controllers
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> SendCode(SendCodeViewModel model)
         {
+            Session["esPedido"] = 0;
             if (!ModelState.IsValid)
             {
                 return View();
@@ -395,6 +403,7 @@ namespace Parrilla3.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult LogOff()
         {
+            Session["esPedido"] = 0;
             AuthenticationManager.SignOut(DefaultAuthenticationTypes.ApplicationCookie);
             return RedirectToAction("Index", "Home");
         }

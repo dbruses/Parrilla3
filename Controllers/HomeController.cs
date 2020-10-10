@@ -26,6 +26,7 @@ namespace Parrilla3.Controllers
             //        var telefono = usuario.telefono;
             //    }
             //}
+            Session["esPedido"] = 0;
             return View();
         }
     }

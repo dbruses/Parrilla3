@@ -22,6 +22,9 @@ namespace Parrilla3.Controllers
             {
                 Session["salsas"] = pe.Salsas.ToList();
             }
+
+            Session["esPedido"] = 1;
+
             return View(pe.Comidas.ToList());
         }
 
@@ -31,22 +34,31 @@ namespace Parrilla3.Controllers
             {
                 Session["categorias"] = pe.Categorias.ToList();
             }
+
+            Session["esPedido"] = 0;
+            
             return View(pe.Comidas.ToList());
         }
 
         public ActionResult VerComida(int id)
         {
+            Session["esPedido"] = 0;
+
             return View(pe.Comidas.Where(x => x.idComida == id));
         }
 
         public ActionResult VerEdit(int id)
         {
+            Session["esPedido"] = 0;
+
             return View(pe.Comidas.Where(x => x.idComida == id));
         }
 
         [HttpPost]
         public JsonResult CargaCarrito(int id, int cantidad, string ingredientes)
         {
+            Session["esPedido"] = 0;
+
             if (Session["carrito"] == null)
             {
                 //int cant = Convert.ToInt16(Request["cantidad"]);
@@ -73,6 +85,8 @@ namespace Parrilla3.Controllers
 
         public ActionResult EliminaCarrito(int id)
         {
+            Session["esPedido"] = 0;
+
             List<CarritoItem> compras = (List<CarritoItem>)Session["carrito"];
             compras.RemoveAt(getIndex(id));
             Session["carrito"] = compras;
@@ -82,6 +96,8 @@ namespace Parrilla3.Controllers
         [Authorize]
         public ActionResult FinalizarCompra()
         {
+            Session["esPedido"] = 0;
+
             Ventas nuevaVenta = new Ventas();
             List<CarritoItem> compras = (List<CarritoItem>)Session["carrito"];
             if ((compras != null) && (compras.Count > 0))
@@ -121,13 +137,15 @@ namespace Parrilla3.Controllers
 
         public ActionResult MostrarCarrito()
         {
+            Session["esPedido"] = 0;
+
             return View("CargaCarrito");
         }
 
         [HttpPost]
         public JsonResult Aumento(decimal porcentaje)
         {
-            foreach(Comidas comida in pe.Comidas.ToList())
+            foreach (Comidas comida in pe.Comidas.ToList())
             {
                 pe.Comidas.Find(comida.idComida).precio = comida.precio + (comida.precio * porcentaje / 100);
                 pe.SaveChanges();
@@ -158,6 +176,8 @@ namespace Parrilla3.Controllers
         [HttpPost]
         public JsonResult Pagar(bool pagoEfectivo, string pagaCon, string observaciones)
         {
+            Session["esPedido"] = 0;
+
             //Cobrar
             enviaEmail(pagoEfectivo, pagaCon, observaciones);
             return Json("Muchas gracias por su compra.", JsonRequestBehavior.AllowGet);
@@ -166,6 +186,8 @@ namespace Parrilla3.Controllers
         [HttpPost]
         public JsonResult Cancelar()
         {
+            Session["esPedido"] = 0;
+
             Session["venta"] = null;
             Session["carrito"] = null;
             return Json("Compra cancelada.", JsonRequestBehavior.AllowGet);
@@ -174,6 +196,7 @@ namespace Parrilla3.Controllers
         [HttpPost]
         public JsonResult CancelaGraba()
         {
+            Session["esPedido"] = 0;
             //Session["venta"] = null;
             //Session["carrito"] = null;
             return Json("No se guardaron los datos.", JsonRequestBehavior.AllowGet);

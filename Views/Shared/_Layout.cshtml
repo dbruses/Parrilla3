@@ -27,6 +27,7 @@
             text-align: center;
             background-color: aquamarine;
         }
+
         .my-fixed-item {
             position: fixed;
             min-height: 120px;
@@ -69,6 +70,38 @@
             </div>
         </div>
     </div>
+    @if ((Session["esPedido"] != null) && (int)Session["esPedido"] == 1)
+    {
+        <div class="navbar navbar-inverse navbar-fixed-bottom">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                @*@Html.ActionLink("Parrilla Los Salteños", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })*@
+            </div>
+            <div class="navbar-collapse collapse">
+                <ul class="nav navbar-nav">
+                    <li><a href="#promociones">Promos</a></li>
+                    <li><a href="#platos">Especiales</a></li>
+                    <li><a href="#minutas">Minutas</a></li>
+                    <li><a href="#sanwiches">Sandwiches</a></li>
+                    <li><a href="#pizzas">Piza/Emp.</a></li>
+                    <li><a href="#entradas">Entradas</a></li>
+                    <li><a href="#ensaladas">Ensaladas</a></li>
+                    <li><a href="#hamburguesas">Hamburguesas</a></li>
+                    <li><a href="#parrilla">Parrilla</a></li>
+                    <li><a href="#guarniciones">Guarniciones</a></li>
+                    <li><a href="#pescados">Pescados</a></li>
+                    <li><a href="#pastas">Pastas</a></li>
+                    <li><a href="#postres">Postres</a></li>
+                    <li><a href="#bebidas">Bebidas</a></li>
+                    <li><a href="#vinos">Vinos</a></li>
+                </ul>
+            </div>
+        </div>
+    }
     <div class="container body-content">
         @RenderBody()
         <hr />
