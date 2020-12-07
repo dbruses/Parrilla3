@@ -13,19 +13,6 @@ namespace Parrilla3.Controllers
     {
         public ActionResult Index()
         {
-            //if (User.Identity.IsAuthenticated)
-            //{
-            //    using(ApplicationDbContext db = new ApplicationDbContext())
-            //    {
-            //        var idUsuarioActual = User.Identity.GetUserId();
-
-            //        var userManager = new UserManager<ApplicationUser>(new UserStore<ApplicationUser>(db));
-
-            //        var usuario = userManager.FindById(idUsuarioActual);
-            //        var direccion = usuario.direccion;
-            //        var telefono = usuario.telefono;
-            //    }
-            //}
             Session["esPedido"] = 0;
             return View();
         }

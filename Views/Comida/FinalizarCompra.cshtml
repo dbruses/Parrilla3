@@ -97,35 +97,48 @@
                 </p>
             </div><br />
             <div class="col-xs-12 col-md-12 col-lg-12" style="text-align:center">
-                <input type="checkbox" class="form-check-input" id="chkPagoEfectivo" onclick="cambioPago();" checked="checked" disabled="disabled" /> <!-- SACAR EL CHEQUED CUANDO SE HABILITE EL PAGO CON TARJETA -->
+                @if (User.IsInRole("Administrador"))
+                {
+                    <input type="checkbox" class="form-check-input" id="chkPagoEfectivo" onclick="cambioPago();" />
+                }
+                else
+                {
+                    <input type="checkbox" class="form-check-input" id="chkPagoEfectivo" onclick="cambioPago();" checked="checked" disabled="disabled" /> <!-- SACAR EL CHEQUED CUANDO SE HABILITE EL PAGO CON TARJETA -->
+                }
                 <label for="chkPagoEfectivo">&nbsp;&nbsp;10% de Descuento por pago en Efectivo!&nbsp;&nbsp;Total:&nbsp;<b>@String.Format("{0:c}", (double)(total * 0.9))</b></label>
                 <br />
                 <input type="number" id="pagaCon" placeholder="Paga Con $" />
             </div>
         </div>
         <input type="hidden" id="ventaId" value="@item.idVenta" />
+        <input type="hidden" id="txntype" value="sale" />
+        <input type="hidden" id="timezone" value="America/Buenos_Aires" />
+        <input type="hidden" id="hash_algorithm" value="SHA256" />
     </div>
 }
 
 @section Scripts {
     <script>
         function cierreCompra() {
+            debugger;
+            var urlAction;
+            
+            urlAction = '@Url.Action("Pagar","Comida")';
+            
             $.ajax({
-                type: "POST",
-                url: '@Url.Action("Pagar","Comida")',
-                contentType: "application/json; charset=utf-8",
-                dataType: "json",
-                data: JSON.stringify({
-                    pagoEfectivo: $("#chkPagoEfectivo").prop("checked"),
-                    pagaCon: document.getElementById("pagaCon").value,
-                    observaciones: document.getElementById("observaciones").value
-                    //id: par_id,
-                    //cantidad: par_cantidad
-                }),
-                success: function (result) {
-                    alert(result);
-                    location.href = '@Url.Action("Index", "Comida")';
-                },
+            type: "POST",
+            url: urlAction,
+            contentType: "application/json; charset=utf-8",
+            dataType: "json",
+            data: JSON.stringify({
+                pagoEfectivo: $("#chkPagoEfectivo").prop("checked"),
+                pagaCon: document.getElementById("pagaCon").value,
+                observaciones: document.getElementById("observaciones").value
+            }),
+            success: function (result) {
+                alert(result);
+                location.href = '@Url.Action("Index", "Comida")';
+            },
                 async: true,
                 error: function (xhr, status, p3, p4) {
                     alert("Error");
@@ -160,5 +173,36 @@
                 document.getElementById("btnPagar").innerText = "Pagar";
             }
         }
+    </script>
+    <!-- google CryptoJS para SHA256 -->
+    <script LANGUAGE=JScript RUNAT=Server src="sha256.js">
+    </script>
+    <script LANGUAGE=JScript RUNAT=Server>
+        var today = new Date();
+        var formattedDate = today.formatDate("Y: m: dH: i: s");
+        /* Función que calcula el hash de los siguientes parámetros: - ID de tienda - Fecha /
+        Hora (ver $ dateTime arriba) - chargetotal - moneda (valor ISO numérico) - secreto compartido */
+        function createHash(chargetotal, moneda) {
+            // Por favor cambie el ID de la tienda por su ID de tienda individual var storeId = "10123456789";
+            // NOTA: NO codifique el secreto en ese script. Léalo de una base de datos. var sharedSecret = "sharedsecret";
+            var stringToHash = storeId + formattedDate + chargetotal + currency + sharedSecret;
+            var ascii = getHexFromChars(stringToHash);
+            var hash = CryptoJS.SHA256(ascii);
+            Response.Write(hash);
+        }
+        function getHexFromChars(valor) {
+            var char_str = valor;
+            var hex_str = "";
+            var i, n; para(i = 0; i < char_str.length; i++) {
+                n = charToByte(char_str.charAt(i));
+                if (n! = 0) {
+                    hex_str + = byteToHex(n);
+                }
+            } return hex_str.toLowerCase();
+        }
+        function getDateTime() {
+            Response.Write(formattedDate);
+        }
+
     </script>
 }

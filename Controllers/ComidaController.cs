@@ -1,10 +1,15 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Linq;
 using System.Web.Mvc;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
 using Parrilla3.Models;
+using System.Security.Cryptography;
+using System.Text;
+using System.Net;
+
 
 namespace Parrilla3.Controllers
 {
@@ -178,9 +183,79 @@ namespace Parrilla3.Controllers
         {
             Session["esPedido"] = 0;
 
+            bool pagoOk = false;
+
+            string mensaje = string.Empty;
+
             //Cobrar
-            enviaEmail(pagoEfectivo, pagaCon, observaciones);
-            return Json("Muchas gracias por su compra.", JsonRequestBehavior.AllowGet);
+            if (!pagoEfectivo)
+            {
+                pagoOk = pagoTarjeta();
+            }
+            else
+            {
+                pagoOk = true;
+            }
+
+            if (pagoOk)
+            {
+                mensaje = "Muchas gracias por su compra.";
+                enviaEmail(pagoEfectivo, pagaCon, observaciones);
+            }
+            else
+            {
+                mensaje = "Hemos encontrado problemas con su pago, por favor elija otro medio.";
+            }
+            return Json(mensaje, JsonRequestBehavior.AllowGet);
+        }
+
+        [HttpPost]
+        public bool pagoTarjeta()
+        {
+            bool ok = false;
+
+            int ventaId = (int)Session["venta"];
+            Ventas venta = pe.Ventas.Find(ventaId);
+
+            string txntype = "sale";
+            string timezone = "America/Buenos_Aires";
+            string hash_algorithm = "SHA256";
+            string currency = ConfigurationManager.AppSettings["Moneda"];
+            string storename = ConfigurationManager.AppSettings["StoreId"];
+            string txndatetime = DateTime.Now.ToString("yyyy:MM:dd-hh:mm:ss");
+            string chargetotal = venta.total.ToString("F2");
+            string sharedsecret = ConfigurationManager.AppSettings["FDPassword"];
+            string stringToHash = storename + txndatetime + chargetotal + currency + sharedsecret; 
+
+            string hexaString = String.Concat(stringToHash.Select(x => ((int)x).ToString("x")));
+
+            string sha256String = ComputeSHA256Hash(hexaString).ToLower();
+
+            var segment = string.Join("&", "txntype="+txntype, "timezone="+timezone, "txndatetime="+txndatetime, "hash_algorithm="+hash_algorithm, "hash="+sha256String, "storename="+storename, "chargetotal="+chargetotal, "currency="+currency);
+            var escapedSegment = Uri.EscapeDataString(segment);
+            var baseFormat = ConfigurationManager.AppSettings["PayURL"];
+
+            var url = string.Concat(baseFormat, "?" + segment);
+
+
+            HttpWebRequest webReq = (HttpWebRequest)WebRequest.Create(string.Format(url));
+            webReq.Method = "POST";
+            HttpWebResponse webResponse = (HttpWebResponse)webReq.GetResponse();
+
+            if (webResponse.StatusCode == HttpStatusCode.OK)
+            {
+                ok = true;
+            }
+
+            return ok;
+        }
+
+        public static string ComputeSHA256Hash(string text)
+        {
+            using (var sha256 = new SHA256Managed())
+            {
+                return BitConverter.ToString(sha256.ComputeHash(Encoding.UTF8.GetBytes(text))).Replace("-", "");
+            }
         }
 
         [HttpPost]
@@ -197,8 +272,6 @@ namespace Parrilla3.Controllers
         public JsonResult CancelaGraba()
         {
             Session["esPedido"] = 0;
-            //Session["venta"] = null;
-            //Session["carrito"] = null;
             return Json("No se guardaron los datos.", JsonRequestBehavior.AllowGet);
         }
 
