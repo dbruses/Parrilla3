@@ -1,0 +1,44 @@
+﻿
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Pago OK</h2>
+
+<div class="row">
+    <div class="col-xs-12 col-md-12 col-lg-12">
+        <label>Muchas gracias por su compra.</label>
+        <br />
+        @Html.ActionLink("Inicio", "Index", "Comida", null, null)
+    </div>
+</div>
+
+<script>
+ $(document).ready(function(){
+window.addEventListener("message", receiveMessage, false);
+checkoutForm.submit();
+});
+function receiveMessage(event)
+{
+  var connectForm = event.source.document.forms[0];
+  forwardForm(event.data,connectForm);
+}
+function forwardForm(redirectURL, connectForm) {
+                    var newForm = document.createElement("form");
+                    newForm.setAttribute('method',"post");
+                    newForm.setAttribute('action',redirectURL);
+                    newForm.setAttribute('id',"newForm");
+                    newForm.setAttribute('name',"newForm");
+                    document.body.appendChild(newForm);
+                    for(j=0 ; j<connectForm.elements.length; j++){
+                                         var element = connectForm.elements[j];
+                                         var input = document.createElement("input");
+                                         input.setAttribute("type", "hidden");
+                                         input.setAttribute("name", element.name);
+                                         input.setAttribute("value", element.value);
+                                         document.newForm.appendChild(input);
+                    }
+                    document.newForm.submit();
+}
+</script>

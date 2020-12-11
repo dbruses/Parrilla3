@@ -186,7 +186,7 @@ namespace Parrilla3.Controllers
             bool pagoOk = false;
 
             string mensaje = string.Empty;
-
+            Session["observaciones"] = observaciones;
             //Cobrar
             if (!pagoEfectivo)
             {
@@ -197,7 +197,7 @@ namespace Parrilla3.Controllers
                 pagoOk = true;
             }
 
-            if (pagoOk)
+            if (pagoOk && pagoEfectivo)
             {
                 mensaje = "Muchas gracias por su compra.";
                 enviaEmail(pagoEfectivo, pagaCon, observaciones);
@@ -226,12 +226,14 @@ namespace Parrilla3.Controllers
             string chargetotal = venta.total.ToString("F2");
             string sharedsecret = ConfigurationManager.AppSettings["FDPassword"];
             string stringToHash = storename + txndatetime + chargetotal + currency + sharedsecret; 
+            string checkoutoption = ConfigurationManager.AppSettings["checkoutoption"];
+            string orderid = ventaId.ToString();
 
             string hexaString = String.Concat(stringToHash.Select(x => ((int)x).ToString("x")));
 
             string sha256String = ComputeSHA256Hash(hexaString).ToLower();
 
-            var segment = string.Join("&", "txntype="+txntype, "timezone="+timezone, "txndatetime="+txndatetime, "hash_algorithm="+hash_algorithm, "hash="+sha256String, "storename="+storename, "chargetotal="+chargetotal, "currency="+currency);
+            var segment = string.Join("&", "txntype="+txntype, "timezone="+timezone, "txndatetime="+txndatetime, "hash_algorithm="+hash_algorithm, "hash="+sha256String, "storename="+storename, "chargetotal="+chargetotal, "currency="+currency, "checkoutoption="+ checkoutoption, "oid="+ orderid);
             var escapedSegment = Uri.EscapeDataString(segment);
             var baseFormat = ConfigurationManager.AppSettings["PayURL"];
 

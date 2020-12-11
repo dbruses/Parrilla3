@@ -206,6 +206,7 @@
     <Compile Include="Controllers\ComidaController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
+    <Compile Include="Controllers\PagoController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -268,13 +269,6 @@
       <DependentUpon>CarritoBD.tt</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Rta\RtaOK.aspx.cs">
-      <DependentUpon>RtaOK.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="Rta\RtaOK.aspx.designer.cs">
-      <DependentUpon>RtaOK.aspx</DependentUpon>
-    </Compile>
     <Compile Include="Startup.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -490,7 +484,6 @@
       <DependentUpon>CarritoBD.edmx</DependentUpon>
       <LastGenOutput>CarritoBD.cs</LastGenOutput>
     </Content>
-    <Content Include="Rta\RtaOK.aspx" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
     <EntityDeploy Include="Models\CarritoBD.edmx">
@@ -557,6 +550,7 @@
     <Content Include="Views\Comida\Pagar.cshtml" />
     <Content Include="Views\Comida\ABM.cshtml" />
     <Content Include="Views\Comida\VerEdit.cshtml" />
+    <Content Include="Views\Pago\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
