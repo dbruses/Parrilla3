@@ -206,6 +206,7 @@
     <Compile Include="Controllers\ComidaController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
+    <Compile Include="Controllers\NotificacionController.cs" />
     <Compile Include="Controllers\PagoController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -484,6 +485,7 @@
       <DependentUpon>CarritoBD.edmx</DependentUpon>
       <LastGenOutput>CarritoBD.cs</LastGenOutput>
     </Content>
+    <Content Include="PagoRechazado.html" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
     <EntityDeploy Include="Models\CarritoBD.edmx">
@@ -551,6 +553,7 @@
     <Content Include="Views\Comida\ABM.cshtml" />
     <Content Include="Views\Comida\VerEdit.cshtml" />
     <Content Include="Views\Pago\Index.cshtml" />
+    <Content Include="Views\Notificacion\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

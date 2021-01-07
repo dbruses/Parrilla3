@@ -9,7 +9,7 @@ using Parrilla3.Models;
 using System.Security.Cryptography;
 using System.Text;
 using System.Net;
-
+using System.IO;
 
 namespace Parrilla3.Controllers
 {
@@ -17,6 +17,7 @@ namespace Parrilla3.Controllers
     {
         // GET: Comida
         private ParrillaEntities pe = new ParrillaEntities();
+        public string resp = string.Empty;
         public ActionResult Index()
         {
             if (Session["ingredientes"] == null)
@@ -204,7 +205,8 @@ namespace Parrilla3.Controllers
             }
             else
             {
-                mensaje = "Hemos encontrado problemas con su pago, por favor elija otro medio.";
+                //mensaje = "Hemos encontrado problemas con su pago, por favor elija otro medio.";
+                mensaje = resp;
             }
             return Json(mensaje, JsonRequestBehavior.AllowGet);
         }
@@ -222,8 +224,10 @@ namespace Parrilla3.Controllers
             string hash_algorithm = "SHA256";
             string currency = ConfigurationManager.AppSettings["Moneda"];
             string storename = ConfigurationManager.AppSettings["StoreId"];
-            string txndatetime = DateTime.Now.ToString("yyyy:MM:dd-hh:mm:ss");
+            string txndatetime = DateTime.Now.ToString("yyyy:MM:dd-HH:mm:ss");
             string chargetotal = venta.total.ToString("F2");
+            chargetotal = chargetotal.Replace(".", string.Empty);
+            chargetotal = chargetotal.Replace(",", ".");
             string sharedsecret = ConfigurationManager.AppSettings["FDPassword"];
             string stringToHash = storename + txndatetime + chargetotal + currency + sharedsecret; 
             string checkoutoption = ConfigurationManager.AppSettings["checkoutoption"];
@@ -233,22 +237,36 @@ namespace Parrilla3.Controllers
 
             string sha256String = ComputeSHA256Hash(hexaString).ToLower();
 
-            var segment = string.Join("&", "txntype="+txntype, "timezone="+timezone, "txndatetime="+txndatetime, "hash_algorithm="+hash_algorithm, "hash="+sha256String, "storename="+storename, "chargetotal="+chargetotal, "currency="+currency, "checkoutoption="+ checkoutoption, "oid="+ orderid);
+            var segment = string.Join("&", "txntype="+txntype, "timezone="+timezone, "txndatetime="+txndatetime, "hash_algorithm="+hash_algorithm, "hash="+sha256String, "storename="+storename, "chargetotal="+chargetotal, "currency="+currency, "checkoutoption="+ checkoutoption, "oid="+ orderid,"country=ARG", "language=es_ES");
             var escapedSegment = Uri.EscapeDataString(segment);
             var baseFormat = ConfigurationManager.AppSettings["PayURL"];
 
             var url = string.Concat(baseFormat, "?" + segment);
+            resp = "URL COMPLETA : " + url + "<br /><br /> RESPUESTA <br /><br />";
 
-
-            HttpWebRequest webReq = (HttpWebRequest)WebRequest.Create(string.Format(url));
+            HttpWebRequest webReq; // = (HttpWebRequest)WebRequest.Create(string.Format(url));
+            webReq = WebRequest.Create(url) as HttpWebRequest;
             webReq.Method = "POST";
-            HttpWebResponse webResponse = (HttpWebResponse)webReq.GetResponse();
+            webReq.Accept = "application/json";
+            webReq.ContentType = "application/json; charset=utf-8";
+
+            Stream postStream = webReq.GetRequestStream();
+
+            //HttpWebResponse webResponse = (HttpWebResponse)webReq.GetResponse();
+            HttpWebResponse webResponse = webReq.GetResponse() as HttpWebResponse;
 
             if (webResponse.StatusCode == HttpStatusCode.OK)
             {
                 ok = true;
             }
-
+            StreamReader sr = new StreamReader(webResponse.GetResponseStream());
+            //resp = resp + sr.ReadToEnd().Trim();
+            resp = sr.ReadToEnd().Trim();
+            //resp = url;
+            //Response.Redirect(url,true);
+            string BaseURL = ConfigurationManager.AppSettings["BaseURL"];
+            resp = resp.Replace("/connect/", BaseURL + "/connect/");
+            resp = resp.Replace("resources/js/", BaseURL + "/resources/js/");
             return ok;
         }
 
