@@ -404,6 +404,10 @@ namespace Parrilla3.Controllers
         public ActionResult LogOff()
         {
             Session["esPedido"] = 0;
+            Session["carrito"] = null;
+            Session["observaciones"] = null;
+            Session["venta"] = null;
+
             AuthenticationManager.SignOut(DefaultAuthenticationTypes.ApplicationCookie);
             return RedirectToAction("Index", "Home");
         }

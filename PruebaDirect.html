@@ -1,0 +1,129 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title></title>
+</head>
+<body>
+    <form method="post" id="checkoutForm" action="https://test.ipg-online.com/connect/gateway/processing">
+        <input type="hidden" name="checkoutoption" id="checkoutoption" value="combinedpage" />
+        <!--<input type="hidden" name="hostURI" id="hostURI" value="https://www.xn--parrillalossalteos-20b.com/Pruebaiframe.html/" />-->
+        <input type="hidden" name="txntype" id="txntype" value="sale" />
+        <input type="hidden" name="chargetotal" id="chargetotal" value="200.00" />
+        <input type="hidden" name="sharedsecret" id="sharedsecret" value="m;K]7DD5Ev" />
+        <!--<input type="hidden" name="paymentMethod" value="M">-->
+        <input type="hidden" name="timezone" id="timezone" value="America/Buenos_Aires" />
+        <input type="hidden" name="txndatetime" id="txndatetime" value="" />
+        <input type="hidden" name="hash_algorithm" id="hash_algorithm" value="SHA256" />
+        <input type="hidden" name="hash" id="hash" value="">
+        <input type="hidden" name="storename" id="storename" value="5920102102">
+        <input type="hidden" name="currency" id="currency" value="032">
+        <input type="hidden" name="oid" id="oid" value="ABCDE1234567890" />
+        <input type="hidden" name="country" id="country" value="ARG" />
+        <input type="hidden" name="language" id="language" value="es_ES" />
+        <input type='hidden' name="responseFailURL" value="https://www.xn--parrillalossalteos-20b.com/" />
+        <input type='hidden' name="responseSuccessURL" value="https://www.xn--parrillalossalteos-20b.com/Comida/" />
+        <input type='hidden' name="authenticateTransaction" value="true" />
+        <input type="button" value="Actualizar" onclick="actualizaDatos()" />
+        <input type="submit" value="Submit">
+    </form>
+
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.0.0/crypto-js.min.js"></script>
+    <script src="Scripts/jquery-3.4.1.js"></script>
+    <script type="text/javascript">
+        $(document).ready(function () {
+            debugger;
+            window.addEventListener("message", receiveMessage, false);
+            //checkoutForm.submit();
+        });
+        function receiveMessage(event) {
+            debugger;
+            var connectForm = event.source.document.forms[0];
+            forwardForm(event.data, connectForm);
+        }
+        function forwardForm(redirectURL, connectForm) {
+            debugger;
+            var newForm = document.createElement("form");
+            newForm.setAttribute('method', "post");
+            newForm.setAttribute('action', redirectURL);
+            newForm.setAttribute('id', "newForm");
+            newForm.setAttribute('name', "newForm");
+            document.body.appendChild(newForm);
+            for (j = 0; j < connectForm.elements.length; j++) {
+                var element = connectForm.elements[j];
+                var input = document.createElement("input");
+                input.setAttribute("type", "hidden");
+                input.setAttribute("name", element.name);
+                input.setAttribute("value", element.value);
+                document.newForm.appendChild(input);
+            }
+            document.newForm.submit();
+        }
+
+        function getHexFromChars(value) {
+            debugger;
+            var char_str = value;
+            var hex_str = "";
+            var i, n;
+            for (i = 0; i < char_str.length; i++) {
+                n = char_str.charCodeAt(i); //charToByte(char_str.charAt(i));
+                if (n != 0) {
+                    hex_str += byteToHex(n);
+                }
+            }
+            return hex_str.toLowerCase();
+        }
+
+        function byteToHex(b) {
+            var hexChar = ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "A", "B", "C", "D", "E", "F"];
+            return hexChar[(b >> 4) & 0x0f] + hexChar[b & 0x0f];
+        }
+
+        function actualizaDatos() {
+            debugger;
+            let storename = document.getElementById("storename").value;
+
+            let ahora = new Date();
+            let mes = (ahora.getMonth() + 1);
+            if (mes < 10) {
+                mes = '0' + mes;
+            }
+            let dia = ahora.getDate();
+            if (dia < 10) {
+                dia = '0' + dia;
+            }
+            let hora = ahora.getHours();
+            if (hora < 10) {
+                hora = '0' + hora;
+            }
+            let minutos = ahora.getUTCMinutes();
+            if (minutos < 10) {
+                minutos = '0' + minutos;
+            }
+            let segundos = ahora.getSeconds();
+            if (segundos < 10) {
+                segundos = '0' + segundos;
+            }
+            let txndatetime = ahora.getFullYear() + ':' + mes + ':' + dia + '-' + hora + ':' + minutos + ':' + segundos;
+
+            document.getElementById("txndatetime").value = txndatetime;
+
+            let chargetotal = document.getElementById("chargetotal").value;
+            let currency = document.getElementById("currency").value;
+            let sharedsecret = document.getElementById("sharedsecret").value;
+
+            let stringToHash = storename + txndatetime + chargetotal + currency + sharedsecret;
+
+            let hexaString = getHexFromChars(stringToHash);
+
+            let sha256String = CryptoJS.SHA256(hexaString);
+
+            document.getElementById("hash").value = sha256String;
+
+            alert(stringToHash);
+            alert(hexaString);
+            alert(sha256String);
+        }
+    </script>
+</body>
+</html>

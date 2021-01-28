@@ -221,36 +221,6 @@
 @section Scripts {
     <script src="~/Scripts/Comida/Comida.js"></script>
     <script>
-        //$(function () {
-        //    $("#send").click(function () {
-        //        alert("ENTROOOOOOOOOOOOOOOOOO");
-        //        var id = $("#idComida").val();
-        //        var cantidad = $("#cantidad").val();
-        //        updateResult(id, cantidad);
-        //        return false;
-        //    });
-        //});
-
-        //$(".numbers").keydown(function (e) {
-        //    alert("ENTROOOOOOOOOOOOOOOOOO");
-        //});
-
-        @*function envia() {
-                    alert("ENTROOOOOOOOOOOOOOOOOO");
-                    var id = $("#idComida").val();
-                    var cantidad = $("#cantidad").val();
-                    updateResult(id, cantidad);
-                    return false;
-        }
-
-        function updateResult(id, cantidad) {
-            var url = "@Url.Action("CargaCarrito", "Comida", new { id="param-id", cantidad = "param-cantidad" })";
-            alert(url);
-            url = url.replace("param-id", id)
-                     .replace("param-cantidad", cantidad);
-            $("#result").load(url);
-        }*@
-
         $(".btncargaCarrito").click(function (eve) {
             alert("btncargaCarrito1");
             $("#modalCarrito-content").load("/Comida/MostrarCarrito/");

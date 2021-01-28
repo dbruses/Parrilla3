@@ -24,6 +24,8 @@ namespace Parrilla3.Models
         public double total { get; set; }
         public string idUsuario { get; set; }
         public System.DateTime fechaVenta { get; set; }
+        public string observaciones { get; set; }
+        public Nullable<decimal> pagaCon { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<ListaVenta> ListaVenta { get; set; }

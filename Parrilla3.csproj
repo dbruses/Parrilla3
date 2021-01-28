@@ -486,6 +486,8 @@
       <LastGenOutput>CarritoBD.cs</LastGenOutput>
     </Content>
     <Content Include="PagoRechazado.html" />
+    <Content Include="PruebaDirect.html" />
+    <Content Include="PruebaIframe.html" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
     <EntityDeploy Include="Models\CarritoBD.edmx">
@@ -554,6 +556,8 @@
     <Content Include="Views\Comida\VerEdit.cshtml" />
     <Content Include="Views\Pago\Index.cshtml" />
     <Content Include="Views\Notificacion\Index.cshtml" />
+    <Content Include="Views\Notificacion\PagoOk.cshtml" />
+    <Content Include="Views\Notificacion\PagoRechazado.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

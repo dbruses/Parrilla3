@@ -1,0 +1,359 @@
+﻿
+@{
+    ViewBag.Title = "FinalizarCompra";
+    double total = 0;
+}
+
+@model Parrilla3.Models.Ventas
+
+@if (Model != null)
+{
+    var item = Model;
+
+    string ingredientes = "";
+
+    <div>
+        <br /><br /><br />
+        <div class="row">
+            @if (Session["usuario"] != null)
+            {
+                var usuario = Session["usuario"] as Parrilla3.Models.Usuario;
+                <div class="row">
+                    <div class="col-xs-6 col-md-6 col-lg-6">
+                        <label>Usuario:</label>
+                    </div>
+                    <div class="col-xs-6 col-md-6 col-lg-6">
+                        @User.Identity.Name
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-xs-6 col-md-6 col-lg-6">
+                        <label>Dirección:</label>
+                    </div>
+                    <div class="col-xs-6 col-md-6 col-lg-6">
+                        @usuario.direccion
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-xs-6 col-md-6 col-lg-6">
+                        <label>Teléfono:</label>
+                    </div>
+                    <div class="col-xs-6 col-md-6 col-lg-6">
+                        @usuario.telefono
+                    </div>
+                </div>
+            }
+        </div>
+        <br />
+        @if (Session["carrito"] != null)
+        {
+            <div class="row">
+                <table>
+                    @foreach (var comida in Session["carrito"] as List<Parrilla3.Models.CarritoItem>)
+                    {
+                        total += (double)(comida.Cantidad * comida.Comidas.precio);
+                        if (comida.Ingredientes != "")
+                        {
+                            ingredientes = " - " + comida.Ingredientes;
+                        }
+                        <tr>
+                            <td width="5%"></td>
+                            <td width="10%" style="text-align:left">@comida.Cantidad</td>
+                            <td width="65%" style="text-align:left">
+                                @comida.Comidas.nombre
+
+                                @if (comida.Ingredientes != "")
+                                {
+                                    @ingredientes;
+                                }
+                            </td>
+                            <td width="20%" style="text-align:right">@String.Format("{0:C}", (comida.Cantidad * comida.Comidas.precio))</td>
+                        </tr>
+                    }
+                </table>
+            </div>
+            @*@Session["carrito"] = null;*@
+        }
+        <br />
+        <div class="row">
+            <div class="col-xs-12 col-md-12 col-lg-12" style="text-align:center">
+                <textarea id="observaciones" rows="4" cols="100" placeholder="Comentarios"></textarea>
+            </div>
+        </div>
+        <br />
+        <div class="row">
+            <p style="text-align:center">Total <b>@String.Format("{0:c}", total)</b></p>
+        </div>
+        <br /><br />
+        <div class="row">
+            <div class="col-xs-12 col-md-12 col-lg-12" style="text-align:center">
+                <button id="btnCancelar" type="button" class="btn btn-danger" onclick="cancelaCompra();">Cancelar</button>
+                <button id="btnPagar" type="button" class="btn btn-primary" onclick="cierreCompra();">Pagar</button>
+                @*<a href="#pagoModal" class="btnPago btn btn-primary" data-toggle="modal">Pagar</a>*@
+            </div><br />
+            <div class="col-xs-12 col-md-12 col-lg-12" style="text-align:center">
+                <p>Momentáneamente solo aceptamos pago en efectivo</p>
+                <p>
+                    Si queres abonar con tarjeta, por favor envianos un&nbsp;
+                    <a href="https://wa.me/541158530973?text=Quiero%20hacer%20un%20pedido" target="_blank">whatsapp</a>.
+                </p>
+            </div><br />
+            <div class="col-xs-12 col-md-12 col-lg-12" style="text-align:center">
+                @if (User.IsInRole("Administrador"))
+                {
+                    <input type="checkbox" class="form-check-input" id="chkPagoEfectivo" onclick="cambioPago();" />
+                }
+                else
+                {
+                    <input type="checkbox" class="form-check-input" id="chkPagoEfectivo" onclick="cambioPago();" checked="checked" disabled="disabled" /> <!-- SACAR EL CHEQUED CUANDO SE HABILITE EL PAGO CON TARJETA -->
+                }
+                <label for="chkPagoEfectivo">&nbsp;&nbsp;10% de Descuento por pago en Efectivo!&nbsp;&nbsp;Total:&nbsp;<b>@String.Format("{0:c}", (double)(total * 0.9))</b></label>
+                <br />
+                <input type="number" id="pagaCon" placeholder="Paga Con $" />
+            </div>
+        </div>
+        <input type="hidden" id="ventaId" value="@item.idVenta" />
+        <input type="hidden" id="txntype" value="sale" />
+        <input type="hidden" id="timezone" value="America/Buenos_Aires" />
+        <input type="hidden" id="hash_algorithm" value="SHA256" />
+    </div>
+    <br />
+    <br />
+    <div id="pagoModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true" data-keyboard="false" data-backdrop="static">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">×</button>
+                </div>
+                <div class="modal-body">
+                    <div id="modal-content">
+                        Cargando ...
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div id="visa">
+
+    </div>
+    @*<iframe name="myFrame" id="myFrame" src="#" width="460px" height="900px" style="border: none;">
+            Su navegador no admite marcos en línea.
+        </iframe>*@
+}
+
+@section Scripts {
+    @*<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.0.0/crypto-js.min.js"></script>*@
+    <script>
+        $(document).ready(function () {
+            debugger;
+            window.addEventListener("message", receiveMessage, false);
+            //checkoutForm.submit();
+        });
+
+        $(".btnPago").click(function (eve) {
+            alert("btnPago");
+            //$("#modal-content").load("/Comida/VerComida/" + $(this).data("id"));
+            $("#modal-content").load(cierreCompra());
+            
+        });
+
+        function receiveMessage(event) {
+            debugger;
+            var connectForm = event.source.document.forms[0];
+            forwardForm(event.data, connectForm);
+        }
+
+        function forwardForm(redirectURL, connectForm) {
+            debugger;
+            var newForm = document.createElement("form");
+            newForm.setAttribute('method', "post");
+            newForm.setAttribute('action', redirectURL);
+            newForm.setAttribute('id', "newForm");
+            newForm.setAttribute('name', "newForm");
+            document.body.appendChild(newForm);
+            for (j = 0; j < connectForm.elements.length; j++) {
+                var element = connectForm.elements[j];
+                var input = document.createElement("input");
+                input.setAttribute("type", "hidden");
+                input.setAttribute("name", element.name);
+                input.setAttribute("value", element.value);
+                document.newForm.appendChild(input);
+            }
+            document.newForm.submit();
+        }
+
+        function getHexFromChars(value) {
+            debugger;
+            var char_str = value;
+            var hex_str = "";
+            var i, n;
+            for (i = 0; i < char_str.length; i++) {
+                n = char_str.charCodeAt(i); //charToByte(char_str.charAt(i));
+                if (n != 0) {
+                    hex_str += byteToHex(n);
+                }
+            }
+            return hex_str.toLowerCase();
+        }
+
+        function byteToHex(b) {
+            var hexChar = ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "A", "B", "C", "D", "E", "F"];
+            return hexChar[(b >> 4) & 0x0f] + hexChar[b & 0x0f];
+        }
+
+        function getDateTime() {
+            Response.Write(formattedDate);
+        }
+
+        @*$('a.modalButton').on('click', function (e) {
+            debugger;
+            let txntype = "sale";
+            let timezone = "America/Buenos_Aires";
+            let hash_algorithm = "SHA256";
+            let currency = '@System.Configuration.ConfigurationManager.AppSettings["Moneda"]';
+            let storename = '@System.Configuration.ConfigurationManager.AppSettings["StoreId"]';
+            let ahora = new Date();
+            let mes = (ahora.getMonth() + 1);
+            if (mes < 10) {
+                mes = '0' + mes;
+            }
+            let dia = ahora.getDate();
+            if (dia < 10) {
+                dia = '0' + dia;
+            }
+            let hora = ahora.getHours();
+            if (hora < 10) {
+                hora = '0' + hora;
+            }
+            let minutos = ahora.getUTCMinutes();
+            if (minutos < 10) {
+                minutos = '0' + minutos;
+            }
+            let segundos = ahora.getSeconds();
+            if (segundos < 10) {
+                segundos = '0' + segundos;
+            }
+            let txndatetime = ahora.getFullYear() + ':' + mes + ':' + dia + '-' + hora + ':' + minutos + ':' + segundos;
+
+            let chargetotal = '@total';
+            chargetotal = chargetotal.toLocaleString();
+            chargetotal = chargetotal.replace(".", "");
+            chargetotal = chargetotal.replace(",", ".");
+
+            let sharedsecret = '@System.Configuration.ConfigurationManager.AppSettings["FDPassword"]';
+
+            let stringToHash = storename + txndatetime + chargetotal + currency + sharedsecret;
+            let checkoutoption = '@System.Configuration.ConfigurationManager.AppSettings["checkoutoption"]';
+
+            let hexaString = getHexFromChars(stringToHash);
+
+            let sha256String = CryptoJS.SHA256(hexaString);
+
+            let orderid = document.getElementById("ventaId").value;
+            let baseUrl = '@System.Configuration.ConfigurationManager.AppSettings["PayURL"]';
+            let params = "?" + "txntype=" + txntype + "&" + "timezone=" + timezone + "&" + "txndatetime=" + txndatetime + "&" + "hash_algorithm=" + hash_algorithm + "&" + "hash=" + sha256String + "&" + "storename=" + storename + "&" + "chargetotal=" + chargetotal + "&" + "currency=" + currency + "&" + "checkoutoption=" + checkoutoption + "&" + "oid=" + orderid + "&" + "country=ARG" + "&" + "language=es_ES"
+            let url = baseUrl + params
+            alert(url);
+
+            $(this).attr('data-src', 'url');
+            var src = $(this).attr('data-src');
+            alert(src);
+            var height = $(this).attr('data-height') || 900;
+            var width = $(this).attr('data-width') || 406;
+            $("#myModal iframe").attr({ 'src': src, 'height': height, 'width': width });
+        });*@
+
+        function cierreCompra() {
+            debugger;
+            var urlAction;
+            urlAction = '@Url.Action("Pagar","Comida")';
+
+            $.ajax({
+            type: "POST",
+            url: urlAction,
+            contentType: "application/json; charset=utf-8",
+            dataType: "json",
+            data: JSON.stringify({
+                pagoEfectivo: $("#chkPagoEfectivo").prop("checked"),
+                pagaCon: document.getElementById("pagaCon").value,
+                observaciones: document.getElementById("observaciones").value
+            }),
+            success: function (result) {
+                alert(result);
+                //$("#visa").prop("src", result);
+                //$("#visa2").prop("src",result);
+                $("#visa").html(result);
+                //location.href = '@Url.Action("Index", "Comida")';
+                $("#btnCancelar").prop("disabled", true);
+                $("#btnPagar").prop("disabled", true);
+                $("#observaciones").prop("disabled", true);
+                $("#chkPagoEfectivo").prop("disabled", true);
+                $("#pagaCon").prop("disabled", true);
+            },
+                async: true,
+                error: function (xhr, status, p3, p4) {
+                    alert("Error");
+                }
+            });
+        }
+
+        function cancelaCompra() {
+            $.ajax({
+                type: "POST",
+                url: '@Url.Action("Cancelar","Comida")',
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                data: JSON.stringify({
+                }),
+                success: function (result) {
+                    alert(result);
+                    location.href = '@Url.Action("Index", "Comida")';
+                },
+                async: true,
+                error: function (xhr, status, p3, p4) {
+                    alert("Error");
+                }
+            });
+        }
+
+        function cambioPago() {
+            if ($("#chkPagoEfectivo").prop("checked")) {
+                document.getElementById("btnPagar").innerText = "Pedir";
+            }
+            else {
+                document.getElementById("btnPagar").innerText = "Pagar";
+            }
+        }
+    </script>
+    <!-- google CryptoJS para SHA256 -->
+    @*<script LANGUAGE=JScript RUNAT=Server src="sha256.js">
+        </script>*@
+    @*<script LANGUAGE=JScript RUNAT=Server>
+            var today = new Date();
+            var formattedDate = today.formatDate("Y: m: dH: i: s");
+            /* Función que calcula el hash de los siguientes parámetros: - ID de tienda - Fecha /
+            Hora (ver $ dateTime arriba) - chargetotal - moneda (valor ISO numérico) - secreto compartido */
+            function createHash(chargetotal, moneda) {
+                // Por favor cambie el ID de la tienda por su ID de tienda individual var storeId = "10123456789";
+                // NOTA: NO codifique el secreto en ese script. Léalo de una base de datos. var sharedSecret = "sharedsecret";
+                var stringToHash = storeId + formattedDate + chargetotal + currency + sharedSecret;
+                var ascii = getHexFromChars(stringToHash);
+                var hash = CryptoJS.SHA256(ascii);
+                Response.Write(hash);
+            }
+            function getHexFromChars(valor) {
+                var char_str = valor;
+                var hex_str = "";
+                var i, n; para(i = 0; i < char_str.length; i++) {
+                    n = charToByte(char_str.charAt(i));
+                    if (n! = 0) {
+                        hex_str + = byteToHex(n);
+                    }
+                } return hex_str.toLowerCase();
+            }
+            function getDateTime() {
+                Response.Write(formattedDate);
+            }
+
+        </script>*@
+}

@@ -10,6 +10,7 @@ using System.Security.Cryptography;
 using System.Text;
 using System.Net;
 using System.IO;
+using Newtonsoft.Json;
 
 namespace Parrilla3.Controllers
 {
@@ -149,6 +150,35 @@ namespace Parrilla3.Controllers
         }
 
         [HttpPost]
+        public JsonResult GrabaObsPaga(int idVenta, string observaciones, decimal pagaCon)
+        {
+            try
+            {
+                pe.Ventas.Find(idVenta).observaciones = observaciones;
+                pe.Ventas.Find(idVenta).pagaCon = pagaCon;
+                pe.SaveChanges();
+
+                return Json("1", JsonRequestBehavior.AllowGet);
+            }
+            catch
+            {
+                return Json("0", JsonRequestBehavior.AllowGet);
+            }
+        }
+
+        [HttpPost]
+        public JsonResult ObtenerDatosComercio()
+        {
+            string result = string.Empty;
+
+            result = "{\"checkoutoption\":\"" + ConfigurationManager.AppSettings["checkoutoption"] + "\",\"sharedsecret\":\"" + ConfigurationManager.AppSettings["FDPassword"] + "\",\"timezone\":\"" + ConfigurationManager.AppSettings["timezone"] + "\",\"storename\":\"" + ConfigurationManager.AppSettings["StoreId"] + "\",\"currency\":\"" + ConfigurationManager.AppSettings["Moneda"] + "\"}";
+
+            //var res = JsonConvert.SerializeObject(result, Formatting.Indented);
+            //return Json(res);
+            return Json(result, JsonRequestBehavior.AllowGet);
+        }
+
+        [HttpPost]
         public JsonResult Aumento(decimal porcentaje)
         {
             foreach (Comidas comida in pe.Comidas.ToList())
@@ -261,12 +291,15 @@ namespace Parrilla3.Controllers
             }
             StreamReader sr = new StreamReader(webResponse.GetResponseStream());
             //resp = resp + sr.ReadToEnd().Trim();
+            
             resp = sr.ReadToEnd().Trim();
+            
             //resp = url;
+
             //Response.Redirect(url,true);
-            string BaseURL = ConfigurationManager.AppSettings["BaseURL"];
-            resp = resp.Replace("/connect/", BaseURL + "/connect/");
-            resp = resp.Replace("resources/js/", BaseURL + "/resources/js/");
+            //string BaseURL = ConfigurationManager.AppSettings["BaseURL"];
+            //resp = resp.Replace("/connect/", BaseURL + "/connect/");
+            //resp = resp.Replace("resources/js/", BaseURL + "/resources/js/");
             return ok;
         }
 
@@ -324,6 +357,7 @@ namespace Parrilla3.Controllers
                     tabla = tabla + "<tr><td><b>";
                     tabla = tabla + item.cantidad.ToString() + "</b></td><td>&nbsp;";
                     tabla = tabla + item.Comidas.nombre + ingredientes + "</td><td>&nbsp;$&nbsp;" + String.Format("{0:C}", (item.cantidad * item.Comidas.precio).ToString()) + "</td></tr>";
+                    ingredientes = string.Empty;
                 }
                 if (pagoEfectivo)
                 {
@@ -373,6 +407,7 @@ namespace Parrilla3.Controllers
                     tabla = tabla + "<tr><td><b>";
                     tabla = tabla + item.cantidad.ToString() + "</b></td><td>&nbsp;";
                     tabla = tabla + item.Comidas.nombre + ingredientes + "</td><td>&nbsp;$&nbsp;" + String.Format("{0:C}", (item.cantidad * item.Comidas.precio).ToString()) + "</td></tr>";
+                    ingredientes = string.Empty;
                 }
                 if (pagoEfectivo)
                 {

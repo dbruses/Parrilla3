@@ -67,6 +67,7 @@
           <Property Name="comidaId" Type="int" Nullable="false" />
           <Property Name="cantidad" Type="int" Nullable="false" />
           <Property Name="total" Type="float" Nullable="false" />
+          <Property Name="ingredientes" Type="varchar" MaxLength="500" />
         </EntityType>
         <EntityType Name="Salsas">
           <Key>
@@ -86,6 +87,8 @@
           <Property Name="fechaVenta" Type="datetime" Nullable="false" />
           <Property Name="total" Type="float" Nullable="false" />
           <Property Name="idUsuario" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="observaciones" Type="varchar" MaxLength="500" />
+          <Property Name="pagaCon" Type="decimal" Precision="16" Scale="2" />
         </EntityType>
         <Association Name="FK_Comidas_Categorias">
           <End Role="Categorias" Type="Self.Categorias" Multiplicity="1" />
@@ -216,6 +219,7 @@
           <Property Name="total" Type="Double" Nullable="false" />
           <NavigationProperty Name="Comidas" Relationship="Self.FK_ListaVenta_Comidas" FromRole="ListaVenta" ToRole="Comidas" />
           <NavigationProperty Name="Ventas" Relationship="Self.FK_ListaVenta_Ventas" FromRole="ListaVenta" ToRole="Ventas" />
+          <Property Name="ingredientes" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
         </EntityType>
         <EntityType Name="Salsas">
           <Key>
@@ -234,8 +238,10 @@
           <Property Name="idVenta" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="total" Type="Double" Nullable="false" />
           <NavigationProperty Name="ListaVenta" Relationship="Self.FK_ListaVenta_Ventas" FromRole="Ventas" ToRole="ListaVenta" />
-          <Property Name="idUsuario" Type="String" Nullable="false" />
+          <Property Name="idUsuario" Type="String" Nullable="false" MaxLength="128" Unicode="true" FixedLength="false" />
           <Property Name="fechaVenta" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="observaciones" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
+          <Property Name="pagaCon" Type="Decimal" Precision="16" Scale="2" />
         </EntityType>
         <Association Name="FK_Comidas_Categorias">
           <End Role="Categorias" Type="Self.Categorias" Multiplicity="1" />
@@ -362,6 +368,7 @@
           <EntitySetMapping Name="ListaVenta">
             <EntityTypeMapping TypeName="ParrillaModel.ListaVenta">
               <MappingFragment StoreEntitySet="ListaVenta">
+                <ScalarProperty Name="ingredientes" ColumnName="ingredientes" />
                 <ScalarProperty Name="idListaVenta" ColumnName="idListaVenta" />
                 <ScalarProperty Name="ventaId" ColumnName="ventaId" />
                 <ScalarProperty Name="comidaId" ColumnName="comidaId" />
@@ -384,6 +391,8 @@
           <EntitySetMapping Name="Ventas">
             <EntityTypeMapping TypeName="ParrillaModel.Ventas">
               <MappingFragment StoreEntitySet="Ventas">
+                <ScalarProperty Name="pagaCon" ColumnName="pagaCon" />
+                <ScalarProperty Name="observaciones" ColumnName="observaciones" />
                 <ScalarProperty Name="idUsuario" ColumnName="idUsuario" />
                 <ScalarProperty Name="fechaVenta" ColumnName="fechaVenta" />
                 <ScalarProperty Name="idVenta" ColumnName="idVenta" />

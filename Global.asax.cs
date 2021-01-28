@@ -16,6 +16,9 @@ namespace Parrilla3
             FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);
             RouteConfig.RegisterRoutes(RouteTable.Routes);
             BundleConfig.RegisterBundles(BundleTable.Bundles);
+
+            // Disable the HTTP Header X-Frame-Options: SAMEORIGIN
+            //System.Web.Helpers.AntiForgeryConfig.SuppressXFrameOptionsHeader = true;
         }
     }
 }
