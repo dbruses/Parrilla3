@@ -104,7 +104,14 @@
                                 }
                                 else
                                 {
-                                    <img id="image-holder" alt="Imagen no disponible" width="500" height="300" style="display: block; align-items:center; align-content: center; align-self: center;" src="~/@item.foto">
+                                    if (item.foto != null)
+                                    {
+                                        <img id="image-holder" alt="Imagen no disponible" width="500" height="300" style="display: block; align-items:center; align-content: center; align-self: center;" src="~/@item.foto">
+                                    }
+                                    else
+                                    {
+                                        <img id="image-holder" alt="Imagen no disponible" width="500" height="300" style="display: block; align-items:center; align-content: center; align-self: center;" src="~/images/comidas/blanco.jpg">
+                                    }
                                 }
                             </td>
                         </tr>

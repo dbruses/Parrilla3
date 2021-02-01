@@ -10,6 +10,7 @@
 {
     int count = 0;
     double total = 0;
+    string imagen = string.Empty;
 
     string uAg = Request.ServerVariables["HTTP_USER_AGENT"].ToLower();
     //Regex regEx = new Regex(@"android|iphone|ipad|ipod|blackberry|symbianos", RegexOptions.IgnoreCase);
@@ -46,13 +47,41 @@
                                             </dl>
                                         </div>
                                         <div class="col-xs-4 col-md-4 col-lg-4">
-                                            @if (item.foto != null)
+                                            @if (item.imagen != null)
                                             {
-                                                <img src="~/@item.foto" height="118" width="118" />
+                                                imagen = string.Empty;
+                                                switch (item.foto.Split('.')[1])
+                                                {
+                                                    case "png":
+                                                    case "PNG":
+                                                        imagen = "data:image/png;base64," + item.imagen;
+                                                        break;
+                                                    case "jpg":
+                                                    case "JPG":
+                                                    case "jpeg":
+                                                    case "JPEG":
+                                                        imagen = "data:image/jpeg;base64," + item.imagen;
+                                                        break;
+                                                    case "bmp":
+                                                    case "BMP":
+                                                        imagen = "data:image/bmp;base64," + item.imagen;
+                                                        break;
+                                                    default:
+                                                        imagen = "";
+                                                        break;
+                                                }
+                                                <img src="@imagen" height="118" width="118" />
                                             }
                                             else
                                             {
-                                                <img src="~/images/comidas/blanco.jpg" height="118" width="118" />
+                                                if (item.foto != null)
+                                                {
+                                                    <img src="~/@item.foto" height="118" width="118" />
+                                                }
+                                                else
+                                                {
+                                                    <img src="~/images/comidas/blanco.jpg" height="118" width="118" />
+                                                }
                                             }
                                         </div>
                                     </div>
@@ -81,13 +110,41 @@
                                             </dl>
                                         </div>
                                         <div class="col-xs-4 col-md-4 col-lg-4">
-                                            @if (item.foto != null)
+                                            @if (item.imagen != null)
                                             {
-                                                <img src="~/@item.foto" height="118" width="118" />
+                                                imagen = string.Empty;
+                                                switch (item.foto.Split('.')[1])
+                                                {
+                                                    case "png":
+                                                    case "PNG":
+                                                        imagen = "data:image/png;base64," + item.imagen;
+                                                        break;
+                                                    case "jpg":
+                                                    case "JPG":
+                                                    case "jpeg":
+                                                    case "JPEG":
+                                                        imagen = "data:image/jpeg;base64," + item.imagen;
+                                                        break;
+                                                    case "bmp":
+                                                    case "BMP":
+                                                        imagen = "data:image/bmp;base64," + item.imagen;
+                                                        break;
+                                                    default:
+                                                        imagen = "";
+                                                        break;
+                                                }
+                                                <img src="@imagen" height="118" width="118" />
                                             }
                                             else
                                             {
-                                                <img src="~/images/comidas/blanco.jpg" height="118" width="118" />
+                                                if (item.foto != null)
+                                                {
+                                                    <img src="~/@item.foto" height="118" width="118" />
+                                                }
+                                                else
+                                                {
+                                                    <img src="~/images/comidas/blanco.jpg" height="118" width="118" />
+                                                }
                                             }
                                         </div>
                                     </div>
@@ -127,13 +184,41 @@
                                             </dl>
                                         </div>
                                         <div class="col-xs-4 col-md-4 col-lg-4">
-                                            @if (item.foto != null)
+                                            @if (item.imagen != null)
                                             {
-                                                <img src="~/@item.foto" height="118" width="118" />
+                                                imagen = string.Empty;
+                                                switch (item.foto.Split('.')[1])
+                                                {
+                                                    case "png":
+                                                    case "PNG":
+                                                        imagen = "data:image/png;base64," + item.imagen;
+                                                        break;
+                                                    case "jpg":
+                                                    case "JPG":
+                                                    case "jpeg":
+                                                    case "JPEG":
+                                                        imagen = "data:image/jpeg;base64," + item.imagen;
+                                                        break;
+                                                    case "bmp":
+                                                    case "BMP":
+                                                        imagen = "data:image/bmp;base64," + item.imagen;
+                                                        break;
+                                                    default:
+                                                        imagen = "";
+                                                        break;
+                                                }
+                                                <img src="@imagen" height="118" width="118" />
                                             }
                                             else
                                             {
-                                                <img src="~/images/comidas/blanco.jpg" height="118" width="118" />
+                                                if (item.foto != null)
+                                                {
+                                                    <img src="~/@item.foto" height="118" width="118" />
+                                                }
+                                                else
+                                                {
+                                                    <img src="~/images/comidas/blanco.jpg" height="118" width="118" />
+                                                }
                                             }
                                         </div>
                                     </div>
@@ -162,13 +247,41 @@
                                             </dl>
                                         </div>
                                         <div class="col-xs-4 col-md-4 col-lg-4">
-                                            @if (item.foto != null)
+                                            @if (item.imagen != null)
                                             {
-                                                <img src="~/@item.foto" height="118" width="118" />
+                                                imagen = string.Empty;
+                                                switch (item.foto.Split('.')[1])
+                                                {
+                                                    case "png":
+                                                    case "PNG":
+                                                        imagen = "data:image/png;base64," + item.imagen;
+                                                        break;
+                                                    case "jpg":
+                                                    case "JPG":
+                                                    case "jpeg":
+                                                    case "JPEG":
+                                                        imagen = "data:image/jpeg;base64," + item.imagen;
+                                                        break;
+                                                    case "bmp":
+                                                    case "BMP":
+                                                        imagen = "data:image/bmp;base64," + item.imagen;
+                                                        break;
+                                                    default:
+                                                        imagen = "";
+                                                        break;
+                                                }
+                                                <img src="@imagen" height="118" width="118" />
                                             }
                                             else
                                             {
-                                                <img src="~/images/comidas/blanco.jpg" height="118" width="118" />
+                                                if (item.foto != null)
+                                                {
+                                                    <img src="~/@item.foto" height="118" width="118" />
+                                                }
+                                                else
+                                                {
+                                                    <img src="~/images/comidas/blanco.jpg" height="118" width="118" />
+                                                }
                                             }
                                         </div>
                                     </div>
@@ -207,13 +320,41 @@
                                             </dl>
                                         </div>
                                         <div class="col-xs-4 col-md-4 col-lg-4">
-                                            @if (item.foto != null)
+                                            @if (item.imagen != null)
                                             {
-                                                <img src="~/@item.foto" height="118" width="118" />
+                                                imagen = string.Empty;
+                                                switch (item.foto.Split('.')[1])
+                                                {
+                                                    case "png":
+                                                    case "PNG":
+                                                        imagen = "data:image/png;base64," + item.imagen;
+                                                        break;
+                                                    case "jpg":
+                                                    case "JPG":
+                                                    case "jpeg":
+                                                    case "JPEG":
+                                                        imagen = "data:image/jpeg;base64," + item.imagen;
+                                                        break;
+                                                    case "bmp":
+                                                    case "BMP":
+                                                        imagen = "data:image/bmp;base64," + item.imagen;
+                                                        break;
+                                                    default:
+                                                        imagen = "";
+                                                        break;
+                                                }
+                                                <img src="@imagen" height="118" width="118" />
                                             }
                                             else
                                             {
-                                                <img src="~/images/comidas/blanco.jpg" height="118" width="118" />
+                                                if (item.foto != null)
+                                                {
+                                                    <img src="~/@item.foto" height="118" width="118" />
+                                                }
+                                                else
+                                                {
+                                                    <img src="~/images/comidas/blanco.jpg" height="118" width="118" />
+                                                }
                                             }
                                         </div>
                                     </div>
@@ -242,13 +383,41 @@
                                             </dl>
                                         </div>
                                         <div class="col-xs-4 col-md-4 col-lg-4">
-                                            @if (item.foto != null)
+                                            @if (item.imagen != null)
                                             {
-                                                <img src="~/@item.foto" height="118" width="118" />
+                                                imagen = string.Empty;
+                                                switch (item.foto.Split('.')[1])
+                                                {
+                                                    case "png":
+                                                    case "PNG":
+                                                        imagen = "data:image/png;base64," + item.imagen;
+                                                        break;
+                                                    case "jpg":
+                                                    case "JPG":
+                                                    case "jpeg":
+                                                    case "JPEG":
+                                                        imagen = "data:image/jpeg;base64," + item.imagen;
+                                                        break;
+                                                    case "bmp":
+                                                    case "BMP":
+                                                        imagen = "data:image/bmp;base64," + item.imagen;
+                                                        break;
+                                                    default:
+                                                        imagen = "";
+                                                        break;
+                                                }
+                                                <img src="@imagen" height="118" width="118" />
                                             }
                                             else
                                             {
-                                                <img src="~/images/comidas/blanco.jpg" height="118" width="118" />
+                                                if (item.foto != null)
+                                                {
+                                                    <img src="~/@item.foto" height="118" width="118" />
+                                                }
+                                                else
+                                                {
+                                                    <img src="~/images/comidas/blanco.jpg" height="118" width="118" />
+                                                }
                                             }
                                         </div>
                                     </div>
@@ -287,13 +456,41 @@
                                             </dl>
                                         </div>
                                         <div class="col-xs-4 col-md-4 col-lg-4">
-                                            @if (item.foto != null)
+                                            @if (item.imagen != null)
                                             {
-                                                <img src="~/@item.foto" height="118" width="118" />
+                                                imagen = string.Empty;
+                                                switch (item.foto.Split('.')[1])
+                                                {
+                                                    case "png":
+                                                    case "PNG":
+                                                        imagen = "data:image/png;base64," + item.imagen;
+                                                        break;
+                                                    case "jpg":
+                                                    case "JPG":
+                                                    case "jpeg":
+                                                    case "JPEG":
+                                                        imagen = "data:image/jpeg;base64," + item.imagen;
+                                                        break;
+                                                    case "bmp":
+                                                    case "BMP":
+                                                        imagen = "data:image/bmp;base64," + item.imagen;
+                                                        break;
+                                                    default:
+                                                        imagen = "";
+                                                        break;
+                                                }
+                                                <img src="@imagen" height="118" width="118" />
                                             }
                                             else
                                             {
-                                                <img src="~/images/comidas/blanco.jpg" height="118" width="118" />
+                                                if (item.foto != null)
+                                                {
+                                                    <img src="~/@item.foto" height="118" width="118" />
+                                                }
+                                                else
+                                                {
+                                                    <img src="~/images/comidas/blanco.jpg" height="118" width="118" />
+                                                }
                                             }
                                         </div>
                                     </div>
@@ -322,13 +519,41 @@
                                             </dl>
                                         </div>
                                         <div class="col-xs-4 col-md-4 col-lg-4">
-                                            @if (item.foto != null)
+                                            @if (item.imagen != null)
                                             {
-                                                <img src="~/@item.foto" height="118" width="118" />
+                                                imagen = string.Empty;
+                                                switch (item.foto.Split('.')[1])
+                                                {
+                                                    case "png":
+                                                    case "PNG":
+                                                        imagen = "data:image/png;base64," + item.imagen;
+                                                        break;
+                                                    case "jpg":
+                                                    case "JPG":
+                                                    case "jpeg":
+                                                    case "JPEG":
+                                                        imagen = "data:image/jpeg;base64," + item.imagen;
+                                                        break;
+                                                    case "bmp":
+                                                    case "BMP":
+                                                        imagen = "data:image/bmp;base64," + item.imagen;
+                                                        break;
+                                                    default:
+                                                        imagen = "";
+                                                        break;
+                                                }
+                                                <img src="@imagen" height="118" width="118" />
                                             }
                                             else
                                             {
-                                                <img src="~/images/comidas/blanco.jpg" height="118" width="118" />
+                                                if (item.foto != null)
+                                                {
+                                                    <img src="~/@item.foto" height="118" width="118" />
+                                                }
+                                                else
+                                                {
+                                                    <img src="~/images/comidas/blanco.jpg" height="118" width="118" />
+                                                }
                                             }
                                         </div>
                                     </div>
@@ -367,13 +592,41 @@
                                             </dl>
                                         </div>
                                         <div class="col-xs-4 col-md-4 col-lg-4">
-                                            @if (item.foto != null)
+                                            @if (item.imagen != null)
                                             {
-                                                <img src="~/@item.foto" height="118" width="118" />
+                                                imagen = string.Empty;
+                                                switch (item.foto.Split('.')[1])
+                                                {
+                                                    case "png":
+                                                    case "PNG":
+                                                        imagen = "data:image/png;base64," + item.imagen;
+                                                        break;
+                                                    case "jpg":
+                                                    case "JPG":
+                                                    case "jpeg":
+                                                    case "JPEG":
+                                                        imagen = "data:image/jpeg;base64," + item.imagen;
+                                                        break;
+                                                    case "bmp":
+                                                    case "BMP":
+                                                        imagen = "data:image/bmp;base64," + item.imagen;
+                                                        break;
+                                                    default:
+                                                        imagen = "";
+                                                        break;
+                                                }
+                                                <img src="@imagen" height="118" width="118" />
                                             }
                                             else
                                             {
-                                                <img src="~/images/comidas/blanco.jpg" height="118" width="118" />
+                                                if (item.foto != null)
+                                                {
+                                                    <img src="~/@item.foto" height="118" width="118" />
+                                                }
+                                                else
+                                                {
+                                                    <img src="~/images/comidas/blanco.jpg" height="118" width="118" />
+                                                }
                                             }
                                         </div>
                                     </div>
@@ -402,13 +655,41 @@
                                             </dl>
                                         </div>
                                         <div class="col-xs-4 col-md-4 col-lg-4">
-                                            @if (item.foto != null)
+                                            @if (item.imagen != null)
                                             {
-                                                <img src="~/@item.foto" height="118" width="118" />
+                                                imagen = string.Empty;
+                                                switch (item.foto.Split('.')[1])
+                                                {
+                                                    case "png":
+                                                    case "PNG":
+                                                        imagen = "data:image/png;base64," + item.imagen;
+                                                        break;
+                                                    case "jpg":
+                                                    case "JPG":
+                                                    case "jpeg":
+                                                    case "JPEG":
+                                                        imagen = "data:image/jpeg;base64," + item.imagen;
+                                                        break;
+                                                    case "bmp":
+                                                    case "BMP":
+                                                        imagen = "data:image/bmp;base64," + item.imagen;
+                                                        break;
+                                                    default:
+                                                        imagen = "";
+                                                        break;
+                                                }
+                                                <img src="@imagen" height="118" width="118" />
                                             }
                                             else
                                             {
-                                                <img src="~/images/comidas/blanco.jpg" height="118" width="118" />
+                                                if (item.foto != null)
+                                                {
+                                                    <img src="~/@item.foto" height="118" width="118" />
+                                                }
+                                                else
+                                                {
+                                                    <img src="~/images/comidas/blanco.jpg" height="118" width="118" />
+                                                }
                                             }
                                         </div>
                                     </div>
@@ -447,13 +728,41 @@
                                             </dl>
                                         </div>
                                         <div class="col-xs-4 col-md-4 col-lg-4">
-                                            @if (item.foto != null)
+                                            @if (item.imagen != null)
                                             {
-                                                <img src="~/@item.foto" height="118" width="118" />
+                                                imagen = string.Empty;
+                                                switch (item.foto.Split('.')[1])
+                                                {
+                                                    case "png":
+                                                    case "PNG":
+                                                        imagen = "data:image/png;base64," + item.imagen;
+                                                        break;
+                                                    case "jpg":
+                                                    case "JPG":
+                                                    case "jpeg":
+                                                    case "JPEG":
+                                                        imagen = "data:image/jpeg;base64," + item.imagen;
+                                                        break;
+                                                    case "bmp":
+                                                    case "BMP":
+                                                        imagen = "data:image/bmp;base64," + item.imagen;
+                                                        break;
+                                                    default:
+                                                        imagen = "";
+                                                        break;
+                                                }
+                                                <img src="@imagen" height="118" width="118" />
                                             }
                                             else
                                             {
-                                                <img src="~/images/comidas/blanco.jpg" height="118" width="118" />
+                                                if (item.foto != null)
+                                                {
+                                                    <img src="~/@item.foto" height="118" width="118" />
+                                                }
+                                                else
+                                                {
+                                                    <img src="~/images/comidas/blanco.jpg" height="118" width="118" />
+                                                }
                                             }
                                         </div>
                                     </div>
@@ -482,13 +791,41 @@
                                             </dl>
                                         </div>
                                         <div class="col-xs-4 col-md-4 col-lg-4">
-                                            @if (item.foto != null)
+                                            @if (item.imagen != null)
                                             {
-                                                <img src="~/@item.foto" height="118" width="118" />
+                                                imagen = string.Empty;
+                                                switch (item.foto.Split('.')[1])
+                                                {
+                                                    case "png":
+                                                    case "PNG":
+                                                        imagen = "data:image/png;base64," + item.imagen;
+                                                        break;
+                                                    case "jpg":
+                                                    case "JPG":
+                                                    case "jpeg":
+                                                    case "JPEG":
+                                                        imagen = "data:image/jpeg;base64," + item.imagen;
+                                                        break;
+                                                    case "bmp":
+                                                    case "BMP":
+                                                        imagen = "data:image/bmp;base64," + item.imagen;
+                                                        break;
+                                                    default:
+                                                        imagen = "";
+                                                        break;
+                                                }
+                                                <img src="@imagen" height="118" width="118" />
                                             }
                                             else
                                             {
-                                                <img src="~/images/comidas/blanco.jpg" height="118" width="118" />
+                                                if (item.foto != null)
+                                                {
+                                                    <img src="~/@item.foto" height="118" width="118" />
+                                                }
+                                                else
+                                                {
+                                                    <img src="~/images/comidas/blanco.jpg" height="118" width="118" />
+                                                }
                                             }
                                         </div>
                                     </div>
@@ -527,13 +864,41 @@
                                             </dl>
                                         </div>
                                         <div class="col-xs-4 col-md-4 col-lg-4">
-                                            @if (item.foto != null)
+                                            @if (item.imagen != null)
                                             {
-                                                <img src="~/@item.foto" height="118" width="118" />
+                                                imagen = string.Empty;
+                                                switch (item.foto.Split('.')[1])
+                                                {
+                                                    case "png":
+                                                    case "PNG":
+                                                        imagen = "data:image/png;base64," + item.imagen;
+                                                        break;
+                                                    case "jpg":
+                                                    case "JPG":
+                                                    case "jpeg":
+                                                    case "JPEG":
+                                                        imagen = "data:image/jpeg;base64," + item.imagen;
+                                                        break;
+                                                    case "bmp":
+                                                    case "BMP":
+                                                        imagen = "data:image/bmp;base64," + item.imagen;
+                                                        break;
+                                                    default:
+                                                        imagen = "";
+                                                        break;
+                                                }
+                                                <img src="@imagen" height="118" width="118" />
                                             }
                                             else
                                             {
-                                                <img src="~/images/comidas/blanco.jpg" height="118" width="118" />
+                                                if (item.foto != null)
+                                                {
+                                                    <img src="~/@item.foto" height="118" width="118" />
+                                                }
+                                                else
+                                                {
+                                                    <img src="~/images/comidas/blanco.jpg" height="118" width="118" />
+                                                }
                                             }
                                         </div>
                                     </div>
@@ -562,13 +927,41 @@
                                             </dl>
                                         </div>
                                         <div class="col-xs-4 col-md-4 col-lg-4">
-                                            @if (item.foto != null)
+                                            @if (item.imagen != null)
                                             {
-                                                <img src="~/@item.foto" height="118" width="118" />
+                                                imagen = string.Empty;
+                                                switch (item.foto.Split('.')[1])
+                                                {
+                                                    case "png":
+                                                    case "PNG":
+                                                        imagen = "data:image/png;base64," + item.imagen;
+                                                        break;
+                                                    case "jpg":
+                                                    case "JPG":
+                                                    case "jpeg":
+                                                    case "JPEG":
+                                                        imagen = "data:image/jpeg;base64," + item.imagen;
+                                                        break;
+                                                    case "bmp":
+                                                    case "BMP":
+                                                        imagen = "data:image/bmp;base64," + item.imagen;
+                                                        break;
+                                                    default:
+                                                        imagen = "";
+                                                        break;
+                                                }
+                                                <img src="@imagen" height="118" width="118" />
                                             }
                                             else
                                             {
-                                                <img src="~/images/comidas/blanco.jpg" height="118" width="118" />
+                                                if (item.foto != null)
+                                                {
+                                                    <img src="~/@item.foto" height="118" width="118" />
+                                                }
+                                                else
+                                                {
+                                                    <img src="~/images/comidas/blanco.jpg" height="118" width="118" />
+                                                }
                                             }
                                         </div>
                                     </div>
@@ -607,13 +1000,41 @@
                                             </dl>
                                         </div>
                                         <div class="col-xs-4 col-md-4 col-lg-4">
-                                            @if (item.foto != null)
+                                            @if (item.imagen != null)
                                             {
-                                                <img src="~/@item.foto" height="118" width="118" />
+                                                imagen = string.Empty;
+                                                switch (item.foto.Split('.')[1])
+                                                {
+                                                    case "png":
+                                                    case "PNG":
+                                                        imagen = "data:image/png;base64," + item.imagen;
+                                                        break;
+                                                    case "jpg":
+                                                    case "JPG":
+                                                    case "jpeg":
+                                                    case "JPEG":
+                                                        imagen = "data:image/jpeg;base64," + item.imagen;
+                                                        break;
+                                                    case "bmp":
+                                                    case "BMP":
+                                                        imagen = "data:image/bmp;base64," + item.imagen;
+                                                        break;
+                                                    default:
+                                                        imagen = "";
+                                                        break;
+                                                }
+                                                <img src="@imagen" height="118" width="118" />
                                             }
                                             else
                                             {
-                                                <img src="~/images/comidas/blanco.jpg" height="118" width="118" />
+                                                if (item.foto != null)
+                                                {
+                                                    <img src="~/@item.foto" height="118" width="118" />
+                                                }
+                                                else
+                                                {
+                                                    <img src="~/images/comidas/blanco.jpg" height="118" width="118" />
+                                                }
                                             }
                                         </div>
                                     </div>
@@ -642,13 +1063,41 @@
                                             </dl>
                                         </div>
                                         <div class="col-xs-4 col-md-4 col-lg-4">
-                                            @if (item.foto != null)
+                                            @if (item.imagen != null)
                                             {
-                                                <img src="~/@item.foto" height="118" width="118" />
+                                                imagen = string.Empty;
+                                                switch (item.foto.Split('.')[1])
+                                                {
+                                                    case "png":
+                                                    case "PNG":
+                                                        imagen = "data:image/png;base64," + item.imagen;
+                                                        break;
+                                                    case "jpg":
+                                                    case "JPG":
+                                                    case "jpeg":
+                                                    case "JPEG":
+                                                        imagen = "data:image/jpeg;base64," + item.imagen;
+                                                        break;
+                                                    case "bmp":
+                                                    case "BMP":
+                                                        imagen = "data:image/bmp;base64," + item.imagen;
+                                                        break;
+                                                    default:
+                                                        imagen = "";
+                                                        break;
+                                                }
+                                                <img src="@imagen" height="118" width="118" />
                                             }
                                             else
                                             {
-                                                <img src="~/images/comidas/blanco.jpg" height="118" width="118" />
+                                                if (item.foto != null)
+                                                {
+                                                    <img src="~/@item.foto" height="118" width="118" />
+                                                }
+                                                else
+                                                {
+                                                    <img src="~/images/comidas/blanco.jpg" height="118" width="118" />
+                                                }
                                             }
                                         </div>
                                     </div>
@@ -687,13 +1136,41 @@
                                             </dl>
                                         </div>
                                         <div class="col-xs-4 col-md-4 col-lg-4">
-                                            @if (item.foto != null)
+                                            @if (item.imagen != null)
                                             {
-                                                <img src="~/@item.foto" height="118" width="118" />
+                                                imagen = string.Empty;
+                                                switch (item.foto.Split('.')[1])
+                                                {
+                                                    case "png":
+                                                    case "PNG":
+                                                        imagen = "data:image/png;base64," + item.imagen;
+                                                        break;
+                                                    case "jpg":
+                                                    case "JPG":
+                                                    case "jpeg":
+                                                    case "JPEG":
+                                                        imagen = "data:image/jpeg;base64," + item.imagen;
+                                                        break;
+                                                    case "bmp":
+                                                    case "BMP":
+                                                        imagen = "data:image/bmp;base64," + item.imagen;
+                                                        break;
+                                                    default:
+                                                        imagen = "";
+                                                        break;
+                                                }
+                                                <img src="@imagen" height="118" width="118" />
                                             }
                                             else
                                             {
-                                                <img src="~/images/comidas/blanco.jpg" height="118" width="118" />
+                                                if (item.foto != null)
+                                                {
+                                                    <img src="~/@item.foto" height="118" width="118" />
+                                                }
+                                                else
+                                                {
+                                                    <img src="~/images/comidas/blanco.jpg" height="118" width="118" />
+                                                }
                                             }
                                         </div>
                                     </div>
@@ -722,13 +1199,41 @@
                                             </dl>
                                         </div>
                                         <div class="col-xs-4 col-md-4 col-lg-4">
-                                            @if (item.foto != null)
+                                            @if (item.imagen != null)
                                             {
-                                                <img src="~/@item.foto" height="118" width="118" />
+                                                imagen = string.Empty;
+                                                switch (item.foto.Split('.')[1])
+                                                {
+                                                    case "png":
+                                                    case "PNG":
+                                                        imagen = "data:image/png;base64," + item.imagen;
+                                                        break;
+                                                    case "jpg":
+                                                    case "JPG":
+                                                    case "jpeg":
+                                                    case "JPEG":
+                                                        imagen = "data:image/jpeg;base64," + item.imagen;
+                                                        break;
+                                                    case "bmp":
+                                                    case "BMP":
+                                                        imagen = "data:image/bmp;base64," + item.imagen;
+                                                        break;
+                                                    default:
+                                                        imagen = "";
+                                                        break;
+                                                }
+                                                <img src="@imagen" height="118" width="118" />
                                             }
                                             else
                                             {
-                                                <img src="~/images/comidas/blanco.jpg" height="118" width="118" />
+                                                if (item.foto != null)
+                                                {
+                                                    <img src="~/@item.foto" height="118" width="118" />
+                                                }
+                                                else
+                                                {
+                                                    <img src="~/images/comidas/blanco.jpg" height="118" width="118" />
+                                                }
                                             }
                                         </div>
                                     </div>
@@ -767,13 +1272,41 @@
                                             </dl>
                                         </div>
                                         <div class="col-xs-4 col-md-4 col-lg-4">
-                                            @if (item.foto != null)
+                                            @if (item.imagen != null)
                                             {
-                                                <img src="~/@item.foto" height="118" width="118" />
+                                                imagen = string.Empty;
+                                                switch (item.foto.Split('.')[1])
+                                                {
+                                                    case "png":
+                                                    case "PNG":
+                                                        imagen = "data:image/png;base64," + item.imagen;
+                                                        break;
+                                                    case "jpg":
+                                                    case "JPG":
+                                                    case "jpeg":
+                                                    case "JPEG":
+                                                        imagen = "data:image/jpeg;base64," + item.imagen;
+                                                        break;
+                                                    case "bmp":
+                                                    case "BMP":
+                                                        imagen = "data:image/bmp;base64," + item.imagen;
+                                                        break;
+                                                    default:
+                                                        imagen = "";
+                                                        break;
+                                                }
+                                                <img src="@imagen" height="118" width="118" />
                                             }
                                             else
                                             {
-                                                <img src="~/images/comidas/blanco.jpg" height="118" width="118" />
+                                                if (item.foto != null)
+                                                {
+                                                    <img src="~/@item.foto" height="118" width="118" />
+                                                }
+                                                else
+                                                {
+                                                    <img src="~/images/comidas/blanco.jpg" height="118" width="118" />
+                                                }
                                             }
                                         </div>
                                     </div>
@@ -802,13 +1335,41 @@
                                             </dl>
                                         </div>
                                         <div class="col-xs-4 col-md-4 col-lg-4">
-                                            @if (item.foto != null)
+                                            @if (item.imagen != null)
                                             {
-                                                <img src="~/@item.foto" height="118" width="118" />
+                                                imagen = string.Empty;
+                                                switch (item.foto.Split('.')[1])
+                                                {
+                                                    case "png":
+                                                    case "PNG":
+                                                        imagen = "data:image/png;base64," + item.imagen;
+                                                        break;
+                                                    case "jpg":
+                                                    case "JPG":
+                                                    case "jpeg":
+                                                    case "JPEG":
+                                                        imagen = "data:image/jpeg;base64," + item.imagen;
+                                                        break;
+                                                    case "bmp":
+                                                    case "BMP":
+                                                        imagen = "data:image/bmp;base64," + item.imagen;
+                                                        break;
+                                                    default:
+                                                        imagen = "";
+                                                        break;
+                                                }
+                                                <img src="@imagen" height="118" width="118" />
                                             }
                                             else
                                             {
-                                                <img src="~/images/comidas/blanco.jpg" height="118" width="118" />
+                                                if (item.foto != null)
+                                                {
+                                                    <img src="~/@item.foto" height="118" width="118" />
+                                                }
+                                                else
+                                                {
+                                                    <img src="~/images/comidas/blanco.jpg" height="118" width="118" />
+                                                }
                                             }
                                         </div>
                                     </div>
@@ -847,13 +1408,41 @@
                                             </dl>
                                         </div>
                                         <div class="col-xs-4 col-md-4 col-lg-4">
-                                            @if (item.foto != null)
+                                            @if (item.imagen != null)
                                             {
-                                                <img src="~/@item.foto" height="118" width="118" />
+                                                imagen = string.Empty;
+                                                switch (item.foto.Split('.')[1])
+                                                {
+                                                    case "png":
+                                                    case "PNG":
+                                                        imagen = "data:image/png;base64," + item.imagen;
+                                                        break;
+                                                    case "jpg":
+                                                    case "JPG":
+                                                    case "jpeg":
+                                                    case "JPEG":
+                                                        imagen = "data:image/jpeg;base64," + item.imagen;
+                                                        break;
+                                                    case "bmp":
+                                                    case "BMP":
+                                                        imagen = "data:image/bmp;base64," + item.imagen;
+                                                        break;
+                                                    default:
+                                                        imagen = "";
+                                                        break;
+                                                }
+                                                <img src="@imagen" height="118" width="118" />
                                             }
                                             else
                                             {
-                                                <img src="~/images/comidas/blanco.jpg" height="118" width="118" />
+                                                if (item.foto != null)
+                                                {
+                                                    <img src="~/@item.foto" height="118" width="118" />
+                                                }
+                                                else
+                                                {
+                                                    <img src="~/images/comidas/blanco.jpg" height="118" width="118" />
+                                                }
                                             }
                                         </div>
                                     </div>
@@ -882,13 +1471,41 @@
                                             </dl>
                                         </div>
                                         <div class="col-xs-4 col-md-4 col-lg-4">
-                                            @if (item.foto != null)
+                                            @if (item.imagen != null)
                                             {
-                                                <img src="~/@item.foto" height="118" width="118" />
+                                                imagen = string.Empty;
+                                                switch (item.foto.Split('.')[1])
+                                                {
+                                                    case "png":
+                                                    case "PNG":
+                                                        imagen = "data:image/png;base64," + item.imagen;
+                                                        break;
+                                                    case "jpg":
+                                                    case "JPG":
+                                                    case "jpeg":
+                                                    case "JPEG":
+                                                        imagen = "data:image/jpeg;base64," + item.imagen;
+                                                        break;
+                                                    case "bmp":
+                                                    case "BMP":
+                                                        imagen = "data:image/bmp;base64," + item.imagen;
+                                                        break;
+                                                    default:
+                                                        imagen = "";
+                                                        break;
+                                                }
+                                                <img src="@imagen" height="118" width="118" />
                                             }
                                             else
                                             {
-                                                <img src="~/images/comidas/blanco.jpg" height="118" width="118" />
+                                                if (item.foto != null)
+                                                {
+                                                    <img src="~/@item.foto" height="118" width="118" />
+                                                }
+                                                else
+                                                {
+                                                    <img src="~/images/comidas/blanco.jpg" height="118" width="118" />
+                                                }
                                             }
                                         </div>
                                     </div>
@@ -927,13 +1544,41 @@
                                             </dl>
                                         </div>
                                         <div class="col-xs-4 col-md-4 col-lg-4">
-                                            @if (item.foto != null)
+                                            @if (item.imagen != null)
                                             {
-                                                <img src="~/@item.foto" height="118" width="118" />
+                                                imagen = string.Empty;
+                                                switch (item.foto.Split('.')[1])
+                                                {
+                                                    case "png":
+                                                    case "PNG":
+                                                        imagen = "data:image/png;base64," + item.imagen;
+                                                        break;
+                                                    case "jpg":
+                                                    case "JPG":
+                                                    case "jpeg":
+                                                    case "JPEG":
+                                                        imagen = "data:image/jpeg;base64," + item.imagen;
+                                                        break;
+                                                    case "bmp":
+                                                    case "BMP":
+                                                        imagen = "data:image/bmp;base64," + item.imagen;
+                                                        break;
+                                                    default:
+                                                        imagen = "";
+                                                        break;
+                                                }
+                                                <img src="@imagen" height="118" width="118" />
                                             }
                                             else
                                             {
-                                                <img src="~/images/comidas/blanco.jpg" height="118" width="118" />
+                                                if (item.foto != null)
+                                                {
+                                                    <img src="~/@item.foto" height="118" width="118" />
+                                                }
+                                                else
+                                                {
+                                                    <img src="~/images/comidas/blanco.jpg" height="118" width="118" />
+                                                }
                                             }
                                         </div>
                                     </div>
@@ -962,13 +1607,41 @@
                                             </dl>
                                         </div>
                                         <div class="col-xs-4 col-md-4 col-lg-4">
-                                            @if (item.foto != null)
+                                            @if (item.imagen != null)
                                             {
-                                                <img src="~/@item.foto" height="118" width="118" />
+                                                imagen = string.Empty;
+                                                switch (item.foto.Split('.')[1])
+                                                {
+                                                    case "png":
+                                                    case "PNG":
+                                                        imagen = "data:image/png;base64," + item.imagen;
+                                                        break;
+                                                    case "jpg":
+                                                    case "JPG":
+                                                    case "jpeg":
+                                                    case "JPEG":
+                                                        imagen = "data:image/jpeg;base64," + item.imagen;
+                                                        break;
+                                                    case "bmp":
+                                                    case "BMP":
+                                                        imagen = "data:image/bmp;base64," + item.imagen;
+                                                        break;
+                                                    default:
+                                                        imagen = "";
+                                                        break;
+                                                }
+                                                <img src="@imagen" height="118" width="118" />
                                             }
                                             else
                                             {
-                                                <img src="~/images/comidas/blanco.jpg" height="118" width="118" />
+                                                if (item.foto != null)
+                                                {
+                                                    <img src="~/@item.foto" height="118" width="118" />
+                                                }
+                                                else
+                                                {
+                                                    <img src="~/images/comidas/blanco.jpg" height="118" width="118" />
+                                                }
                                             }
                                         </div>
                                     </div>
@@ -1007,13 +1680,41 @@
                                             </dl>
                                         </div>
                                         <div class="col-xs-4 col-md-4 col-lg-4">
-                                            @if (item.foto != null)
+                                            @if (item.imagen != null)
                                             {
-                                                <img src="~/@item.foto" height="118" width="118" />
+                                                imagen = string.Empty;
+                                                switch (item.foto.Split('.')[1])
+                                                {
+                                                    case "png":
+                                                    case "PNG":
+                                                        imagen = "data:image/png;base64," + item.imagen;
+                                                        break;
+                                                    case "jpg":
+                                                    case "JPG":
+                                                    case "jpeg":
+                                                    case "JPEG":
+                                                        imagen = "data:image/jpeg;base64," + item.imagen;
+                                                        break;
+                                                    case "bmp":
+                                                    case "BMP":
+                                                        imagen = "data:image/bmp;base64," + item.imagen;
+                                                        break;
+                                                    default:
+                                                        imagen = "";
+                                                        break;
+                                                }
+                                                <img src="@imagen" height="118" width="118" />
                                             }
                                             else
                                             {
-                                                <img src="~/images/comidas/blanco.jpg" height="118" width="118" />
+                                                if (item.foto != null)
+                                                {
+                                                    <img src="~/@item.foto" height="118" width="118" />
+                                                }
+                                                else
+                                                {
+                                                    <img src="~/images/comidas/blanco.jpg" height="118" width="118" />
+                                                }
                                             }
                                         </div>
                                     </div>
@@ -1042,13 +1743,41 @@
                                             </dl>
                                         </div>
                                         <div class="col-xs-4 col-md-4 col-lg-4">
-                                            @if (item.foto != null)
+                                            @if (item.imagen != null)
                                             {
-                                                <img src="~/@item.foto" height="118" width="118" />
+                                                imagen = string.Empty;
+                                                switch (item.foto.Split('.')[1])
+                                                {
+                                                    case "png":
+                                                    case "PNG":
+                                                        imagen = "data:image/png;base64," + item.imagen;
+                                                        break;
+                                                    case "jpg":
+                                                    case "JPG":
+                                                    case "jpeg":
+                                                    case "JPEG":
+                                                        imagen = "data:image/jpeg;base64," + item.imagen;
+                                                        break;
+                                                    case "bmp":
+                                                    case "BMP":
+                                                        imagen = "data:image/bmp;base64," + item.imagen;
+                                                        break;
+                                                    default:
+                                                        imagen = "";
+                                                        break;
+                                                }
+                                                <img src="@imagen" height="118" width="118" />
                                             }
                                             else
                                             {
-                                                <img src="~/images/comidas/blanco.jpg" height="118" width="118" />
+                                                if (item.foto != null)
+                                                {
+                                                    <img src="~/@item.foto" height="118" width="118" />
+                                                }
+                                                else
+                                                {
+                                                    <img src="~/images/comidas/blanco.jpg" height="118" width="118" />
+                                                }
                                             }
                                         </div>
                                     </div>
@@ -1087,13 +1816,41 @@
                                             </dl>
                                         </div>
                                         <div class="col-xs-4 col-md-4 col-lg-4">
-                                            @if (item.foto != null)
+                                            @if (item.imagen != null)
                                             {
-                                                <img src="~/@item.foto" height="118" width="118" />
+                                                imagen = string.Empty;
+                                                switch (item.foto.Split('.')[1])
+                                                {
+                                                    case "png":
+                                                    case "PNG":
+                                                        imagen = "data:image/png;base64," + item.imagen;
+                                                        break;
+                                                    case "jpg":
+                                                    case "JPG":
+                                                    case "jpeg":
+                                                    case "JPEG":
+                                                        imagen = "data:image/jpeg;base64," + item.imagen;
+                                                        break;
+                                                    case "bmp":
+                                                    case "BMP":
+                                                        imagen = "data:image/bmp;base64," + item.imagen;
+                                                        break;
+                                                    default:
+                                                        imagen = "";
+                                                        break;
+                                                }
+                                                <img src="@imagen" height="118" width="118" />
                                             }
                                             else
                                             {
-                                                <img src="~/images/comidas/blanco.jpg" height="118" width="118" />
+                                                if (item.foto != null)
+                                                {
+                                                    <img src="~/@item.foto" height="118" width="118" />
+                                                }
+                                                else
+                                                {
+                                                    <img src="~/images/comidas/blanco.jpg" height="118" width="118" />
+                                                }
                                             }
                                         </div>
                                     </div>
@@ -1122,13 +1879,41 @@
                                             </dl>
                                         </div>
                                         <div class="col-xs-4 col-md-4 col-lg-4">
-                                            @if (item.foto != null)
+                                            @if (item.imagen != null)
                                             {
-                                                <img src="~/@item.foto" height="118" width="118" />
+                                                imagen = string.Empty;
+                                                switch (item.foto.Split('.')[1])
+                                                {
+                                                    case "png":
+                                                    case "PNG":
+                                                        imagen = "data:image/png;base64," + item.imagen;
+                                                        break;
+                                                    case "jpg":
+                                                    case "JPG":
+                                                    case "jpeg":
+                                                    case "JPEG":
+                                                        imagen = "data:image/jpeg;base64," + item.imagen;
+                                                        break;
+                                                    case "bmp":
+                                                    case "BMP":
+                                                        imagen = "data:image/bmp;base64," + item.imagen;
+                                                        break;
+                                                    default:
+                                                        imagen = "";
+                                                        break;
+                                                }
+                                                <img src="@imagen" height="118" width="118" />
                                             }
                                             else
                                             {
-                                                <img src="~/images/comidas/blanco.jpg" height="118" width="118" />
+                                                if (item.foto != null)
+                                                {
+                                                    <img src="~/@item.foto" height="118" width="118" />
+                                                }
+                                                else
+                                                {
+                                                    <img src="~/images/comidas/blanco.jpg" height="118" width="118" />
+                                                }
                                             }
                                         </div>
                                     </div>
@@ -1167,13 +1952,41 @@
                                             </dl>
                                         </div>
                                         <div class="col-xs-4 col-md-4 col-lg-4">
-                                            @if (item.foto != null)
+                                            @if (item.imagen != null)
                                             {
-                                                <img src="~/@item.foto" height="118" width="118" />
+                                                imagen = string.Empty;
+                                                switch (item.foto.Split('.')[1])
+                                                {
+                                                    case "png":
+                                                    case "PNG":
+                                                        imagen = "data:image/png;base64," + item.imagen;
+                                                        break;
+                                                    case "jpg":
+                                                    case "JPG":
+                                                    case "jpeg":
+                                                    case "JPEG":
+                                                        imagen = "data:image/jpeg;base64," + item.imagen;
+                                                        break;
+                                                    case "bmp":
+                                                    case "BMP":
+                                                        imagen = "data:image/bmp;base64," + item.imagen;
+                                                        break;
+                                                    default:
+                                                        imagen = "";
+                                                        break;
+                                                }
+                                                <img src="@imagen" height="118" width="118" />
                                             }
                                             else
                                             {
-                                                <img src="~/images/comidas/blanco.jpg" height="118" width="118" />
+                                                if (item.foto != null)
+                                                {
+                                                    <img src="~/@item.foto" height="118" width="118" />
+                                                }
+                                                else
+                                                {
+                                                    <img src="~/images/comidas/blanco.jpg" height="118" width="118" />
+                                                }
                                             }
                                         </div>
                                     </div>
@@ -1202,13 +2015,41 @@
                                             </dl>
                                         </div>
                                         <div class="col-xs-4 col-md-4 col-lg-4">
-                                            @if (item.foto != null)
+                                            @if (item.imagen != null)
                                             {
-                                                <img src="~/@item.foto" height="118" width="118" />
+                                                imagen = string.Empty;
+                                                switch (item.foto.Split('.')[1])
+                                                {
+                                                    case "png":
+                                                    case "PNG":
+                                                        imagen = "data:image/png;base64," + item.imagen;
+                                                        break;
+                                                    case "jpg":
+                                                    case "JPG":
+                                                    case "jpeg":
+                                                    case "JPEG":
+                                                        imagen = "data:image/jpeg;base64," + item.imagen;
+                                                        break;
+                                                    case "bmp":
+                                                    case "BMP":
+                                                        imagen = "data:image/bmp;base64," + item.imagen;
+                                                        break;
+                                                    default:
+                                                        imagen = "";
+                                                        break;
+                                                }
+                                                <img src="@imagen" height="118" width="118" />
                                             }
                                             else
                                             {
-                                                <img src="~/images/comidas/blanco.jpg" height="118" width="118" />
+                                                if (item.foto != null)
+                                                {
+                                                    <img src="~/@item.foto" height="118" width="118" />
+                                                }
+                                                else
+                                                {
+                                                    <img src="~/images/comidas/blanco.jpg" height="118" width="118" />
+                                                }
                                             }
                                         </div>
                                     </div>

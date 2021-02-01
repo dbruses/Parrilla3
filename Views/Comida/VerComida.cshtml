@@ -5,6 +5,7 @@
 @model IEnumerable<Parrilla3.Models.Comidas>
 @if (Model != null)
 {
+    string imagen = string.Empty;
     <div>
         <div class="row">
             @foreach (var item in Model)
@@ -12,13 +13,41 @@
                 @*<div class="col-xs-12 col-sm-6 col-md-4 col-lg-4">*@
                 <div class="col-xs-12 col-md-12 col-lg-12">
                     <div style="text-align:center;">
-                        @if (item.foto != null)
+                        @if (item.imagen != null)
                         {
-                            <img src="~/@item.foto" height="300" width="500" />
+                            imagen = string.Empty;
+                            switch (item.foto.Split('.')[1])
+                            {
+                                case "png":
+                                case "PNG":
+                                    imagen = "data:image/png;base64," + item.imagen;
+                                    break;
+                                case "jpg":
+                                case "JPG":
+                                case "jpeg":
+                                case "JPEG":
+                                    imagen = "data:image/jpeg;base64," + item.imagen;
+                                    break;
+                                case "bmp":
+                                case "BMP":
+                                    imagen = "data:image/bmp;base64," + item.imagen;
+                                    break;
+                                default:
+                                    imagen = "";
+                                    break;
+                            }
+                            <img src="@imagen" height="300" width="500" />
                         }
                         else
                         {
-                            <img src="~/images/comidas/blanco.jpg" height="300" width="500" />
+                            if (item.foto != null)
+                            {
+                                <img src="~/@item.foto" height="300" width="500" />
+                            }
+                            else
+                            {
+                                <img src="~/images/comidas/blanco.jpg" height="300" width="500" />
+                            }
                         }
                     </div>
                     <div>
