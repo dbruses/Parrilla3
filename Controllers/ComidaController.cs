@@ -11,6 +11,9 @@ using System.Text;
 using System.Net;
 using System.IO;
 using Newtonsoft.Json;
+using System.Drawing;
+using System.Drawing.Drawing2D;
+using System.Drawing.Imaging;
 
 namespace Parrilla3.Controllers
 {
@@ -469,5 +472,135 @@ namespace Parrilla3.Controllers
 
             return -1;
         }
+
+        private bool UploadFileValido(string extension)
+        {
+            bool valido = false;
+            string[] formatosValidos = { "PNG", "JPG", "JPEG", "BMP", "GIF" };
+            int i = 0;
+
+            if (!string.IsNullOrEmpty(extension))
+            {
+                while ((!valido) && (i < formatosValidos.Length))
+                {
+                    if (extension.ToUpper() == formatosValidos[i])
+                    {
+                        valido = true;
+                    }
+                    i++;
+                }
+            }
+
+            return valido;
+        }
+
+        [HttpPost]
+        public JsonResult UploadFile()
+        {
+            string msjRetorno = string.Empty;
+            string bits = string.Empty;
+            string nombre = string.Empty;
+            string ext = string.Empty;
+            string nomArch = string.Empty;
+            byte[] arreglo = null;
+            byte[] result = null;
+            string post = string.Empty;
+            try
+            {
+                foreach (string file in Request.Files)
+                {
+                    var fileContent = Request.Files[file];
+                    if (fileContent != null && fileContent.ContentLength > 0)
+                    {
+                        // get a stream
+                        var stream = fileContent.InputStream;
+                        bits = stream.Length.ToString();
+
+                        var fileName = fileContent.FileName;
+                        nombre = file; // fileName.ToString();
+
+                        string[] fn = fileName.Split('.');
+                        nomArch = fn[0].ToString();
+                        ext = fn[1].ToString();
+
+                        // valido que sea un formato de archivo válido
+                        if (UploadFileValido(ext))
+                        {
+                            var streamMem = new MemoryStream();
+                            arreglo = new byte[fileContent.ContentLength];
+
+                            int bytesRead;
+                            while ((bytesRead = stream.Read(arreglo, 0, arreglo.Length)) > 0)
+                            {
+                                streamMem.Write(arreglo, 0, bytesRead);
+                            }
+                            result = streamMem.ToArray();
+                            //string archBytes = Convert.ToBase64String(result);
+
+                            //redimensiono la imagen
+                            Image imagenOriginal;
+                            byte[] nuevaImg;
+                            using (var ms = new MemoryStream(result))
+                            {
+                                imagenOriginal = Image.FromStream(ms);
+                                imagenOriginal = ResizeImage(imagenOriginal, 500, 300);
+                            }
+                            using (var ms = new MemoryStream())
+                            {
+                                imagenOriginal.Save(ms, ImageFormat.Jpeg);
+                                nuevaImg = ms.ToArray();
+                            }
+
+                            string archBytes = Convert.ToBase64String(nuevaImg);
+                            int cId = Convert.ToInt32(Request.Form[0]);
+
+                            //Actualizo la comida
+                            pe.Comidas.Find(cId).imagen = archBytes;
+                            pe.SaveChanges();
+
+                            msjRetorno = "Archivo subido correctamente";
+                        }
+                        else
+                        {
+                            msjRetorno = "El formato de archivo no es válido, debe ser del tipo imagen (PNG, JPEG, JPG, BMP o GIF)";
+                        }
+                        // FIN SISDEV-5286
+                    }
+                }
+            }
+            catch (Exception e)
+            {
+                Response.StatusCode = (int)HttpStatusCode.BadRequest;
+                return Json("1^Fallo en la subida del archivo " + e.Message);
+            }
+
+            return Json(msjRetorno);
+        }
+
+        public static Bitmap ResizeImage(Image image, int width, int height)
+        {
+            var destRect = new Rectangle(0, 0, width, height);
+            var destImage = new Bitmap(width, height);
+
+            destImage.SetResolution(image.HorizontalResolution, image.VerticalResolution);
+
+            using (var graphics = Graphics.FromImage(destImage))
+            {
+                graphics.CompositingMode = CompositingMode.SourceCopy;
+                graphics.CompositingQuality = CompositingQuality.Default;
+                graphics.InterpolationMode = InterpolationMode.Default;
+                graphics.SmoothingMode = SmoothingMode.Default;
+                graphics.PixelOffsetMode = PixelOffsetMode.Default;
+
+                using (var wrapMode = new ImageAttributes())
+                {
+                    wrapMode.SetWrapMode(WrapMode.TileFlipXY);
+                    graphics.DrawImage(image, destRect, 0, 0, image.Width, image.Height, GraphicsUnit.Pixel, wrapMode);
+                }
+            }
+
+            return destImage;
+        }
+
     }
 }

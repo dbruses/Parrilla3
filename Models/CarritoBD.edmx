@@ -37,6 +37,7 @@
           <Property Name="llevaAderezo" Type="bit" />
           <Property Name="llevaGuarnicion" Type="bit" />
           <Property Name="cantIngredientes" Type="int" />
+          <Property Name="imagen" Type="varchar(max)" />
         </EntityType>
         <EntityType Name="Guarniciones">
           <Key>
@@ -187,6 +188,7 @@
           <Property Name="cantIngredientes" Type="Int32" />
           <NavigationProperty Name="Categorias" Relationship="Self.FK_Comidas_Categorias" FromRole="Comidas" ToRole="Categorias" />
           <NavigationProperty Name="ListaVenta" Relationship="Self.FK_ListaVenta_Comidas" FromRole="Comidas" ToRole="ListaVenta" />
+          <Property Name="imagen" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
         </EntityType>
         <EntityType Name="Guarniciones">
           <Key>
@@ -329,6 +331,7 @@
           <EntitySetMapping Name="Comidas">
             <EntityTypeMapping TypeName="ParrillaModel.Comidas">
               <MappingFragment StoreEntitySet="Comidas">
+                <ScalarProperty Name="imagen" ColumnName="imagen" />
                 <ScalarProperty Name="idComida" ColumnName="idComida" />
                 <ScalarProperty Name="nombre" ColumnName="nombre" />
                 <ScalarProperty Name="precio" ColumnName="precio" />

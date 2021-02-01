@@ -31,6 +31,7 @@ namespace Parrilla3.Models
         public Nullable<bool> llevaAderezo { get; set; }
         public Nullable<bool> llevaGuarnicion { get; set; }
         public Nullable<int> cantIngredientes { get; set; }
+        public string imagen { get; set; }
     
         public virtual Categorias Categorias { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]

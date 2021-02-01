@@ -69,10 +69,48 @@
                     </div>
                     <div class="col-lg-2" style="text-align:right">
                         <label for="ingredientes">Cant. Ingred.</label>
-                        <input type="number" id="cantIngredientes" class="form-control" value="@item.cantIngredientes" onblur="verificaNro('cantIngredientes');"/>
+                        <input type="number" id="cantIngredientes" class="form-control" value="@item.cantIngredientes" onblur="verificaNro('cantIngredientes');" />
                     </div>
                 </div>
-                <br />
+                <div class="col-md-12" style="align-items: center; align-content: center; align-self: center;">
+                    <br />
+                    <table align="center">
+                        <tr style="align-content:center; align-items: center;">
+                            <td style="align-content:center; align-items: center;">
+                                @if (item.imagen != null)
+                                {
+                                    string src = string.Empty;
+                                    switch (item.foto.Split('.')[1])
+                                    {
+                                        case "png":
+                                        case "PNG":
+                                            src = "data:image/png;base64," + item.imagen;
+                                            break;
+                                        case "jpg":
+                                        case "JPG":
+                                        case "jpeg":
+                                        case "JPEG":
+                                            src = "data:image/jpeg;base64," + item.imagen;
+                                            break;
+                                        case "bmp":
+                                        case "BMP":
+                                            src = "data:image/bmp;base64," + item.imagen;
+                                            break;
+                                        default:
+                                            src = "";
+                                            break;
+                                    }
+                                    <img id="image-holder" alt="Imagen no disponible" width="500" height="300" style="display: block; align-items:center; align-content: center; align-self: center;" src="@src">
+                                }
+                                else
+                                {
+                                    <img id="image-holder" alt="Imagen no disponible" width="500" height="300" style="display: block; align-items:center; align-content: center; align-self: center;" src="~/@item.foto">
+                                }
+                            </td>
+                        </tr>
+                    </table>
+                    <br />
+                </div>
                 <div class="col-xs-12 col-md-12 col-lg-12" style="text-align:center">
                     <button id="btnCancelar" type="button" class="btn btn-danger" onclick="cancelaGraba();">Cancelar</button>
                     <button id="btnGuardar" type="button" class="btn btn-primary" onclick="guardar();">Guardar</button>
