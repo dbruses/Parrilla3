@@ -19,6 +19,13 @@
     <link href="~/Content/font-awesome.min.css" rel="stylesheet" />
     <link href="~/Content/star-rating.css" rel="stylesheet" />
     <script src="https://kit.fontawesome.com/62a0a05291.js" crossorigin="anonymous"></script>
+    <script src="~/Scripts/smooth-scroll.min.js"></script>
+    <script>
+        //var easeInQuad = new SmoothScroll('[data-easing="easeInQuad"]', { easing: 'easeInQuad' });
+        var scroll = new SmoothScroll('a[href*="#"]', {
+            speed: 500
+        });
+    </script>
     @*<script src="~/Scripts/jquerysession.js"></script>*@
     <style type="text/css">
         .position-fixed {
@@ -84,21 +91,21 @@
             </div>
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
-                    <li><a href="#promociones">Promos</a></li>
-                    <li><a href="#platos">Especiales</a></li>
-                    <li><a href="#minutas">Minutas</a></li>
-                    <li><a href="#sanwiches">Sandwiches</a></li>
-                    <li><a href="#pizzas">Piza/Emp.</a></li>
-                    <li><a href="#entradas">Entradas</a></li>
-                    <li><a href="#ensaladas">Ensaladas</a></li>
-                    <li><a href="#hamburguesas">Hamburguesas</a></li>
-                    <li><a href="#parrilla">Parrilla</a></li>
-                    <li><a href="#guarniciones">Guarniciones</a></li>
-                    <li><a href="#pescados">Pescados</a></li>
-                    <li><a href="#pastas">Pastas</a></li>
-                    <li><a href="#postres">Postres</a></li>
-                    <li><a href="#bebidas">Bebidas</a></li>
-                    <li><a href="#vinos">Vinos</a></li>
+                    <li><a data-scroll href="#promociones">Promos</a></li>
+                    <li><a data-scroll href="#platos">Especiales</a></li>
+                    <li><a data-scroll href="#minutas">Minutas</a></li>
+                    <li><a data-scroll href="#sanwiches">Sandwiches</a></li>
+                    <li><a data-scroll href="#pizzas">Piza/Emp.</a></li>
+                    <li><a data-scroll href="#entradas">Entradas</a></li>
+                    <li><a data-scroll href="#ensaladas">Ensaladas</a></li>
+                    <li><a data-scroll href="#hamburguesas">Hamburguesas</a></li>
+                    <li><a data-scroll href="#parrilla">Parrilla</a></li>
+                    <li><a data-scroll href="#guarniciones">Guarniciones</a></li>
+                    <li><a data-scroll href="#pescados">Pescados</a></li>
+                    <li><a data-scroll href="#pastas">Pastas</a></li>
+                    <li><a data-scroll href="#postres">Postres</a></li>
+                    <li><a data-scroll href="#bebidas">Bebidas</a></li>
+                    <li><a data-scroll href="#vinos">Vinos</a></li>
                 </ul>
             </div>
         </div>

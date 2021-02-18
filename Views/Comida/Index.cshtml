@@ -2170,7 +2170,13 @@
 
 @section Scripts {
     <script src="~/Scripts/Comida/Comida.js"></script>
+    
     <script type="text/javascript">
+        //var easeInQuad = new SmoothScroll('[data-easing="easeInQuad"]', { easing: 'easeInQuad' });
+        var scroll = new SmoothScroll('a[href*="#"]', {
+            speed: 1000
+        });
+
         function AgregaCarrito() {
             debugger;
             let ing = "";

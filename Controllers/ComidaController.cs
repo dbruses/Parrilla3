@@ -24,6 +24,7 @@ namespace Parrilla3.Controllers
         public string resp = string.Empty;
         public ActionResult Index()
         {
+            //bool ec = EstaCerrado();
             if (Session["ingredientes"] == null)
             {
                 Session["ingredientes"] = pe.Ingredientes.ToList();
@@ -46,7 +47,7 @@ namespace Parrilla3.Controllers
             }
 
             Session["esPedido"] = 0;
-            
+
             return View(pe.Comidas.ToList());
         }
 
@@ -86,7 +87,7 @@ namespace Parrilla3.Controllers
                 }
                 else
                 {
-                    compras[indexExistente].Cantidad+=cantidad;
+                    compras[indexExistente].Cantidad += cantidad;
                 }
                 Session["carrito"] = compras;
             }
@@ -139,6 +140,8 @@ namespace Parrilla3.Controllers
                 Session["usuario"] = usr;
                 Session["venta"] = nuevaVenta.idVenta;
 
+                Session["estaCerrado"] = EstaCerrado();
+
                 return View(nuevaVenta);
             }
 
@@ -189,14 +192,14 @@ namespace Parrilla3.Controllers
                 pe.Comidas.Find(comida.idComida).precio = comida.precio + (comida.precio * porcentaje / 100);
                 pe.SaveChanges();
             }
-            
+
             return Json("Los cambios fueron aplicados correctamente.", JsonRequestBehavior.AllowGet);
         }
 
         [HttpPost]
         public JsonResult GrabaProd(int id, string nombre, string descripcion, int categoria, string precio, bool activo, bool llevaSalsa, bool llevaAderezo, bool llevaGuarnicion, int cantIngredientes)
         {
-            decimal precioUnit = Convert.ToDecimal(precio.Replace(".",","));
+            decimal precioUnit = Convert.ToDecimal(precio.Replace(".", ","));
             pe.Comidas.Find(id).nombre = nombre;
             pe.Comidas.Find(id).descripcion = descripcion;
             pe.Comidas.Find(id).categoria = categoria;
@@ -262,7 +265,7 @@ namespace Parrilla3.Controllers
             chargetotal = chargetotal.Replace(".", string.Empty);
             chargetotal = chargetotal.Replace(",", ".");
             string sharedsecret = ConfigurationManager.AppSettings["FDPassword"];
-            string stringToHash = storename + txndatetime + chargetotal + currency + sharedsecret; 
+            string stringToHash = storename + txndatetime + chargetotal + currency + sharedsecret;
             string checkoutoption = ConfigurationManager.AppSettings["checkoutoption"];
             string orderid = ventaId.ToString();
 
@@ -270,7 +273,7 @@ namespace Parrilla3.Controllers
 
             string sha256String = ComputeSHA256Hash(hexaString).ToLower();
 
-            var segment = string.Join("&", "txntype="+txntype, "timezone="+timezone, "txndatetime="+txndatetime, "hash_algorithm="+hash_algorithm, "hash="+sha256String, "storename="+storename, "chargetotal="+chargetotal, "currency="+currency, "checkoutoption="+ checkoutoption, "oid="+ orderid,"country=ARG", "language=es_ES");
+            var segment = string.Join("&", "txntype=" + txntype, "timezone=" + timezone, "txndatetime=" + txndatetime, "hash_algorithm=" + hash_algorithm, "hash=" + sha256String, "storename=" + storename, "chargetotal=" + chargetotal, "currency=" + currency, "checkoutoption=" + checkoutoption, "oid=" + orderid, "country=ARG", "language=es_ES");
             var escapedSegment = Uri.EscapeDataString(segment);
             var baseFormat = ConfigurationManager.AppSettings["PayURL"];
 
@@ -294,9 +297,9 @@ namespace Parrilla3.Controllers
             }
             StreamReader sr = new StreamReader(webResponse.GetResponseStream());
             //resp = resp + sr.ReadToEnd().Trim();
-            
+
             resp = sr.ReadToEnd().Trim();
-            
+
             //resp = url;
 
             //Response.Redirect(url,true);
@@ -356,7 +359,7 @@ namespace Parrilla3.Controllers
                             }
                         }
                     }
-                    
+
                     tabla = tabla + "<tr><td><b>";
                     tabla = tabla + item.cantidad.ToString() + "</b></td><td>&nbsp;";
                     tabla = tabla + item.Comidas.nombre + ingredientes + "</td><td>&nbsp;$&nbsp;" + String.Format("{0:C}", (item.cantidad * item.Comidas.precio).ToString()) + "</td></tr>";
@@ -375,7 +378,7 @@ namespace Parrilla3.Controllers
                 {
                     tabla = tabla + "<tr><td colspan=3><b>Total:&nbsp;&nbsp;" + String.Format("{0:C}", venta.total) + "</b></td></tr></table>";
                 }
-                string body = "<label>Pedido para " + user.nombre.ToUpper()  + ", " + user.apellido.ToUpper() + " - TE: " + user.telefono + "<label><br /><br/>";
+                string body = "<label>Pedido para " + user.nombre.ToUpper() + ", " + user.apellido.ToUpper() + " - TE: " + user.telefono + "<label><br /><br/>";
                 body = body + "<label><b>Pedido Nº :&nbsp;&nbsp;" + venta.idVenta.ToString() + "&nbsp; &nbsp;Fecha:&nbsp;&nbsp;" + DateTime.Now.ToShortDateString() + "&nbsp;&nbsp;Hora:&nbsp;&nbsp;" + DateTime.Now.ToShortTimeString() + " </b><label><br /><br/>";
                 body = body + tabla;
                 if ((observaciones != null) && (observaciones != ""))
@@ -386,7 +389,7 @@ namespace Parrilla3.Controllers
                 {
                     body = body + "<br /><br/><label>Paga con $: " + pagaCon + ".<label>";
                 }
-                
+
                 body = body + "<br /><br/><label>Enviar pedido a " + user.direccion + ".<label>";
 
                 //Envia mail parrilla
@@ -448,7 +451,7 @@ namespace Parrilla3.Controllers
                 body = body + "<p>WhatsApp: <b><a href = 'https://wa.me/541158530973?text=Quiero%20hacer%20un%20pedido' target='_blank'>11 5853 - 0973</a></p>";
                 body = body + "</div><div class='col-md-4'><span class='social_heading'>O LLAME AL </span><span class='social_info'>011 4957-0049</span>";
                 body = body + "</div><div class='col-md-10'><span class='social_heading'>DELIVERY SIN CARGO</span></div></div>";
-                
+
                 //Envia mail usuario
                 email = new Email();
                 email.sendEmailPedido(User.Identity.Name, body);
@@ -456,7 +459,7 @@ namespace Parrilla3.Controllers
                 Session["venta"] = null;
                 Session["carrito"] = null;
             }
-            
+
         }
 
         private int getIndex(int id)
@@ -600,6 +603,52 @@ namespace Parrilla3.Controllers
             }
 
             return destImage;
+        }
+
+        public bool EstaCerrado()
+        {
+            bool cerrado = false;
+            DateTime hora = DateTime.Now; //Convert.ToDateTime("12/02/2021 0:22:03"); //DateTime.Now;
+            string dia = hora.DayOfWeek.ToString();
+            if ((hora.Hour > 0) && (hora.Hour < 11))
+            {
+                cerrado = true;
+            }
+            else
+                if ((hora.Hour == 0) && ((dia == "Saturday") || (dia == "Sunday")))
+                {
+                    if (hora.Minute > 30)
+                    {
+                        cerrado = true;
+                    }
+                    else
+                    {
+                        cerrado = false;
+                    }
+                }
+                else
+                    if (hora.Hour == 23)
+                    {
+                        if (hora.Minute > 30)
+                        {
+                            cerrado = true;
+                        }
+                        else
+                        {
+                            cerrado = false;
+                        }
+                    }
+                    else
+                        if ((hora.Hour > 11) && (hora.Hour < 23))
+                        {
+                            cerrado = false;
+                        }
+                        else
+                        {
+                            cerrado = true;
+                        }
+
+            return cerrado;
         }
 
     }

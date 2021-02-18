@@ -76,62 +76,77 @@
                 @*@Session["carrito"] = null;*@
             }
             <br />
-            <div class="row">
-                <div class="col-xs-12 col-md-12 col-lg-12" style="text-align:center">
-                    <textarea id="observaciones" rows="4" cols="100" placeholder="Comentarios"></textarea>
+            @if (!Convert.ToBoolean(Session["estaCerrado"]))
+            {
+                <div class="row">
+                    <div class="col-xs-12 col-md-12 col-lg-12" style="text-align:center">
+                        <textarea id="observaciones" rows="4" cols="100" placeholder="Comentarios"></textarea>
+                    </div>
                 </div>
-            </div>
-            <br />
-            <div class="row">
-                <p style="text-align:center">Total <b>@String.Format("{0:c}", total)</b></p>
-            </div>
-            <br /><br />
-            <div class="row">
-                <div class="col-xs-12 col-md-12 col-lg-12" style="text-align:center">
-                    <button id="btnCancelar" type="button" class="btn btn-danger" onclick="cancelaCompra();">Cancelar</button>
-                    <button id="btnPagar" type="button" class="btn btn-primary" onclick="verPago();">Pagar</button>
-                </div><br />
-                <!-- PAGO WHATSAPP -->
-                <!--<div class="col-xs-12 col-md-12 col-lg-12" style="text-align:center">
-                    <p>Momentáneamente solo aceptamos pago en efectivo</p>
-                    <p>
-                        Si queres abonar con tarjeta, por favor envianos un&nbsp;
-                        <a href="https://wa.me/541158530973?text=Quiero%20hacer%20un%20pedido" target="_blank">whatsapp</a>.
-                    </p>
-                </div><br />-->
-                <div class="col-xs-12 col-md-12 col-lg-12" style="text-align:center">
-                    @*@if (User.IsInRole("Administrador"))
-                        {*@
-                    <input type="checkbox" class="form-check-input" id="chkPagoEfectivo" onclick="cambioPago();" />
-                    <!--}
-                    else
-                    {
-                        <input type="checkbox" class="form-check-input" id="chkPagoEfectivo" onclick="cambioPago();" checked="checked" disabled="disabled" />-->
-                    <!-- SACAR EL CHEQUED CUANDO SE HABILITE EL PAGO CON TARJETA -->
-                    <!--}-->
-                    <label for="chkPagoEfectivo">&nbsp;&nbsp;10% de Descuento por pago en Efectivo!&nbsp;&nbsp;Total:&nbsp;<b>@String.Format("{0:c}", (double)(total * 0.9))</b></label>
-                    <br />
-                    <input type="number" id="pagaCon" placeholder="Paga Con $" />
+                <br />
+                <div class="row">
+                    <p style="text-align:center">Total <b>@String.Format("{0:c}", total)</b></p>
                 </div>
-            </div>
-            <input type="hidden" name="oid" id="oid" value="@item.idVenta" />
-            <input type="hidden" name="txntype" id="txntype" value="sale" />
-            <input type="hidden" name="hash_algorithm" id="hash_algorithm" value="SHA256" />
-            <input type="hidden" name="txndatetime" id="txndatetime" value="" />
-            <input type="hidden" name="chargetotal" id="chargetotal" value="@total" />
-            <input type="hidden" name="hash" id="hash" value="">
-            <input type="hidden" name="checkoutoption" id="checkoutoption" value="" />
-            <input type="hidden" name="sharedsecret" id="sharedsecret" value="" />
-            <input type="hidden" name="timezone" id="timezone" value="" />
-            <input type="hidden" name="storename" id="storename" value="">
-            <input type="hidden" name="currency" id="currency" value="">
-            <input type="hidden" name="country" id="country" value="ARG" />
-            <input type="hidden" name="language" id="language" value="es_ES" />
-            <input type='hidden' name="responseFailURL" id="responseFailURL" value="https://www.xn--parrillalossalteos-20b.com/Notificacion/PagoRechazado" />
-            <input type='hidden' name="responseSuccessURL" id="responseSuccessURL" value="https://www.xn--parrillalossalteos-20b.com/Notificacion/PagoOk" />
-            <input type='hidden' name="authenticateTransaction" id="authenticateTransaction" value="true" />
-            <!--<input type="hidden" name="numberOfInstallments" id="numberOfInstallments" value="3" />--> <!-- CANTIDAD DE CUOTAS > 1 -->
-            <!--<input type="hidden" name="hostURI" id="hostURI" value="https://www.xn--parrillalossalteos-20b.com/Pruebaiframe.html/" />--> <!-- PARA IFRAME -->
+                <br /><br />
+                <div class="row">
+                    <div class="col-xs-12 col-md-12 col-lg-12" style="text-align:center">
+                        <button id="btnCancelar" type="button" class="btn btn-danger" onclick="cancelaCompra();">Cancelar</button>
+                        <button id="btnPagar" type="button" class="btn btn-primary" onclick="verPago();">Pagar</button>
+                    </div><br />
+                    <!-- PAGO WHATSAPP -->
+                    <!--<div class="col-xs-12 col-md-12 col-lg-12" style="text-align:center">
+                <p>Momentáneamente solo aceptamos pago en efectivo</p>
+                <p>
+                    Si queres abonar con tarjeta, por favor envianos un&nbsp;
+                    <a href="https://wa.me/541158530973?text=Quiero%20hacer%20un%20pedido" target="_blank">whatsapp</a>.
+                </p>
+            </div><br />-->
+                    <div class="col-xs-12 col-md-12 col-lg-12" style="text-align:center">
+                        @*@if (User.IsInRole("Administrador"))
+                    {*@
+                        <input type="checkbox" class="form-check-input" id="chkPagoEfectivo" onclick="cambioPago();" />
+                        <!--}
+                else
+                {
+                    <input type="checkbox" class="form-check-input" id="chkPagoEfectivo" onclick="cambioPago();" checked="checked" disabled="disabled" />-->
+                        <!-- SACAR EL CHEQUED CUANDO SE HABILITE EL PAGO CON TARJETA -->
+                        <!--}-->
+                        <label for="chkPagoEfectivo">&nbsp;&nbsp;10% de Descuento por pago en Efectivo!&nbsp;&nbsp;Total:&nbsp;<b>@String.Format("{0:c}", (double)(total * 0.9))</b></label>
+                        <br />
+                        <input type="number" id="pagaCon" placeholder="Paga Con $" />
+                    </div>
+                </div>
+                <input type="hidden" name="oid" id="oid" value="@item.idVenta" />
+                <input type="hidden" name="txntype" id="txntype" value="sale" />
+                <input type="hidden" name="hash_algorithm" id="hash_algorithm" value="SHA256" />
+                <input type="hidden" name="txndatetime" id="txndatetime" value="" />
+                <input type="hidden" name="chargetotal" id="chargetotal" value="@total" />
+                <input type="hidden" name="hash" id="hash" value="">
+                <input type="hidden" name="checkoutoption" id="checkoutoption" value="" />
+                <input type="hidden" name="sharedsecret" id="sharedsecret" value="" />
+                <input type="hidden" name="timezone" id="timezone" value="" />
+                <input type="hidden" name="storename" id="storename" value="">
+                <input type="hidden" name="currency" id="currency" value="">
+                <input type="hidden" name="country" id="country" value="ARG" />
+                <input type="hidden" name="language" id="language" value="es_ES" />
+                <input type="hidden" name="responseFailURL" id="responseFailURL" value="https://www.xn--parrillalossalteos-20b.com/Notificacion/PagoRechazado" />
+                <input type="hidden" name="responseSuccessURL" id="responseSuccessURL" value="https://www.xn--parrillalossalteos-20b.com/Notificacion/PagoOk" />
+                <input type="hidden" name="authenticateTransaction" id="authenticateTransaction" value="true" />
+                <!--<input type="hidden" name="numberOfInstallments" id="numberOfInstallments" value="3" />--> <!-- CANTIDAD DE CUOTAS > 1 -->
+                <!--<input type="hidden" name="hostURI" id="hostURI" value="https://www.xn--parrillalossalteos-20b.com/Pruebaiframe.html/" />--> <!-- PARA IFRAME -->
+            }
+            else
+            {
+                Session["venta"] = null;
+                Session["carrito"] = null;
+                <div class="row">
+                    <div class="col-xs-12 col-md-12 col-lg-12" style="text-align:center">
+                        <h3>LAMENTABLEMENTE NUESTRA COCINA SE ENCUENTRA CERRADA Y NO PODEMOS TOMARLE EL PEDIDO. DISCULPE LAS MOLESTIAS OCASIONADAS.</h3>
+                        <br />
+                        <h4>HORARIO DE ATENCIÓN: DOMINGO A JUEVES DE 11:00 A 00:00 - VIERNES Y SÁBADO DE 11:00 A 01:00</h4>
+                    </div>
+                </div>
+            }
         </div>
     </form>
     <!--<br />
