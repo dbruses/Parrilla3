@@ -1,0 +1,91 @@
+﻿
+@{
+    Layout = null;
+}
+
+@if (Model != null)
+{
+    var usr = Session["pedidoUsr"] as Parrilla3.Models.VentaUsuario;
+    Parrilla3.Models.Ventas venta = Model;
+    string mPago = string.Empty;
+
+    <div>
+        <div class="row">
+            <div class="col-xs-6 col-md-6 col-lg-6">
+                <label>Fecha:</label>
+            </div>
+            <div class="col-xs-6 col-md-6 col-lg-6">
+                @usr.fechaVenta
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-xs-6 col-md-6 col-lg-6">
+                <label>Pedido Nº:</label>
+            </div>
+            <div class="col-xs-6 col-md-6 col-lg-6">
+                @usr.idVenta
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-xs-6 col-md-6 col-lg-6">
+                <label>Cliente:</label>
+            </div>
+            <div class="col-xs-6 col-md-6 col-lg-6">
+                @usr.apellido, @usr.nombre
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-xs-6 col-md-6 col-lg-6">
+                <label>Dirección:</label>
+            </div>
+            <div class="col-xs-6 col-md-6 col-lg-6">
+                @usr.direccion
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-xs-6 col-md-6 col-lg-6">
+                <label>Teléfono:</label>
+            </div>
+            <div class="col-xs-6 col-md-6 col-lg-6">
+                @usr.telefono
+            </div>
+        </div>
+        <br />
+        <div class="form-group row">
+            @foreach (var reng in Session["detPedido"] as string[])
+            {
+                <div class="row">
+                    <div class="col-xs-12 col-md-12 col-lg-12">
+                        &nbsp;&nbsp;&nbsp;&nbsp;@reng
+                    </div>
+                </div>
+            }
+            <div class="row">
+                <div class="col-xs-6 col-md-6 col-lg-6">
+                    <p style="text-align:center">Total <b>@String.Format("{0:c}", venta.total)</b></p>
+                </div>
+                <div class="col-xs-6 col-md-6 col-lg-6">
+                    @if ((venta.efectivo != null) && (venta.efectivo == true))
+                    {
+                        mPago = "EFECTIVO";
+                    }
+                    else
+                    {
+                        mPago = "TARJETA";
+                    }
+                    <p style="text-align:center">Medio de pago: <b>@mPago</b></p>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-xs-6 col-md-6 col-lg-6" style="text-align:center">
+                    <label for="chkGuardaEnvio">Enviado?</label>
+                    <input type="checkbox" class="form-check-input" id="chkGuardaEnvio" />
+                </div>
+                <div class="col-xs-6 col-md-6 col-lg-6" style="text-align:center">
+                    <button id="btnGuardar" type="button" class="btn btn-primary" onclick="guardarEnvio();">Guardar</button>
+                </div><br />
+                <input type="hidden" id="idPedido" value="@venta.idVenta" />
+            </div>
+        </div>
+    </div>
+}

@@ -33,5 +33,6 @@ namespace Parrilla3.Models
         public virtual DbSet<ListaVenta> ListaVenta { get; set; }
         public virtual DbSet<Salsas> Salsas { get; set; }
         public virtual DbSet<Ventas> Ventas { get; set; }
+        public virtual DbSet<AspNetUsers> AspNetUsers { get; set; }
     }
 }

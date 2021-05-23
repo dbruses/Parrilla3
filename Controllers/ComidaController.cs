@@ -39,6 +39,28 @@ namespace Parrilla3.Controllers
             return View(pe.Comidas.ToList());
         }
 
+        public ActionResult Pedidos()
+        {
+            Session["esPedido"] = 0;
+
+            var pediosActivos = pe.Ventas.Join(pe.AspNetUsers, ventas => ventas.idUsuario, aspnetusers => aspnetusers.Id, (ventas, aspnetuser) => new { Ventas = ventas, AspNetUsers = aspnetuser }).Where(x => x.Ventas.entregado == false).OrderBy(y => y.Ventas.fechaVenta);
+
+            List<VentaUsuario> pedidos = new List<VentaUsuario>();
+            foreach (var p in pediosActivos)
+            {
+                VentaUsuario vu = new VentaUsuario();
+                vu.idVenta = p.Ventas.idVenta;
+                vu.fechaVenta = p.Ventas.fechaVenta;
+                vu.total = p.Ventas.total;
+                vu.apellido = p.AspNetUsers.apellido;
+                vu.nombre = p.AspNetUsers.nombre;
+                vu.direccion = p.AspNetUsers.direccion;
+                vu.telefono = p.AspNetUsers.telefono;
+                pedidos.Add(vu);
+            }
+            return View(pedidos.ToList());
+        }
+
         public ActionResult ABM()
         {
             if (Session["categorias"] == null)
@@ -65,6 +87,90 @@ namespace Parrilla3.Controllers
             return View(pe.Comidas.Where(x => x.idComida == id));
         }
 
+        public ActionResult VerPedido(int id)
+        {
+            Session["esPedido"] = 0;
+
+            var ped = pe.Ventas.Join(pe.AspNetUsers, ventas => ventas.idUsuario, aspnetusers => aspnetusers.Id, (ventas, aspnetuser) => new { Ventas = ventas, AspNetUsers = aspnetuser }).Where(x => x.Ventas.idVenta == id);
+            List<VentaUsuario> pedidos = new List<VentaUsuario>();
+            foreach (var p in ped)
+            {
+                VentaUsuario vu = new VentaUsuario();
+                vu.idVenta = p.Ventas.idVenta;
+                vu.fechaVenta = p.Ventas.fechaVenta;
+                vu.total = p.Ventas.total;
+                vu.apellido = p.AspNetUsers.apellido;
+                vu.nombre = p.AspNetUsers.nombre;
+                vu.direccion = p.AspNetUsers.direccion;
+                vu.telefono = p.AspNetUsers.telefono;
+                pedidos.Add(vu);
+            }
+
+            var venta = pe.Ventas.Where(x => x.idVenta == id);
+
+            List<Ventas> ventas2 = new List<Ventas>();
+            foreach (var v in venta)
+            {
+                Ventas ven = new Ventas();
+                ven.idUsuario = v.idUsuario;
+                ven.entregado = v.entregado;
+                ven.fechaVenta = v.fechaVenta;
+                ven.idVenta = v.idVenta;
+                ven.ListaVenta = v.ListaVenta;
+                ven.observaciones = v.observaciones;
+                ven.pagaCon = v.pagaCon;
+                ven.total = v.total;
+                ven.efectivo = v.efectivo;
+                ventas2.Add(ven);
+            }
+
+            string ingredientes = string.Empty;
+            string[] detPedido = new string[ventas2[0].ListaVenta.Count];
+            int i = 0;
+            foreach (var item in ventas2[0].ListaVenta)
+            {
+                string renglon = string.Empty;
+                
+                //var comida = pe.Comidas.Where(x => x.idComida == item.comidaId);
+                //List<Comidas> comidas = new List<Comidas>();
+                //foreach(var c in comida)
+                //{
+                //    Comidas com = new Comidas();
+                //    com.activo = c.activo;
+                //    com.cantIngredientes = c.cantIngredientes;
+                //    com.categoria = c.categoria;
+                //    com.Categorias = c.Categorias;
+                //    com.descripcion = c.descripcion;
+                //    com.foto = c.foto;
+                //    com.idComida = c.idComida;
+                //    com.imagen = c.imagen;
+                //    com.ListaVenta = c.ListaVenta;
+                //    com.llevaAderezo = c.llevaAderezo;
+                //    com.llevaGuarnicion = c.llevaGuarnicion;
+                //    com.llevaSalsa = c.llevaSalsa;
+                //    com.nombre = c.nombre;
+                //    com.precio = c.precio;
+                //    comidas.Add(com);
+                //}
+
+                if ((item.ingredientes != null) && (item.ingredientes != ""))
+                {
+                    ingredientes = " - " + item.ingredientes;
+                }
+
+                renglon = item.cantidad.ToString() + "  ";
+                renglon = renglon + item.Comidas.nombre + ingredientes + "  " + String.Format("{0:C}", (item.total));
+                detPedido[i] = renglon;
+                i++;
+                ingredientes = string.Empty;
+            }
+
+
+            Session["pedidoUsr"] = pedidos[0];
+            Session["detPedido"] = detPedido;
+            return View(ventas2[0]);
+        }
+
         [HttpPost]
         public JsonResult CargaCarrito(int id, int cantidad, string ingredientes)
         {
@@ -72,7 +178,6 @@ namespace Parrilla3.Controllers
 
             if (Session["carrito"] == null)
             {
-                //int cant = Convert.ToInt16(Request["cantidad"]);
                 List<CarritoItem> compras = new List<CarritoItem>();
                 compras.Add(new CarritoItem(pe.Comidas.Find(id), cantidad, ingredientes));
                 Session["carrito"] = compras;
@@ -120,6 +225,8 @@ namespace Parrilla3.Controllers
                 nuevaVenta.fechaVenta = DateTime.Now;
                 nuevaVenta.total = ((double)compras.Sum(x => x.Comidas.precio * x.Cantidad));
                 nuevaVenta.idUsuario = user.Id;
+                nuevaVenta.entregado = false;
+                nuevaVenta.efectivo = false;
 
                 nuevaVenta.ListaVenta = (from item in compras
                                          select new ListaVenta
@@ -173,14 +280,48 @@ namespace Parrilla3.Controllers
         }
 
         [HttpPost]
+        public JsonResult GrabaEnvPedido(int idVenta, bool enviado)
+        {
+            try
+            {
+                pe.Ventas.Find(idVenta).entregado = enviado;
+                pe.SaveChanges();
+
+                return Json("1", JsonRequestBehavior.AllowGet);
+            }
+            catch
+            {
+                return Json("0", JsonRequestBehavior.AllowGet);
+            }
+        }
+
+        [HttpPost]
+        public JsonResult ActualizaTotalPedido(int idVenta)
+        {
+            try
+            {
+                double tot = pe.Ventas.Find(idVenta).total;
+                tot = tot * 0.9;
+                pe.Ventas.Find(idVenta).total = tot;
+                pe.Ventas.Find(idVenta).efectivo = true;
+
+                pe.SaveChanges();
+
+                return Json("1", JsonRequestBehavior.AllowGet);
+            }
+            catch
+            {
+                return Json("0", JsonRequestBehavior.AllowGet);
+            }
+        }
+
+        [HttpPost]
         public JsonResult ObtenerDatosComercio()
         {
             string result = string.Empty;
 
             result = "{\"checkoutoption\":\"" + ConfigurationManager.AppSettings["checkoutoption"] + "\",\"sharedsecret\":\"" + ConfigurationManager.AppSettings["FDPassword"] + "\",\"timezone\":\"" + ConfigurationManager.AppSettings["timezone"] + "\",\"storename\":\"" + ConfigurationManager.AppSettings["StoreId"] + "\",\"currency\":\"" + ConfigurationManager.AppSettings["Moneda"] + "\"}";
 
-            //var res = JsonConvert.SerializeObject(result, Formatting.Indented);
-            //return Json(res);
             return Json(result, JsonRequestBehavior.AllowGet);
         }
 
@@ -216,7 +357,7 @@ namespace Parrilla3.Controllers
         }
 
         [HttpPost]
-        public JsonResult Pagar(bool pagoEfectivo, string pagaCon, string observaciones)
+        public JsonResult Pagar(bool pagoEfectivo, string pagaCon, string observaciones, int idVenta)
         {
             Session["esPedido"] = 0;
 
@@ -238,6 +379,7 @@ namespace Parrilla3.Controllers
             {
                 mensaje = "Muchas gracias por su compra.";
                 enviaEmail(pagoEfectivo, pagaCon, observaciones);
+                ActualizaTotalPedido(idVenta);
             }
             else
             {
@@ -288,7 +430,6 @@ namespace Parrilla3.Controllers
 
             Stream postStream = webReq.GetRequestStream();
 
-            //HttpWebResponse webResponse = (HttpWebResponse)webReq.GetResponse();
             HttpWebResponse webResponse = webReq.GetResponse() as HttpWebResponse;
 
             if (webResponse.StatusCode == HttpStatusCode.OK)
@@ -296,16 +437,9 @@ namespace Parrilla3.Controllers
                 ok = true;
             }
             StreamReader sr = new StreamReader(webResponse.GetResponseStream());
-            //resp = resp + sr.ReadToEnd().Trim();
 
             resp = sr.ReadToEnd().Trim();
 
-            //resp = url;
-
-            //Response.Redirect(url,true);
-            //string BaseURL = ConfigurationManager.AppSettings["BaseURL"];
-            //resp = resp.Replace("/connect/", BaseURL + "/connect/");
-            //resp = resp.Replace("resources/js/", BaseURL + "/resources/js/");
             return ok;
         }
 
@@ -616,37 +750,37 @@ namespace Parrilla3.Controllers
             }
             else
                 if ((hora.Hour == 0) && ((dia == "Saturday") || (dia == "Sunday")))
+            {
+                if (hora.Minute > 30)
                 {
-                    if (hora.Minute > 30)
-                    {
-                        cerrado = true;
-                    }
-                    else
-                    {
-                        cerrado = false;
-                    }
+                    cerrado = true;
                 }
                 else
+                {
+                    cerrado = false;
+                }
+            }
+            else
                     if (hora.Hour == 23)
-                    {
-                        if (hora.Minute > 30)
-                        {
-                            cerrado = true;
-                        }
-                        else
-                        {
-                            cerrado = false;
-                        }
-                    }
-                    else
-                        if ((hora.Hour > 11) && (hora.Hour < 23))
-                        {
-                            cerrado = false;
-                        }
-                        else
-                        {
-                            cerrado = true;
-                        }
+            {
+                if (hora.Minute > 30)
+                {
+                    cerrado = true;
+                }
+                else
+                {
+                    cerrado = false;
+                }
+            }
+            else
+                        if ((hora.Hour >= 11) && (hora.Hour <= 23))
+            {
+                cerrado = false;
+            }
+            else
+            {
+                cerrado = true;
+            }
 
             return cerrado;
         }

@@ -364,7 +364,8 @@
             data: JSON.stringify({
                 pagoEfectivo: $("#chkPagoEfectivo").prop("checked"),
                 pagaCon: document.getElementById("pagaCon").value,
-                observaciones: document.getElementById("observaciones").value
+                observaciones: document.getElementById("observaciones").value,
+                idVenta: document.getElementById("oid").value
             }),
             success: function (result) {
                 //alert(result);

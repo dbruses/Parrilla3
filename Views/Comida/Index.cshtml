@@ -1653,6 +1653,142 @@
                     <br />
                 </div>
             </section>
+            @*============ Regionales  =============*@
+            <section id="regionales" class="description_content">
+                <div>
+                    <h3 class="section-name ">
+                        <span itemprop="servesCuisine">Platos Regionales</span>
+                    </h3>
+                </div>
+                <div class="text-content container">
+                    <div class="col-xs-10 col-md-4 col-lg-4">
+                        <ItemTemplate>
+                            @foreach (var item in Model)
+                            {
+                                count++;
+                                if ((item.categoria == 16) && (count % 2 == 1) && ((bool)item.activo))
+                                {
+                                    <div class="row" style="cursor: pointer;">
+                                        <div class="col-xs-8 col-md-8 col-lg-8">
+                                            <dl>
+                                                <dt>@item.nombre </dt>
+                                                <dd>
+                                                    @item.descripcion &nbsp<br />
+                                                    <mark>@String.Format("{0:C}", item.precio)</mark>&nbsp;&nbsp;
+                                                    <a href="#comidaModal" class="btnComida btn-link btn-info" data-toggle="modal" data-id="@item.idComida"><i class="fas fa-plus-circle color_add" title="Agregar al pedido."></i></a>
+                                                </dd>
+                                            </dl>
+                                        </div>
+                                        <div class="col-xs-4 col-md-4 col-lg-4">
+                                            @if (item.imagen != null)
+                                            {
+                                                imagen = string.Empty;
+                                                switch (item.foto.Split('.')[1])
+                                                {
+                                                    case "png":
+                                                    case "PNG":
+                                                        imagen = "data:image/png;base64," + item.imagen;
+                                                        break;
+                                                    case "jpg":
+                                                    case "JPG":
+                                                    case "jpeg":
+                                                    case "JPEG":
+                                                        imagen = "data:image/jpeg;base64," + item.imagen;
+                                                        break;
+                                                    case "bmp":
+                                                    case "BMP":
+                                                        imagen = "data:image/bmp;base64," + item.imagen;
+                                                        break;
+                                                    default:
+                                                        imagen = "";
+                                                        break;
+                                                }
+                                                <img src="@imagen" height="118" width="118" />
+                                            }
+                                            else
+                                            {
+                                                if (item.foto != null)
+                                                {
+                                                    <img src="~/@item.foto" height="118" width="118" />
+                                                }
+                                                else
+                                                {
+                                                    <img src="~/images/comidas/blanco.jpg" height="118" width="118" />
+                                                }
+                                            }
+                                        </div>
+                                    </div>
+                                    <br />
+                                }
+                            }
+                        </ItemTemplate>
+                    </div>
+                    <br />
+                    <div class="col-xs-10 col-md-4 col-lg-4">
+                        <ItemTemplate>
+                            @foreach (var item in Model)
+                            {
+                                count++;
+                                if ((item.categoria == 16) && (count % 2 == 0) && ((bool)item.activo))
+                                {
+                                    <div class="row" style="cursor: pointer;">
+                                        <div class="col-xs-8 col-md-8 col-lg-8">
+                                            <dl>
+                                                <dt>@item.nombre </dt>
+                                                <dd>
+                                                    @item.descripcion &nbsp<br />
+                                                    <mark>@String.Format("{0:C}", item.precio)</mark>&nbsp;&nbsp;
+                                                    <a href="#comidaModal" class="btnComida btn-link btn-info" data-toggle="modal" data-id="@item.idComida"><i class="fas fa-plus-circle color_add" title="Agregar al pedido."></i></a>
+                                                </dd>
+                                            </dl>
+                                        </div>
+                                        <div class="col-xs-4 col-md-4 col-lg-4">
+                                            @if (item.imagen != null)
+                                            {
+                                                imagen = string.Empty;
+                                                switch (item.foto.Split('.')[1])
+                                                {
+                                                    case "png":
+                                                    case "PNG":
+                                                        imagen = "data:image/png;base64," + item.imagen;
+                                                        break;
+                                                    case "jpg":
+                                                    case "JPG":
+                                                    case "jpeg":
+                                                    case "JPEG":
+                                                        imagen = "data:image/jpeg;base64," + item.imagen;
+                                                        break;
+                                                    case "bmp":
+                                                    case "BMP":
+                                                        imagen = "data:image/bmp;base64," + item.imagen;
+                                                        break;
+                                                    default:
+                                                        imagen = "";
+                                                        break;
+                                                }
+                                                <img src="@imagen" height="118" width="118" />
+                                            }
+                                            else
+                                            {
+                                                if (item.foto != null)
+                                                {
+                                                    <img src="~/@item.foto" height="118" width="118" />
+                                                }
+                                                else
+                                                {
+                                                    <img src="~/images/comidas/blanco.jpg" height="118" width="118" />
+                                                }
+                                            }
+                                        </div>
+                                    </div>
+                                    <br />
+                                }
+                            }
+                        </ItemTemplate>
+                    </div>
+                    <br />
+                </div>
+            </section>
             @*============ Postres  =============*@
             <section id="postres" class="description_content">
                 <div>

@@ -16,6 +16,7 @@
         <AssociationConnector Association="ParrillaModel.FK_Comidas_Categorias" ManuallyRouted="false" />
         <AssociationConnector Association="ParrillaModel.FK_ListaVenta_Comidas" ManuallyRouted="false" />
         <AssociationConnector Association="ParrillaModel.FK_ListaVenta_Ventas" ManuallyRouted="false" />
+        <EntityTypeShape EntityType="ParrillaModel.AspNetUsers" Width="1.5" PointX="8.375" PointY="6.75" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

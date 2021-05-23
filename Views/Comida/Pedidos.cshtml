@@ -1,0 +1,135 @@
+﻿
+@{
+    ViewBag.Title = "Pedidos";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Pedidos</h2>
+
+@if (Model != null)
+{
+    <div class="container">
+        <div class="col-xs-12 col-md-12 col-lg-12">
+            <div>
+                <h3 class="section-name ">
+                    <span itemprop="servesCuisine">Pedidos</span>
+                </h3>
+            </div>
+            <div class="col-xs-12 col-md-12 col-lg-12">
+                <button id="btnActualizar" type="button" class="btn btn-primary" onclick="actualizaEnvio();">Actualizar</button>
+            </div>
+            <div class="col-xs-12 col-md-12 col-lg-12">
+                <table class="table table-bordered" id="tabla">
+                    <thead>
+                        <tr>
+                            <th>
+                                Ver
+                            </th>
+                            <th>
+                                Fecha
+                            </th>
+                            <th>
+                                Pedido Nº
+                            </th>
+                            <th>
+                                Cliente
+                            </th>
+                            <th>
+                                Dirección
+                            </th>
+                            <th>
+                                Teléfono
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (Parrilla3.Models.VentaUsuario p in Model)
+                        {
+                            <tr>
+                                <td>
+                                    <a href="#verModal" class="btnVer btn-link btn-info" data-toggle="modal" data-id="@p.idVenta"><i class="fas fa-eye color_add" title="Ver"></i></a>
+                                </td>
+                                <td>
+                                    @p.fechaVenta
+                                </td>
+                                <td>
+                                    @p.idVenta
+                                </td>
+                                <td>
+                                    @p.apellido, @p.nombre
+                                </td>
+                                <td>
+                                    @p.direccion
+                                </td>
+                                <td>
+                                    @p.telefono
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <div id="verModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true" data-keyboard="false" data-backdrop="static">
+            <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal">×</button>
+                    </div>
+                    <div class="modal-body">
+                        <div id="modal-content">
+                            Cargando ...
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+}
+
+@section Scripts {
+    <script type="text/javascript">
+        $(".btnVer").click(function (eve) {
+            $("#modal-content").load("/Comida/VerPedido/" + $(this).data("id"));
+        });
+
+        function guardarEnvio() {
+            var nPedido = document.getElementById("idPedido").value;
+            var entregado;
+
+            if ($("#chkGuardaEnvio").prop("checked")) {
+                entregado = true;
+            }
+            else {
+                entregado = false;
+            }
+
+            var urlAction;
+            urlAction = '@Url.Action("GrabaEnvPedido", "Comida")';
+
+            $.ajax({
+                    type: "POST",
+                    url: urlAction,
+                    contentType: "application/json; charset=utf-8",
+                    dataType: "json",
+                    data: JSON.stringify({
+                        idVenta: nPedido,
+                        enviado: entregado
+                    }),
+                    success: function (result) {
+                        var rs = result;
+                        location.href = '@Url.Action("Pedidos", "Comida")';
+                    },
+                    async: true,
+                    error: function (xhr, status, p3, p4) {
+                        alert("Error al grabar observaciones.");
+                    }
+            });
+        }
+
+        function actualizaEnvio() {
+            location.href = '@Url.Action("Pedidos", "Comida")';
+        }
+    </script>
+}
